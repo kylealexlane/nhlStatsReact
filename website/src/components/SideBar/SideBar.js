@@ -4,20 +4,36 @@ import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
 
-const { Sider } = Layout;
-const { Item, SubMenu, ItemGroup } = Menu;
+const { Item } = Menu;
 
-const StyledLogo = styled.h1`
+const LogoItem = styled(Item)``;
+
+const Sider = styled(Layout.Sider)`
+  background-color: #f76600;
+`;
+
+const StyledLogo = styled.span`
   font-family: ${props => props.theme.logoFont};
   color: ${props => props.theme.colors.text.white};
-  font-size: 26px;
+  font-size: 28px;
   margin: 0;
   padding: 0;
 `;
 
 const StyledMenu = styled(Menu)`
-  // background-color: #f76600;
-  // color: #fff !important;
+  background-color: #f76600;
+  height: 100vh;
+  .ant-menu-item-selected {
+    background-color: #d15600 !important;
+  }
+`;
+
+const SubMenu = styled(Menu.SubMenu)`
+  background-color: #f76600;
+`;
+
+const ItemGroup = styled(Menu.ItemGroup)`
+  background-color: #f76600;
 `;
 
 const Main = styled.div`
@@ -51,7 +67,7 @@ class SideBar extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <React.Fragment>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <StyledMenu
             onClick={this.handleClick}
@@ -60,11 +76,12 @@ class SideBar extends React.Component {
             mode="inline"
             defaultSelectedKeys={["1"]}
           >
-            <Item>
+            <LogoItem>
               <StyledLink to="/">
+                {this.state.collapsed && <StyledIcon type="robot" />}
                 <StyledLogo>PuckLuck</StyledLogo>
               </StyledLink>
-            </Item>
+            </LogoItem>
             <Item key="players">
               <StyledLink to="/players">
                 <StyledIcon type="user" />
@@ -111,7 +128,7 @@ class SideBar extends React.Component {
           />
           {this.props.render}
         </Main>
-      </Layout>
+      </React.Fragment>
     );
   }
 }

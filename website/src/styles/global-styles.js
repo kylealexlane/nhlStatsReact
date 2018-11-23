@@ -2,8 +2,6 @@ import { injectGlobal } from "styled-components";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less';
 // import url('https://fonts.googleapis.com/css?family=Raleway');
 
-
-
 injectGlobal`
   html,
   body {
@@ -16,8 +14,10 @@ injectGlobal`
   }
 
   h1 {
-    font-size: 64px;
+    color: #f76600;
     font-weight: 500;
+    font-size: 48px;
+    margin: 0;
   }
   h2 {
     font-size: 44px;

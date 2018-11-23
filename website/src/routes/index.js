@@ -4,8 +4,6 @@ import { ConnectedRouter } from "connected-react-router";
 import styled, { withTheme } from "styled-components";
 import { history } from "../store";
 import { SideBar } from "../components/SideBar";
-import { TopBar } from "../components/TopBar";
-import { Layout } from "antd";
 
 import {
   BaseContainer,
@@ -20,13 +18,27 @@ const Container = styled.div`
   text-align: left;
 `;
 
+const Content = styled.div`
+  ${props => props.theme.flex.flexColumnTopCenter};
+  color: ${props => props.theme.colors.mainText};
+  background: ${props => props.theme.colors.mainBackground};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  padding: ${props => props.theme.padding.sixteen}
+    ${props => props.theme.padding.twentyFour};
+  background-color: ${props => props.theme.colors.mainBackground};
+  height: 100%;
+  width: 100%;
+`;
+
 function Routes() {
   return (
     <ConnectedRouter history={history}>
       <Container>
         <SideBar
           render={
-            <React.Fragment>
+            <Content>
               {/*<Route exact path={process.env.PUBLIC_URL + "/"} component={HomeContainer} />*/}
               {/*<Route exact path={"/"} component={HomeContainer} />*/}
               <Route
@@ -39,7 +51,7 @@ function Routes() {
               <Route exact path={"/goalies"} component={GoaliesContainer} />
               <Route exact path={"/teams"} component={TeamsContainer} />
               <Route exact path={"/model"} component={ModelContainer} />
-            </React.Fragment>
+            </Content>
           }
         />
         {/* <TopBar /> */}

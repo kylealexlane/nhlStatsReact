@@ -1,40 +1,15 @@
 import React from "react";
-import styled, { keyframes, withTheme } from "styled-components";
-import { Link } from "react-router-dom";
-import Typist from "react-typist";
+import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
 import { Input, Button, Icon, Select } from "antd";
 import { Table } from "../Table";
 import compareByAlph from "../../functions/helpers";
-import theme from "../../styles/theme";
 
-const Wrapper = styled.div`
-  ${props => props.theme.flex.flexColumnTopCenter};
-  color: ${props => props.theme.colors.mainText};
-  background: ${props => props.theme.colors.mainBackground};
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top;
-  padding: ${props => props.theme.padding.thirtyTwo};
-  background-color: ${props => props.theme.colors.mainBackground};
-  // height: calc(100vh - ${props => props.theme.dimensions.navbar.height});
-  height: 100%;
-  width: 100%;
-`;
-
-const TopDiv = styled.div`
+const Header = styled.header`
   margin-bottom: 24px;
   ${props => props.theme.flex.flexRowJustifyStart};
   width: 100%;
   flex-wrap: wrap;
-`;
-
-const StyledHeader = styled.h1`
-  color: ${props => props.theme.colors.mainAccent};
-  font-size: 48px;
-  margin: 0;
-  padding-left: 6px;
-  flex: 0;
 `;
 
 const SelectDiv = styled.div`
@@ -127,15 +102,46 @@ function onChange(pagination, filters, sorter) {
   console.log("params", pagination, filters, sorter);
 }
 
-const Option = Select.Option;
+const Dropdowns = () => {
+  const Option = Select.Option;
+  function handleChangeYear(value) {
+    console.log(`selected ${value}`);
+  }
 
-function handleChangeYear(value) {
-  console.log(`selected ${value}`);
-}
-
-function handleChangePlayoff(value) {
-  console.log(`selected ${value}`);
-}
+  function handleChangePlayoff(value) {
+    console.log(`selected ${value}`);
+  }
+  return (
+    <React.Fragment>
+      <SelectDiv>
+        <Select
+          defaultValue="2018"
+          style={{ width: 160 }}
+          onChange={handleChangeYear}
+        >
+          <Option value="2011">2011-2012</Option>
+          <Option value="2012">2012-2013</Option>
+          <Option value="2013">2013-2014</Option>
+          <Option value="2014">2014-2015</Option>
+          <Option value="2015">2015-2016</Option>
+          <Option value="2016">2016-2017</Option>
+          <Option value="2017">2017-2018</Option>
+          <Option value="2018">2018-2019</Option>
+        </Select>
+      </SelectDiv>
+      <SelectDiv>
+        <Select
+          defaultValue="0"
+          style={{ width: 160 }}
+          onChange={handleChangePlayoff}
+        >
+          <Option value="0">Regular Season</Option>
+          <Option value="1">Playoffs</Option>
+        </Select>
+      </SelectDiv>
+    </React.Fragment>
+  );
+};
 
 class Players extends React.Component {
   constructor(props) {
@@ -378,43 +384,16 @@ class Players extends React.Component {
     ];
     return (
       <React.Fragment>
-        <Wrapper>
-          <TopDiv>
-            <StyledHeader>Shooters</StyledHeader>
-            <SelectDiv>
-              <Select
-                defaultValue="2018"
-                style={{ width: 160 }}
-                onChange={handleChangeYear}
-              >
-                <Option value="2011">2011-2012</Option>
-                <Option value="2012">2012-2013</Option>
-                <Option value="2013">2013-2014</Option>
-                <Option value="2014">2014-2015</Option>
-                <Option value="2015">2015-2016</Option>
-                <Option value="2016">2016-2017</Option>
-                <Option value="2017">2017-2018</Option>
-                <Option value="2018">2018-2019</Option>
-              </Select>
-            </SelectDiv>
-            <SelectDiv>
-              <Select
-                defaultValue="0"
-                style={{ width: 160 }}
-                onChange={handleChangePlayoff}
-              >
-                <Option value="0">Regular Season</Option>
-                <Option value="1">Playoffs</Option>
-              </Select>
-            </SelectDiv>
-          </TopDiv>
-          <Table
-            columns={columns}
-            dataSource={data}
-            onChange={onChange}
-            scroll={{ x: 1300 }}
-          />
-        </Wrapper>
+        <Header>
+          <h1>Players</h1>
+          <Dropdowns />
+        </Header>
+        <Table
+          columns={columns}
+          dataSource={data}
+          onChange={onChange}
+          scroll={{ x: 1300 }}
+        />
       </React.Fragment>
     );
   }
