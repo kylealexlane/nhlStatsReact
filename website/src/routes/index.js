@@ -3,38 +3,47 @@ import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import styled, { withTheme } from "styled-components";
 import { history } from "../store";
-import { MenuBar } from "../components/MenuBar"
+import { SideBar } from "../components/SideBar";
+import { TopBar } from "../components/TopBar";
+import { Layout } from "antd";
 
 import {
-  AboutContainer,
   BaseContainer,
   PlayersContainer,
   TeamsContainer,
   GoaliesContainer,
-  ModelContainer,
+  ModelContainer
 } from "../containers";
 
 const Container = styled.div`
+  ${props => props.theme.flex.flexStart};
   text-align: left;
 `;
 
 function Routes() {
   return (
     <ConnectedRouter history={history}>
-      <React.Fragment>
-        <MenuBar/>
-        <Container>
-          {/*<Route exact path={process.env.PUBLIC_URL + "/"} component={HomeContainer} />*/}
-          {/*<Route exact path={"/"} component={HomeContainer} />*/}
-          <Route exact path={process.env.PUBLIC_URL + "/"} component={BaseContainer} />
-          {/*<Route exact path={"/"} component={BaseContainer} />*/}
-          <Route exact path={"/players"} component={PlayersContainer} />
-          <Route exact path={"/goalies"} component={GoaliesContainer} />
-          <Route exact path={"/teams"} component={TeamsContainer} />
-          <Route exact path={"/model"} component={ModelContainer} />
-          <Route exact path={"/about"} component={AboutContainer} />
-        </Container>
-      </React.Fragment>
+      <Container>
+        <SideBar
+          render={
+            <React.Fragment>
+              {/*<Route exact path={process.env.PUBLIC_URL + "/"} component={HomeContainer} />*/}
+              {/*<Route exact path={"/"} component={HomeContainer} />*/}
+              <Route
+                exact
+                path={process.env.PUBLIC_URL + "/"}
+                component={BaseContainer}
+              />
+              {/*<Route exact path={"/"} component={BaseContainer} />*/}
+              <Route exact path={"/players"} component={PlayersContainer} />
+              <Route exact path={"/goalies"} component={GoaliesContainer} />
+              <Route exact path={"/teams"} component={TeamsContainer} />
+              <Route exact path={"/model"} component={ModelContainer} />
+            </React.Fragment>
+          }
+        />
+        {/* <TopBar /> */}
+      </Container>
     </ConnectedRouter>
   );
 }
