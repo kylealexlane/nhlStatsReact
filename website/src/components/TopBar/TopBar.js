@@ -35,11 +35,8 @@ const RightMenuIcon = styled(Icon)`
 
 const TopBar = props => (
   <Container>
-    <ExpandIcon>
-      <Icon
-        type={props.collapsed ? "menu-unfold" : "menu-fold"}
-        onClick={props.toggle}
-      />
+    <ExpandIcon onClick={props.toggle}>
+      <Icon type={props.collapsed ? "menu-unfold" : "menu-fold"} />
     </ExpandIcon>
     <span>
       <RightMenuIcon type="search" />

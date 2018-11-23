@@ -233,7 +233,7 @@ class Players extends React.Component {
           );
         },
         sorter: (a, b) => compareByAlph(a.last, b.last),
-        fixed: "left",
+
         width: 100
       },
       {
@@ -324,10 +324,16 @@ class Players extends React.Component {
             value: "D"
           }
         ],
+        filterIcon: filtered => (
+          <Icon
+            type="filter"
+            style={{ color: filtered ? "#108ee9" : "#aaa" }}
+          />
+        ),
         onFilter: (value, record) => record.pos.indexOf(value) === 0,
         defaultSortOrder: "descend",
         sorter: (a, b) => compareByAlph(a.pos, b.pos),
-        width: 100
+        width: 90
       },
       //   {
       //   title: 'Year Start',
@@ -344,42 +350,49 @@ class Players extends React.Component {
         title: "Shots",
         dataIndex: "shots",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.shots - b.shots
+        sorter: (a, b) => a.shots - b.shots,
+        width: 90
       },
       {
         title: "Goals",
         dataIndex: "goals",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.goals - b.goals
+        sorter: (a, b) => a.goals - b.goals,
+        width: 90
       },
       {
         title: "kxGoals",
         dataIndex: "kxgoals",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxgoals - b.kxgoals
+        sorter: (a, b) => a.kxgoals - b.kxgoals,
+        width: 90
       },
       {
         title: "S%",
         dataIndex: "sperc",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.sperc - b.sperc
+        sorter: (a, b) => a.sperc - b.sperc,
+        width: 90
       },
       {
         title: "kxS%",
         dataIndex: "kxsperc",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxsperc - b.kxsperc
+        sorter: (a, b) => a.kxsperc - b.kxsperc,
+        width: 90
       },
       {
         title: "kxSS",
         dataIndex: "kxss",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxss - b.kxss
+        sorter: (a, b) => a.kxss - b.kxss,
+        width: 90
       },
       {
         title: "Shot Quality",
         dataIndex: "shotquality",
-        sorter: (a, b) => a.shotquality - b.shotquality
+        sorter: (a, b) => a.shotquality - b.shotquality,
+        width: 90
       }
     ];
     return (

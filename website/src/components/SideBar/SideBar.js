@@ -23,6 +23,7 @@ const StyledLogo = styled.span`
 const StyledMenu = styled(Menu)`
   background-color: #f76600;
   height: 100vh;
+  position: absolute;
   .ant-menu-item-selected {
     background-color: #d15600 !important;
   }
