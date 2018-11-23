@@ -12,7 +12,8 @@ const colors = {
   secondaryText: "#333333",
 
   mainAccent: "#f76600",
-  secondaryAccent: "#B4EC51",
+  mainAccentDark: "#d15600",
+  secondaryAccent: "#B4EC51"
 
   // mainBackground: "#202124",
   // secondaryBackground: "#FCFCFC",
@@ -28,7 +29,7 @@ export default {
   baseWrapper: {
     paddingTop: 12,
     marginRight: 32,
-    marginLeft: 32,
+    marginLeft: 32
   },
   dimensions: {
     subSection: {
@@ -56,12 +57,11 @@ export default {
     },
     mainBackground: colors.mainBackground,
     secondaryBackground: colors.secondaryBackground,
-
     mainText: colors.mainText,
     secondaryText: colors.secondaryText,
-
     mainAccent: colors.mainAccent,
-    secondaryAccent: colors.secondaryAccent,
+    mainAccentDark: colors.mainAccentDark,
+    secondaryAccent: colors.secondaryAccent
   },
   padding: {
     four: "4px",
@@ -78,14 +78,21 @@ export default {
     spaceBetween: "display: flex; justify-content: space-between",
     spaceAround: "display: flex; justify-content: space-around",
     center: "display: flex; align-items: center; justify-content: center",
-    topCenter: "display: flex; align-items: flex-start; justify-content: center",
-    flexStart: "display: flex; justify-content: flex-start; align-items: flex-start;",
+    topCenter:
+      "display: flex; align-items: flex-start; justify-content: center",
+    flexStart:
+      "display: flex; justify-content: flex-start; align-items: flex-start;",
     flexEnd: "display: flex; justify-content: flex-end",
-    flexRowEnd: "display: flex; flex-direction: row; justify-content: flex-end; align-items: center;",
-    flexRowBetween: "display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;",
-    flexColumnCenter: "display: flex; flex-direction: column; justify-content: center, align-items: center;",
-    flexColumnTopCenter: "display: flex; flex: 1; flex-direction: column; justify-content: flex-start, align-items: center;",
-    flexRowJustifyStart: "display: flex; flex-direction: row; justify-content: flex-start; align-items: center;",
+    flexRowEnd:
+      "display: flex; flex-direction: row; justify-content: flex-end; align-items: center;",
+    flexRowBetween:
+      "display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;",
+    flexColumnCenter:
+      "display: flex; flex-direction: column; justify-content: center, align-items: center;",
+    flexColumnTopCenter:
+      "display: flex; flex: 1; flex-direction: column; justify-content: flex-start, align-items: center;",
+    flexRowJustifyStart:
+      "display: flex; flex-direction: row; justify-content: flex-start; align-items: center;"
   },
   fontSize: {
     mainHeading: "32px",
@@ -97,5 +104,5 @@ export default {
     lg: "992px",
     xl: "1200px"
   },
-  logoFont: "'Quicksand', sans-serif;",
+  logoFont: "'Quicksand', sans-serif;"
 };
