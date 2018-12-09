@@ -1,9 +1,12 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
-import { Input, Button, Icon, Select } from "antd";
+import { Input, Button, Icon, Select, Layout } from "antd";
 import { Table } from "../Table";
 import compareByAlph from "../../functions/helpers";
+import mainTheme from "../../styles/theme"
+
+const maxTableWidth = 1000;
 
 const Header = styled.header`
   margin-bottom: 24px;
@@ -18,6 +21,20 @@ const SelectDiv = styled.div`
   margin: 0;
   padding-left: 24px;
   flex: 0;
+`;
+
+const MainWrapper = styled.div`
+  margin: 0;
+  width: 100%;
+  max-width: ${maxTableWidth}px
+  margin-bottom: 24px;
+  // position: relative;
+  // border: 1px solid #ebedf0;;
+  // padding-top: 42px;
+  // padding-right: 24px;
+  // padding-bottom: 50px;
+  // padding-left: 24px;
+  // zoom: 1
 `;
 
 const data = [
@@ -102,6 +119,10 @@ function onChange(pagination, filters, sorter) {
   console.log("params", pagination, filters, sorter);
 }
 
+const fixedColWidth = 100;
+const colWidth = 100;
+
+
 const Dropdowns = () => {
   const Option = Select.Option;
   function handleChangeYear(value) {
@@ -147,23 +168,41 @@ class Players extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: ""
+      searchText: "",
+      width: 0,
+      height: 0
     };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
+  // Functions for calculating window size on the fly and dynamically updating things
+  // Should work with resizing!!!
+  componentDidMount() {
+    document.title = "Puckluck";
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    console.log(window.innerWidth, window.innerHeight)
+  }
+
+  // Handle searches for data
   handleSearch = (selectedKeys, confirm) => () => {
     confirm();
     this.setState({ searchText: selectedKeys[0] });
   };
-
+  // Handle reset for data
   handleReset = clearFilters => () => {
     clearFilters();
     this.setState({ searchText: "" });
   };
 
-  componentDidMount() {
-    document.title = "Puckluck";
-  }
 
   render() {
     const columns = [
@@ -234,7 +273,8 @@ class Players extends React.Component {
         },
         sorter: (a, b) => compareByAlph(a.last, b.last),
 
-        width: 100
+        width: fixedColWidth,
+        fixed: 'left'
       },
       {
         title: "First",
@@ -301,7 +341,8 @@ class Players extends React.Component {
           );
         },
         sorter: (a, b) => compareByAlph(a.first, b.first),
-        width: 100
+        width: fixedColWidth,
+        fixed: 'left'
       },
       {
         title: "Pos",
@@ -333,7 +374,7 @@ class Players extends React.Component {
         onFilter: (value, record) => record.pos.indexOf(value) === 0,
         defaultSortOrder: "descend",
         sorter: (a, b) => compareByAlph(a.pos, b.pos),
-        width: 90
+        width: colWidth
       },
       //   {
       //   title: 'Year Start',
@@ -351,65 +392,130 @@ class Players extends React.Component {
         dataIndex: "shots",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.shots - b.shots,
-        width: 90
+        width: colWidth
       },
       {
         title: "Goals",
         dataIndex: "goals",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.goals - b.goals,
-        width: 90
+        width: colWidth
       },
       {
         title: "kxGoals",
         dataIndex: "kxgoals",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.kxgoals - b.kxgoals,
-        width: 90
+        width: colWidth
       },
       {
         title: "S%",
         dataIndex: "sperc",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.sperc - b.sperc,
-        width: 90
+        width: colWidth
       },
       {
         title: "kxS%",
         dataIndex: "kxsperc",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.kxsperc - b.kxsperc,
-        width: 90
+        width: colWidth
       },
       {
         title: "kxSS",
         dataIndex: "kxss",
         defaultSortOrder: "descend",
         sorter: (a, b) => a.kxss - b.kxss,
-        width: 90
+        width: colWidth
       },
       {
         title: "Shot Quality",
         dataIndex: "shotquality",
         sorter: (a, b) => a.shotquality - b.shotquality,
-        width: 90
+        // fixed: 'right',
+        // width: colWidth
       }
     ];
     return (
       <React.Fragment>
-        <Header>
-          <h1>Players</h1>
-          <Dropdowns />
-        </Header>
-        <Table
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-          scroll={{ x: 1300 }}
-        />
+        <MainWrapper style={{ width: this.state.width - mainTheme.sideBarWidth - 48}}>
+        {/*<Layout>*/}
+          <Header>
+            <h1>Players</h1>
+            <Dropdowns />
+          </Header>
+          <Table
+            columns={columns}
+            dataSource={data}
+            onChange={onChange}
+            scroll={{ x: maxTableWidth }}
+          />
+        {/*</Layout>*/}
+        </MainWrapper>
       </React.Fragment>
     );
   }
 }
 
 export default withTheme(Players);
+
+
+
+
+
+
+
+
+
+
+// class Players extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       searchText: ""
+//     };
+//   }
+//   render () {
+//     const columns = [
+//       {
+//         title: 'Full Name', width: 100, dataIndex: 'name', key: 'name', fixed: 'left',
+//       },
+//       {
+//         title: 'Age', width: 100, dataIndex: 'age', key: 'age', fixed: 'left',
+//       },
+//       { title: 'Column 1', dataIndex: 'address', key: '1' },
+//       { title: 'Column 2', dataIndex: 'address', key: '2' },
+//       { title: 'Column 3', dataIndex: 'address', key: '3' },
+//       { title: 'Column 4', dataIndex: 'address', key: '4' },
+//       { title: 'Column 5', dataIndex: 'address', key: '5' },
+//       { title: 'Column 6', dataIndex: 'address', key: '6' },
+//       { title: 'Column 7', dataIndex: 'address', key: '7' },
+//       { title: 'Column 8', dataIndex: 'address', key: '8' }
+//     ];
+//
+//     const data = [{
+//       key: '1',
+//       name: 'John Brown',
+//       age: 32,
+//       address: 'New York Park',
+//     }, {
+//       key: '2',
+//       name: 'Jim Green',
+//       age: 40,
+//       address: 'London Park',
+//     }];
+//
+//     return (
+//       <React.Fragment>
+//         <Header>
+//           <h1>Players</h1>
+//         </Header>
+//         <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
+//       </React.Fragment>
+//     );
+//   }
+// }
+//
+// export default withTheme(Players);
+

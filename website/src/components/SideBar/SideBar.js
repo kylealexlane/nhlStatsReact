@@ -3,6 +3,8 @@ import styled, { withTheme } from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
+import mainTheme from "../../styles/theme"
+
 
 const { Item } = Menu;
 
@@ -69,7 +71,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={mainTheme.sideBarWidth}>
           <StyledMenu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}

@@ -31,6 +31,7 @@ export default {
     marginRight: 32,
     marginLeft: 32
   },
+  sideBarWidth: 200,
   dimensions: {
     subSection: {
       margin: "0 auto"
