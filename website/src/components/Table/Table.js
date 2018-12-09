@@ -9,6 +9,7 @@ const Table = props => (
     columns={props.columns}
     dataSource={props.dataSource}
     onChange={props.onChange}
+    scroll={props.scroll}
   />
 );
 
