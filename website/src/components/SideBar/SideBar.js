@@ -79,19 +79,19 @@ class SideBar extends React.Component {
             mode="inline"
             defaultSelectedKeys={["1"]}
           >
-            <LogoItem>
+            <LogoItem disabled>
               <StyledLink to="/">
-                {this.state.collapsed && <StyledIcon type="robot" />}
+                {this.state.collapsed && <StyledIcon type="home" />}
                 <StyledLogo>PuckLuck</StyledLogo>
               </StyledLink>
             </LogoItem>
-            <Item key="players">
+            <Item key="players" disabled>
               <StyledLink to="/players">
                 <StyledIcon type="user" />
                 <span>Players</span>
               </StyledLink>
             </Item>
-            <Item key="goalies">
+            <Item key="goalies" disabled>
               <StyledLink to="/goalies">
                 <StyledIcon type="lock" />
                 <span>Goalies</span>
@@ -103,7 +103,7 @@ class SideBar extends React.Component {
                   <Icon type="team" />
                   <span>Teams</span>
                 </span>
-              }
+              } disabled
             >
               <ItemGroup title="West">
                 <Item key="kings">Kings</Item>
@@ -114,10 +114,16 @@ class SideBar extends React.Component {
                 <Item key="bruins">Bruins</Item>
               </ItemGroup>
             </SubMenu>
-            <Item key="model">
+            <Item key="model" disabled>
               <StyledLink to="/model">
                 <StyledIcon type="radar-chart" />
                 <span>Model</span>
+              </StyledLink>
+            </Item>
+            <Item key="blog" disabled>
+              <StyledLink to="/model">
+                <StyledIcon type="laptop" />
+                <span>Blog</span>
               </StyledLink>
             </Item>
           </StyledMenu>

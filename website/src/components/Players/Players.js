@@ -5,6 +5,10 @@ import { Input, Button, Icon, Select, Layout } from "antd";
 import { Table } from "../Table";
 import compareByAlph from "../../functions/helpers";
 import mainTheme from "../../styles/theme"
+import { playersFetchData } from '../../actions/players';
+import { connect } from 'react-redux';
+
+
 
 const maxTableWidth = 1000;
 
@@ -28,6 +32,7 @@ const MainWrapper = styled.div`
   width: 100%;
   max-width: ${maxTableWidth}px
   margin-bottom: 24px;
+  // align-self: center;
   // position: relative;
   // border: 1px solid #ebedf0;;
   // padding-top: 42px;
@@ -176,11 +181,11 @@ class Players extends React.Component {
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
-  // Should work with resizing!!!
   componentDidMount() {
-    document.title = "Puckluck";
+    document.title = "Players";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
   }
 
   componentWillUnmount() {
@@ -436,6 +441,21 @@ class Players extends React.Component {
         // width: colWidth
       }
     ];
+    // if (this.props.hasErrored) {
+    //   return <p>Sorry! There was an error loading the items</p>;
+    // }
+    // if (this.props.isLoading) {
+    //   return <p>Loading…</p>;
+    // }
+    // return (
+    //   <ul>
+    //     {this.props.players.map((players) => (
+    //       <li key={players.id}>
+    //         {players.label}
+    //       </li>
+    //     ))}
+    //   </ul>
+    // );
     return (
       <React.Fragment>
         <MainWrapper style={{ width: this.state.width - mainTheme.sideBarWidth - 48}}>
@@ -455,4 +475,18 @@ class Players extends React.Component {
   }
 }
 
-export default withTheme(Players);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (url) => dispatch(playersFetchData(url))
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    players: state.players,
+    hasErrored: state.playersHasErrored,
+    isLoading: state.playersIsLoading
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (withTheme(Players));

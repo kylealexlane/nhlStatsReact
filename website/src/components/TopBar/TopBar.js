@@ -11,7 +11,7 @@ const Container = styled.div`
   background: white;
   width: 100%;
   height: 48px;
-  border-bottom: 1px solid black;
+  border-bottom: 0px solid black;
 `;
 
 const ExpandIcon = styled.span`
