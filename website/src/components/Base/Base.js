@@ -34,9 +34,8 @@ class Base extends React.Component {
           <h1>Under Construction!</h1>
           <ParagraphDiv>Front-end is currently under construction :(</ParagraphDiv>
           <ParagraphDiv>Check back soon for restored functionality and improvements!</ParagraphDiv>
-
-          <ParagraphDiv>In the mean time, check out the api documentation at <b>docs.thepuckluck.com</b></ParagraphDiv>
-          <ParagraphDiv>Api requests are still functional through <b>api.thepuckluck.com/...</b> see documentation for details</ParagraphDiv>
+          <ParagraphDiv>In the mean time, check out the api documentation at <a href="http://docs.thepuckluck.com"><b>docs.thepuckluck.com</b></a></ParagraphDiv>
+          <ParagraphDiv>Api requests are still functional through <a href="http://docs.thepuckluck.com"><b>api.thepuckluck.com/...</b></a> see documentation for details</ParagraphDiv>
         </Header>
       </MainWrapper>
     </React.Fragment>;
