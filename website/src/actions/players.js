@@ -25,6 +25,7 @@ export function playersFetchData(url) {
 
     fetch(url)
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           throw Error(response.statusText);
         }
@@ -34,7 +35,7 @@ export function playersFetchData(url) {
         return response;
       })
       .then((response) => response.json())
-      .then((players) => dispatch(playersFetchDataSuccess(players)))
+      .then((players) => dispatch(playersFetchDataSuccess(players.player_stats)))
       .catch(() => dispatch(playersHasErrored(true)));
   };
 }

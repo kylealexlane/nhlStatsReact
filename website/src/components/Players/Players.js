@@ -175,7 +175,8 @@ class Players extends React.Component {
     this.state = {
       searchText: "",
       width: 0,
-      height: 0
+      height: 0,
+      data: []
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
@@ -185,11 +186,18 @@ class Players extends React.Component {
     document.title = "Players";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
+    this.props.fetchData('http://www.api.thepuckluck.com/api/v1/players?season=20182019&gametype=R&returntype=list');
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.players !== this.state.players) {
+      this.setState({ data: nextProps.players });
+    }
   }
 
   updateWindowDimensions() {
@@ -213,7 +221,7 @@ class Players extends React.Component {
     const columns = [
       {
         title: "Last",
-        dataIndex: "last",
+        dataIndex: "last_name",
         defaultSortOrder: "descend",
         filterDropdown: ({
           setSelectedKeys,
@@ -247,7 +255,7 @@ class Players extends React.Component {
           />
         ),
         onFilter: (value, record) =>
-          record.last.toLowerCase().includes(value.toLowerCase()),
+          record.last_name.toLowerCase().includes(value.toLowerCase()),
         onFilterDropdownVisibleChange: visible => {
           if (visible) {
             setTimeout(() => {
@@ -276,14 +284,14 @@ class Players extends React.Component {
             text
           );
         },
-        sorter: (a, b) => compareByAlph(a.last, b.last),
+        sorter: (a, b) => compareByAlph(a.last_name, b.last_name),
 
         width: fixedColWidth,
         fixed: 'left'
       },
       {
         title: "First",
-        dataIndex: "first",
+        dataIndex: "first_name",
         filterDropdown: ({
           setSelectedKeys,
           selectedKeys,
@@ -316,7 +324,7 @@ class Players extends React.Component {
           />
         ),
         onFilter: (value, record) =>
-          record.first.toLowerCase().includes(value.toLowerCase()),
+          record.first_name.toLowerCase().includes(value.toLowerCase()),
         onFilterDropdownVisibleChange: visible => {
           if (visible) {
             setTimeout(() => {
@@ -345,13 +353,13 @@ class Players extends React.Component {
             text
           );
         },
-        sorter: (a, b) => compareByAlph(a.first, b.first),
-        width: fixedColWidth,
-        fixed: 'left'
+        sorter: (a, b) => compareByAlph(a.first_name, b.first_name),
+        width: colWidth,
+        // fixed: 'left'
       },
       {
         title: "Pos",
-        dataIndex: "pos",
+        dataIndex: "pos_code",
         filters: [
           {
             text: "C",
@@ -378,7 +386,7 @@ class Players extends React.Component {
         ),
         onFilter: (value, record) => record.pos.indexOf(value) === 0,
         defaultSortOrder: "descend",
-        sorter: (a, b) => compareByAlph(a.pos, b.pos),
+        sorter: (a, b) => compareByAlph(a.pos_code, b.pos_code),
         width: colWidth
       },
       //   {
@@ -394,37 +402,37 @@ class Players extends React.Component {
       // },
       {
         title: "Shots",
-        dataIndex: "shots",
+        dataIndex: "num_shots",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.shots - b.shots,
+        sorter: (a, b) => a.num_shots - b.num_shots,
         width: colWidth
       },
       {
         title: "Goals",
-        dataIndex: "goals",
+        dataIndex: "num_goals",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.goals - b.goals,
+        sorter: (a, b) => a.num_goals - b.num_goals,
         width: colWidth
       },
       {
-        title: "kxGoals",
-        dataIndex: "kxgoals",
+        title: "xGoals",
+        dataIndex: "sum_xgoals",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxgoals - b.kxgoals,
+        sorter: (a, b) => a.sum_xgoals - b.sum_xgoals,
         width: colWidth
       },
       {
         title: "S%",
-        dataIndex: "sperc",
+        dataIndex: "avg_shoot_perc",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.sperc - b.sperc,
+        sorter: (a, b) => a.avg_shoot_perc - b.avg_shoot_perc,
         width: colWidth
       },
       {
-        title: "kxS%",
-        dataIndex: "kxsperc",
+        title: "xS%",
+        dataIndex: "avg_xgoals",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxsperc - b.kxsperc,
+        sorter: (a, b) => a.avg_xgoals - b.avg_xgoals,
         width: colWidth
       },
       {
@@ -436,8 +444,8 @@ class Players extends React.Component {
       },
       {
         title: "Shot Quality",
-        dataIndex: "shotquality",
-        sorter: (a, b) => a.shotquality - b.shotquality,
+        dataIndex: "shot_quality",
+        sorter: (a, b) => a.shot_quality - b.shot_quality,
         // width: colWidth
       }
     ];
@@ -465,7 +473,7 @@ class Players extends React.Component {
           </Header>
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={this.state.data}
             onChange={onChange}
             scroll={{ x: maxTableWidth }}
           />

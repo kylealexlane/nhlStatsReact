@@ -4,6 +4,8 @@ import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
 import mainTheme from "../../styles/theme"
+import { changeSidebarStatus } from '../../actions/sidebar';
+import { connect } from 'react-redux';
 
 
 const { Item } = Menu;
@@ -52,13 +54,19 @@ const StyledIcon = styled(Icon)``;
 class SideBar extends React.Component {
   state = {
     current: "players",
-    collapsed: false
+    collapsed: this.props.sidebarCollapsed
   };
 
+  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
+      this.setState({ collapsed: nextProps.sidebarCollapsed });
+    }
+  }
+
   toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
+    console.log(this.props.sidebarCollapsed);
+    this.props.changeSB(!this.props.sidebarCollapsed);
   };
 
   handleClick = e => {
@@ -85,7 +93,7 @@ class SideBar extends React.Component {
                 <StyledLogo>PuckLuck</StyledLogo>
               </StyledLink>
             </LogoItem>
-            <Item key="players" disabled>
+            <Item key="players">
               <StyledLink to="/players">
                 <StyledIcon type="user" />
                 <span>Players</span>
@@ -142,4 +150,16 @@ class SideBar extends React.Component {
   }
 }
 
-export default withRouter(withTheme(SideBar));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeSB: (bool) => dispatch(changeSidebarStatus(bool))
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    sidebarCollapsed: state.sidebarCollapsed
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (withTheme(SideBar));
