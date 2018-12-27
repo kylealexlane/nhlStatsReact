@@ -2,7 +2,7 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
 import { Table } from "../Table";
-import theme from "../../styles/theme"
+import maintheme from "../../styles/theme"
 import { layout } from "../../styles/theme"
 import { playersFetchData } from '../../actions/players';
 import { connect } from 'react-redux';
@@ -12,11 +12,16 @@ import { TableAbove } from "../TableAbove";
 const maxTableWidth = 1000;
 
 const MainWrapper = styled.div`
+  align-self: center;
   margin: 0;
   width: 100%;
   height: 100%;
-  max-width: ${maxTableWidth}px
-  margin-bottom: 24px;
+  max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
+  // padding-bottom: 24px;
+  padding-right: ${props => props.theme.layout.paddingHorizontal};
+  padding-left: ${props => props.theme.layout.paddingHorizontal};
+  background: ${props => props.theme.colors.mainBackground};
+  min-height: calc(100vh - ${props => props.theme.layout.topBarHeight});
 `;
 
 class Players extends React.Component {
@@ -31,7 +36,7 @@ class Players extends React.Component {
       isLoading: false,
       data: [],
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
-      pageNum: theme.DefaultNumTableItems
+      pageNum: maintheme.DefaultNumTableItems
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
@@ -122,15 +127,15 @@ class Players extends React.Component {
 
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.paddingInt * 2)}}>
+        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth}}>
           <TableAbove
             title={"Players"}
-            subTitle={"~ player shooting statistics"}
+            subTitle={"Player shooting statistics by season."}
             chooseSelects={true}
             selectsOptions={selectsOptions}
             pageNumChangeCallback={this.pageNumChangeCallback}
             defaultSelectFilters={defaultSelectOptions}
-            defaultPageNum={theme.DefaultNumTableItems}
+            defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
           />

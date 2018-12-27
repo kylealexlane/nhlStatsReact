@@ -10,7 +10,7 @@ const Container = styled.div`
   padding-right: ${props => props.theme.padding.twentyFour};
   background: white;
   width: 100%;
-  height: 48px;
+  height: ${props => props.theme.layout.topBarHeight};;
   border-bottom: 0px solid black;
 `;
 

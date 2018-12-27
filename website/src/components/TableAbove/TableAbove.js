@@ -22,15 +22,16 @@ const SelectDiv = styled.div`
 
 const TitleDiv = styled.div`
   flex-basis: 100%;
+  padding-bottom: 8px;
 `;
 
 const Title = styled.h1`
-  display: inline;
+  // display: inline;
   padding-right: 24px;
 `;
 
 const Subtitle = styled.p`
-  display: inline;
+  // display: inline;
   padding-right: 24px;
 `;
 
@@ -64,15 +65,17 @@ class TableAbove extends React.Component {
         children.push(<Option key={opt.val}>{opt.label}</Option>);
       });
       chooseSelect =
-        <Select
-          mode="multiple"
-          style={{ minWidth: 100, maxWidth: 400 }}
-          placeholder="Choose Filters"
-          defaultValue={this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype']}
-          onChange={this.handleChange}
-        >
-          {children}
-        </Select>
+        <SelectDiv>
+          <Select
+            mode="multiple"
+            style={{ minWidth: 220, maxWidth: 400 }}
+            placeholder="Choose Filters"
+            defaultValue={this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype']}
+            onChange={this.handleChange}
+          >
+            {children}
+          </Select>
+        </SelectDiv>
     }
 
     // year filter
@@ -80,7 +83,7 @@ class TableAbove extends React.Component {
       selectYear =
         <SelectDiv>
           <Select
-            defaultValue="2018"
+            defaultValue="20182019"
             style={{width: 160}}
             onChange={(value) => this.props.selectYearCallback(value)}
           >
@@ -121,9 +124,9 @@ class TableAbove extends React.Component {
     <Header>
       <TitleDiv>
         <Title>{this.props.title}</Title>
-        {chooseSelect}
-        {/*<Subtitle>{this.props.subTitle}</Subtitle>*/}
+        <Subtitle>{this.props.subTitle}</Subtitle>
       </TitleDiv>
+      {chooseSelect}
       {selectYear}
       {selectGameType}
       {selectNumPerPage}

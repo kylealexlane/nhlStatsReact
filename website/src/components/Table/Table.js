@@ -8,9 +8,6 @@ import {layout} from "../../styles/theme";
 
 
 
-
-
-
 class Table extends React.Component {
   constructor(props) {
     super(props);
