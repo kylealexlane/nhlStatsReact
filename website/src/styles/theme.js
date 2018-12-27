@@ -6,7 +6,9 @@ const colors = {
   greyHighlight: "#aaa",
 
   mainBackground: "#FFFFFF",
-  secondaryBackground: "#FCFCFC",
+  secondaryBackground: "#f0f2f5",
+  // secondaryBackground: "#FCFCFC",
+
 
   mainText: "#171717",
   secondaryText: "#333333",
@@ -26,17 +28,23 @@ const colors = {
 };
 
 export const layout = {
-  padding: "24px",
-  paddingInt: 24,
+  paddingHorizontal: "24px",
+  paddingHorizInt: 24,
   sideBarWidth: 160,
-  sidebarCollapsedWidth: 80
+  sidebarCollapsedWidth: 80,
+  topBarHeight: "48px",
+  topBariHeightInt: 48,
 };
 
 export default {
-  baseWrapper: {
-    paddingTop: 12,
-    marginRight: 32,
-    marginLeft: 32
+  DefaultNumTableItems: 15,
+  layout: {
+    paddingHorizontal: layout.paddingHorizontal,
+    paddingHorizInt: layout.paddingHorizInt,
+    sideBarWidth: layout.sideBarWidth,
+    sidebarCollapsedWidth: layout.sidebarCollapsedWidth,
+    topBarHeight: layout.topBarHeight,
+    topBariHeightInt: layout.topBariHeightInt,
   },
   dimensions: {
     subSection: {

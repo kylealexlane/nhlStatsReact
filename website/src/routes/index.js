@@ -25,10 +25,9 @@ const Content = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  padding: ${props => props.theme.padding.sixteen}
-    ${props => props.theme.padding.mainWrapper};
-  background-color: ${props => props.theme.colors.mainBackground};
+  // padding: 16px;
   height: 100%;
+  min-height: calc(100vh - ${props => props.theme.layout.topBarHeight});
   width: 100%;
 `;
 
