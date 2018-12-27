@@ -26,7 +26,7 @@ const Content = styled.div`
   background-repeat: no-repeat;
   background-position: top;
   padding: ${props => props.theme.padding.sixteen}
-    ${props => props.theme.padding.twentyFour};
+    ${props => props.theme.padding.mainWrapper};
   background-color: ${props => props.theme.colors.mainBackground};
   height: 100%;
   width: 100%;

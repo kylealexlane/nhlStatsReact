@@ -25,13 +25,19 @@ const colors = {
   // secondaryAccent: "#B4EC51",
 };
 
+export const layout = {
+  padding: "24px",
+  paddingInt: 24,
+  sideBarWidth: 160,
+  sidebarCollapsedWidth: 80
+};
+
 export default {
   baseWrapper: {
     paddingTop: 12,
     marginRight: 32,
     marginLeft: 32
   },
-  sideBarWidth: 200,
   dimensions: {
     subSection: {
       margin: "0 auto"
@@ -73,7 +79,8 @@ export default {
     fourtyEight: "48px",
     sixtyFour: "64px",
     eighty: "80px",
-    hundredTwenty: "120px"
+    hundredTwenty: "120px",
+    mainWrapper: layout.padding
   },
   flex: {
     spaceBetween: "display: flex; justify-content: space-between",

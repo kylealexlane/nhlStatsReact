@@ -4,6 +4,9 @@ import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
 import mainTheme from "../../styles/theme"
+import { changeSidebarStatus } from '../../actions/sidebar';
+import { connect } from 'react-redux';
+import { layout } from '../../styles/theme'
 
 
 const { Item } = Menu;
@@ -12,6 +15,8 @@ const LogoItem = styled(Item)``;
 
 const Sider = styled(Layout.Sider)`
   background-color: #f76600;
+   position: sticky;
+   top: 0;
 `;
 
 const StyledLogo = styled.span`
@@ -52,13 +57,17 @@ const StyledIcon = styled(Icon)``;
 class SideBar extends React.Component {
   state = {
     current: "players",
-    collapsed: false
+    collapsed: this.props.sidebarCollapsed
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
+      this.setState({ collapsed: nextProps.sidebarCollapsed });
+    }
+  }
+
   toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
+    this.props.changeSB(!this.props.sidebarCollapsed);
   };
 
   handleClick = e => {
@@ -71,7 +80,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={mainTheme.sideBarWidth}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={layout.sideBarWidth} collapsedWidth={layout.sidebarCollapsedWidth}>
           <StyledMenu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -79,9 +88,9 @@ class SideBar extends React.Component {
             mode="inline"
             defaultSelectedKeys={["1"]}
           >
-            <LogoItem>
+            <LogoItem disabled>
               <StyledLink to="/">
-                {this.state.collapsed && <StyledIcon type="robot" />}
+                {this.state.collapsed && <StyledIcon type="home" />}
                 <StyledLogo>PuckLuck</StyledLogo>
               </StyledLink>
             </LogoItem>
@@ -91,7 +100,7 @@ class SideBar extends React.Component {
                 <span>Players</span>
               </StyledLink>
             </Item>
-            <Item key="goalies">
+            <Item key="goalies" disabled>
               <StyledLink to="/goalies">
                 <StyledIcon type="lock" />
                 <span>Goalies</span>
@@ -103,7 +112,7 @@ class SideBar extends React.Component {
                   <Icon type="team" />
                   <span>Teams</span>
                 </span>
-              }
+              } disabled
             >
               <ItemGroup title="West">
                 <Item key="kings">Kings</Item>
@@ -114,10 +123,16 @@ class SideBar extends React.Component {
                 <Item key="bruins">Bruins</Item>
               </ItemGroup>
             </SubMenu>
-            <Item key="model">
+            <Item key="model" disabled>
               <StyledLink to="/model">
                 <StyledIcon type="radar-chart" />
                 <span>Model</span>
+              </StyledLink>
+            </Item>
+            <Item key="blog" disabled>
+              <StyledLink to="/model">
+                <StyledIcon type="laptop" />
+                <span>Blog</span>
               </StyledLink>
             </Item>
           </StyledMenu>
@@ -136,4 +151,16 @@ class SideBar extends React.Component {
   }
 }
 
-export default withRouter(withTheme(SideBar));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeSB: (bool) => dispatch(changeSidebarStatus(bool))
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    sidebarCollapsed: state.sidebarCollapsed
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (withTheme(SideBar));
