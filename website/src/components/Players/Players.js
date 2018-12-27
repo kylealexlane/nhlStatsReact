@@ -17,11 +17,12 @@ const MainWrapper = styled.div`
   width: 100%;
   height: 100%;
   max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
-  // padding-bottom: 24px;
+  padding-top: ${props => props.theme.layout.paddingVertical};
+  padding-bottom: ${props => props.theme.layout.paddingVertical};
   padding-right: ${props => props.theme.layout.paddingHorizontal};
   padding-left: ${props => props.theme.layout.paddingHorizontal};
   background: ${props => props.theme.colors.mainBackground};
-  min-height: calc(100vh - ${props => props.theme.layout.topBarHeight});
+  min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
 
 class Players extends React.Component {
@@ -127,7 +128,7 @@ class Players extends React.Component {
 
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth}}>
+        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}>
           <TableAbove
             title={"Players"}
             subTitle={"Player shooting statistics by season."}

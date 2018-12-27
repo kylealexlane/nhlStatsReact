@@ -21,11 +21,11 @@ const Container = styled.div`
 const Content = styled.div`
   ${props => props.theme.flex.flexColumnTopCenter};
   color: ${props => props.theme.colors.mainText};
-  background: ${props => props.theme.colors.mainBackground};
+  background: ${props => props.theme.colors.secondaryBackground};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  // padding: 16px;
+  padding: ${props => props.theme.layout.outerPadding};
   height: 100%;
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight});
   width: 100%;

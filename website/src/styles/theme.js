@@ -6,7 +6,8 @@ const colors = {
   greyHighlight: "#aaa",
 
   mainBackground: "#FFFFFF",
-  secondaryBackground: "#f0f2f5",
+
+  secondaryBackground: "#F2F3F5",
   // secondaryBackground: "#FCFCFC",
 
 
@@ -30,10 +31,14 @@ const colors = {
 export const layout = {
   paddingHorizontal: "24px",
   paddingHorizInt: 24,
+  paddingVertical: "24px",
+  paddingVertInt: 24,
   sideBarWidth: 160,
   sidebarCollapsedWidth: 80,
   topBarHeight: "48px",
   topBariHeightInt: 48,
+  outerPadding: "16px",
+  outerPaddingInt: 16,
 };
 
 export default {
@@ -45,6 +50,10 @@ export default {
     sidebarCollapsedWidth: layout.sidebarCollapsedWidth,
     topBarHeight: layout.topBarHeight,
     topBariHeightInt: layout.topBariHeightInt,
+    outerPadding: layout.outerPadding,
+    outerPaddingInt: layout.outerPaddingInt,
+    paddingVertical: layout.paddingVertical,
+    paddingVertInt: layout.paddingVertInt,
   },
   dimensions: {
     subSection: {
