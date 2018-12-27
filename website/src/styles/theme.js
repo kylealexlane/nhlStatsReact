@@ -33,6 +33,7 @@ export const layout = {
 };
 
 export default {
+  DefaultNumTableItems: 15,
   baseWrapper: {
     paddingTop: 12,
     marginRight: 32,

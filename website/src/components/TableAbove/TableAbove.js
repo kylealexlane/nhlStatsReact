@@ -2,7 +2,8 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
 // import styled from "styled-components/typings/styled-components";
-import {Select} from "antd/lib/index";
+import {Select, InputNumber} from "antd/lib/index";
+import theme from "../../styles/theme"
 
 const Header = styled.header`
   margin-bottom: 24px;
@@ -15,20 +16,67 @@ const SelectDiv = styled.div`
   color: ${props => props.theme.colors.mainText};
   font-size: ${props => props.theme.fontSize.subHeading};
   margin: 0;
-  padding-left: 24px;
+  padding-right: 24px;
   flex: 0;
+`;
+
+const TitleDiv = styled.div`
+  flex-basis: 100%;
+`;
+
+const Title = styled.h1`
+  display: inline;
+  padding-right: 24px;
+`;
+
+const Subtitle = styled.p`
+  display: inline;
+  padding-right: 24px;
 `;
 
 
 class TableAbove extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOpts: this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype']
+      // selectPageNum: (this.props.defaultSelectFilters.indexOf("pagenum") > -1) ? true : false
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(value) {
+    this.setState({ selectedOpts: value })
+  }
 
   render() {
     const Option = Select.Option;
 
     let selectYear;
     let selectGameType;
+    let chooseSelect;
+    let selectNumPerPage;
 
-    if(this.props.selectYear){
+    // Selector for choosing which filters to show/display
+    if(this.props.chooseSelects) {
+      const children = [];
+      this.props.selectsOptions.forEach(function (opt) {
+        children.push(<Option key={opt.val}>{opt.label}</Option>);
+      });
+      chooseSelect =
+        <Select
+          mode="multiple"
+          style={{ minWidth: 100, maxWidth: 400 }}
+          placeholder="Choose Filters"
+          defaultValue={this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype']}
+          onChange={this.handleChange}
+        >
+          {children}
+        </Select>
+    }
+
+    // year filter
+    if(this.state.selectedOpts.indexOf("year") > -1){
       selectYear =
         <SelectDiv>
           <Select
@@ -48,7 +96,8 @@ class TableAbove extends React.Component {
         </SelectDiv>
     }
 
-    if(this.props.selectGameType){
+    // gametype filter
+    if(this.state.selectedOpts.indexOf("gametype") > -1){
       selectGameType =
         <SelectDiv>
           <Select
@@ -62,11 +111,22 @@ class TableAbove extends React.Component {
         </SelectDiv>
     }
 
-    return(
+    // page number filter for pagination
+    if(this.state.selectedOpts.indexOf("pagenum") > -1){
+      selectNumPerPage =
+        <InputNumber min={1} max={1000} defaultValue={this.props.deafultPageNum? this.props.deafultPageNum: theme.DefaultNumTableItems} onChange={this.props.pageNumChangeCallback} />
+    }
+
+      return(
     <Header>
-      <h1>{this.props.title}</h1>
+      <TitleDiv>
+        <Title>{this.props.title}</Title>
+        {chooseSelect}
+        {/*<Subtitle>{this.props.subTitle}</Subtitle>*/}
+      </TitleDiv>
       {selectYear}
       {selectGameType}
+      {selectNumPerPage}
     </Header>)}
 };
 
