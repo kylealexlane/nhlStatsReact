@@ -34,6 +34,13 @@ const StyledMenu = styled(Menu)`
   .ant-menu-item-selected {
     background-color: #d15600 !important;
   }
+  .ant-menu-item {
+    background-color: #f76600;
+  }
+  .ant-menu-sub {
+    background: #f76600 !important;
+    box-shadow: none !important;
+  }
 `;
 
 const SubMenu = styled(Menu.SubMenu)`
@@ -88,7 +95,7 @@ class SideBar extends React.Component {
             mode="inline"
             defaultSelectedKeys={["1"]}
           >
-            <LogoItem disabled>
+            <LogoItem >
               <StyledLink to="/">
                 {this.state.collapsed && <StyledIcon type="home" />}
                 <StyledLogo>PuckLuck</StyledLogo>
@@ -100,28 +107,44 @@ class SideBar extends React.Component {
                 <span>Players</span>
               </StyledLink>
             </Item>
-            <Item key="goalies" disabled>
+            <Item key="goalies">
               <StyledLink to="/goalies">
-                <StyledIcon type="lock" />
+                <StyledIcon type="table" />
                 <span>Goalies</span>
               </StyledLink>
             </Item>
+            {/*<Item key="goalies">*/}
+              {/*<StyledLink to="/goalies">*/}
+                {/*<StyledIcon type="table" />*/}
+                {/*<span>Goalies</span>*/}
+              {/*</StyledLink>*/}
+            {/*</Item>*/}
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">
                   <Icon type="team" />
                   <span>Teams</span>
                 </span>
-              } disabled
+              }
             >
-              <ItemGroup title="West">
-                <Item key="kings">Kings</Item>
-                <Item key="wild">Wild</Item>
-              </ItemGroup>
-              <ItemGroup title="East">
-                <Item key="leafs">Leafs</Item>
-                <Item key="bruins">Bruins</Item>
-              </ItemGroup>
+              {/*<ItemGroup title="Offensive">*/}
+              <Item key="offensiveteams">
+                <StyledLink to="/teams" params={{ type: "offensive" }}>
+                  <StyledIcon type="user" />
+                  <span>Offensive</span>
+                </StyledLink>
+              </Item>
+              <Item key="defensiveteams">
+                <StyledLink to="/teams" params={{ type: "defensive" }}>
+                  <StyledIcon type="table" />
+                  <span>Defensive</span>
+                </StyledLink>
+              </Item>
+              {/*</ItemGroup>*/}
+              {/*<ItemGroup title="East">*/}
+                {/*<Item key="leafs">Leafs</Item>*/}
+                {/*<Item key="bruins">Bruins</Item>*/}
+              {/*</ItemGroup>*/}
             </SubMenu>
             <Item key="model" disabled>
               <StyledLink to="/model">
