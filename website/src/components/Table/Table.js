@@ -246,6 +246,8 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+
+    // SHOOTER STATS
     if(this.props.cols.indexOf("avg_shoot_perc") > -1) {
       columns.push({
             title: "S%",
@@ -273,12 +275,40 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+
+    // GOALIE STATS
+    if(this.props.cols.indexOf("save_perc") > -1) {
+      columns.push({
+        title: "Save %",
+        dataIndex: "save_perc",
+        sorter: (a, b) => a.save_perc - b.save_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("xsave_perc") > -1) {
+      columns.push({
+        title: "xSave %",
+        dataIndex: "xsave_perc",
+        sorter: (a, b) => a.xsave_perc - b.xsave_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("saves_aa_per_shot") > -1) {
+      columns.push({
+        title: "SavesAA/s",
+        dataIndex: "saves_aa_per_shot",
+        sorter: (a, b) => a.saves_aa_per_shot - b.saves_aa_per_shot,
+        width: colWidth
+      })
+    }
+
+    // BOTH
     if(this.props.cols.indexOf("shot_quality") > -1) {
       columns.push({
-            title: "Shot Quality",
-            dataIndex: "shot_quality",
-            sorter: (a, b) => a.shot_quality - b.shot_quality,
-            // width: colWidth
+        title: "Shot Quality",
+        dataIndex: "shot_quality",
+        sorter: (a, b) => a.shot_quality - b.shot_quality,
+        // width: colWidth
       })
     }
 
