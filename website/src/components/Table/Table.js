@@ -10,6 +10,9 @@ const Table = props => (
     dataSource={props.dataSource}
     onChange={props.onChange}
     scroll={props.scroll}
+    rowKey={props.rowKey}
+    loading={props.loading}
+    pagination={props.pagination}
   />
 );
 

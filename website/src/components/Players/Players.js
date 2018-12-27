@@ -5,169 +5,25 @@ import { Input, Button, Icon, Select, Layout } from "antd";
 import { Table } from "../Table";
 import compareByAlph from "../../functions/helpers";
 import mainTheme from "../../styles/theme"
+import { layout } from "../../styles/theme"
 import { playersFetchData } from '../../actions/players';
 import { connect } from 'react-redux';
+import { TableAbove } from "../TableAbove";
 
 
-
+const fixedColWidth = 100;
+const colWidth = 100;
 const maxTableWidth = 1000;
 
-const Header = styled.header`
-  margin-bottom: 24px;
-  ${props => props.theme.flex.flexRowJustifyStart};
-  width: 100%;
-  flex-wrap: wrap;
-`;
-
-const SelectDiv = styled.div`
-  color: ${props => props.theme.colors.mainText};
-  font-size: ${props => props.theme.fontSize.subHeading};
-  margin: 0;
-  padding-left: 24px;
-  flex: 0;
-`;
 
 const MainWrapper = styled.div`
   margin: 0;
   width: 100%;
+  height: 100%;
   max-width: ${maxTableWidth}px
   margin-bottom: 24px;
-  // align-self: center;
-  // position: relative;
-  // border: 1px solid #ebedf0;;
-  // padding-top: 42px;
-  // padding-right: 24px;
-  // padding-bottom: 50px;
-  // padding-left: 24px;
-  // zoom: 1
 `;
 
-const data = [
-  {
-    key: "1",
-    first: "Patrice",
-    last: "Bergeron",
-    pos: "C",
-    yearstart: "2017",
-    yearend: "2018",
-    shots: "211",
-    goals: "31",
-    kxgoals: "24.5",
-    sperc: "11.12",
-    kxsperc: "9.83",
-    kxss: "1.98",
-    shotquality: "1.32"
-  },
-  {
-    key: "2",
-    first: "Connor",
-    last: "Mcdavid",
-    pos: "C",
-    yearstart: "2016",
-    yearend: "2017",
-    shots: "322",
-    goals: "45",
-    kxgoals: "37.5",
-    sperc: "11.12",
-    kxsperc: "9.83",
-    kxss: "1.98",
-    shotquality: "1.32"
-  },
-  {
-    key: "3",
-    first: "Mikko",
-    last: "Rantenan",
-    pos: "R",
-    yearstart: "2017",
-    yearend: "2018",
-    shots: "211",
-    goals: "31",
-    kxgoals: "24.5",
-    sperc: "11.12",
-    kxsperc: "9.83",
-    kxss: "1.98",
-    shotquality: "1.32"
-  },
-  {
-    key: "4",
-    first: "Austin",
-    last: "Matthews",
-    pos: "C",
-    yearstart: "2016",
-    yearend: "2017",
-    shots: "211",
-    goals: "31",
-    kxgoals: "24.5",
-    sperc: "11.12",
-    kxsperc: "9.83",
-    kxss: "1.98",
-    shotquality: "1.32"
-  },
-  {
-    key: "5",
-    first: "John",
-    last: "Tavares",
-    pos: "C",
-    yearstart: "2017",
-    yearend: "2018",
-    shots: "211",
-    goals: "31",
-    kxgoals: "24.5",
-    sperc: "11.12",
-    kxsperc: "9.83",
-    kxss: "1.98",
-    shotquality: "1.32"
-  }
-];
-
-function onChange(pagination, filters, sorter) {
-  console.log("params", pagination, filters, sorter);
-}
-
-const fixedColWidth = 100;
-const colWidth = 100;
-
-
-const Dropdowns = () => {
-  const Option = Select.Option;
-  function handleChangeYear(value) {
-    console.log(`selected ${value}`);
-  }
-
-  function handleChangePlayoff(value) {
-    console.log(`selected ${value}`);
-  }
-  return (
-    <React.Fragment>
-      <SelectDiv>
-        <Select
-          defaultValue="2018"
-          style={{ width: 160 }}
-          onChange={handleChangeYear}
-        >
-          <Option value="2011">2011-2012</Option>
-          <Option value="2012">2012-2013</Option>
-          <Option value="2013">2013-2014</Option>
-          <Option value="2014">2014-2015</Option>
-          <Option value="2015">2015-2016</Option>
-          <Option value="2016">2016-2017</Option>
-          <Option value="2017">2017-2018</Option>
-          <Option value="2018">2018-2019</Option>
-        </Select>
-      </SelectDiv>
-      <SelectDiv>
-        <Select
-          defaultValue="0"
-          style={{ width: 160 }}
-          onChange={handleChangePlayoff}
-        >
-          <Option value="0">Regular Season</Option>
-          <Option value="1">Playoffs</Option>
-        </Select>
-      </SelectDiv>
-    </React.Fragment>
-  );
-};
 
 class Players extends React.Component {
   constructor(props) {
@@ -176,9 +32,15 @@ class Players extends React.Component {
       searchText: "",
       width: 0,
       height: 0,
-      data: []
+      yearSelected: '20182019',
+      gametype: 'R',
+      isLoading: false,
+      data: [],
+      sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.handleChangeYear = this.handleChangeYear.bind(this);
+    this.handleChangeGameType = this.handleChangeGameType.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -186,7 +48,7 @@ class Players extends React.Component {
     document.title = "Players";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.props.fetchData('http://www.api.thepuckluck.com/api/v1/players?season=20182019&gametype=R&returntype=list');
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
   }
 
   componentWillUnmount() {
@@ -197,6 +59,15 @@ class Players extends React.Component {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.players !== this.state.players) {
       this.setState({ data: nextProps.players });
+    }
+    if (nextProps.isLoading !== this.state.isLoading) {
+      this.setState({ isLoading: nextProps.isLoading });
+    }
+    if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
+      this.setState({
+        sidebarCollapsed: nextProps.sidebarCollapsed,
+        sidebarWidth: nextProps.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth
+      });
     }
   }
 
@@ -216,10 +87,27 @@ class Players extends React.Component {
     this.setState({ searchText: "" });
   };
 
+  // Handle changing year
+  handleChangeYear(value) {
+    this.setState({
+      yearSelected: value}, function stateUpdateComplete() {
+      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    }.bind(this));
+  };
+
+  // Handle changing gemetype
+  handleChangeGameType(value) {
+    this.setState({
+      gametype: value}, function stateUpdateComplete() {
+      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+      }.bind(this));
+  };
+
 
   render() {
     const columns = [
       {
+        // key: "id",
         title: "Last",
         dataIndex: "last_name",
         defaultSortOrder: "descend",
@@ -290,6 +178,7 @@ class Players extends React.Component {
         fixed: 'left'
       },
       {
+        // key: "id",
         title: "First",
         dataIndex: "first_name",
         filterDropdown: ({
@@ -358,6 +247,7 @@ class Players extends React.Component {
         // fixed: 'left'
       },
       {
+        // key: "id",
         title: "Pos",
         dataIndex: "pos_code",
         filters: [
@@ -384,22 +274,11 @@ class Players extends React.Component {
             style={{ color: filtered ? "#108ee9" : "#aaa" }}
           />
         ),
-        onFilter: (value, record) => record.pos.indexOf(value) === 0,
+        onFilter: (value, record) => record.pos_code.indexOf(value) === 0,
         defaultSortOrder: "descend",
         sorter: (a, b) => compareByAlph(a.pos_code, b.pos_code),
         width: colWidth
       },
-      //   {
-      //   title: 'Year Start',
-      //   dataIndex: 'yearstart',
-      //   defaultSortOrder: 'descend',
-      //   sorter: (a, b) => a.yearstart - b.yearstart,
-      // }, {
-      //   title: 'Year End',
-      //   dataIndex: 'yearend',
-      //   defaultSortOrder: 'descend',
-      //   sorter: (a, b) => a.yearend - b.yearend,
-      // },
       {
         title: "Shots",
         dataIndex: "num_shots",
@@ -436,10 +315,10 @@ class Players extends React.Component {
         width: colWidth
       },
       {
-        title: "kxSS",
-        dataIndex: "kxss",
+        title: "goalsAA/s",
+        dataIndex: "goals_aa_per_shot",
         defaultSortOrder: "descend",
-        sorter: (a, b) => a.kxss - b.kxss,
+        sorter: (a, b) => a.goals_aa_per_shot - b.goals_aa_per_shot,
         width: colWidth
       },
       {
@@ -449,33 +328,26 @@ class Players extends React.Component {
         // width: colWidth
       }
     ];
-    // if (this.props.hasErrored) {
-    //   return <p>Sorry! There was an error loading the items</p>;
-    // }
-    // if (this.props.isLoading) {
-    //   return <p>Loading…</p>;
-    // }
-    // return (
-    //   <ul>
-    //     {this.props.players.map((players) => (
-    //       <li key={players.id}>
-    //         {players.label}
-    //       </li>
-    //     ))}
-    //   </ul>
-    // );
+
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: this.state.width - mainTheme.sideBarWidth - 48}}>
-          <Header>
-            <h1>Players</h1>
-            <Dropdowns />
-          </Header>
+        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.paddingInt * 2)}}>
+          <TableAbove
+            title={"Players"}
+            selectYear={true}
+            selectYearCallback={this.handleChangeYear}
+            selectGameType={true}
+            selectGameTypeCallback={this.handleChangeGameType}
+          />
           <Table
+            pagination={{
+              pageSize: 15
+            }}
             columns={columns}
             dataSource={this.state.data}
-            onChange={onChange}
             scroll={{ x: maxTableWidth }}
+            loading={this.state.isLoading}
+            rowKey="id"
           />
         </MainWrapper>
       </React.Fragment>
@@ -493,7 +365,8 @@ const mapStateToProps = (state) => {
   return {
     players: state.players,
     hasErrored: state.playersHasErrored,
-    isLoading: state.playersIsLoading
+    isLoading: state.playersIsLoading,
+    sidebarCollapsed: state.sidebarCollapsed
   };
 };
 

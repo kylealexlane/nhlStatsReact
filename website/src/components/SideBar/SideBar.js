@@ -6,6 +6,7 @@ import { TopBar } from "../TopBar";
 import mainTheme from "../../styles/theme"
 import { changeSidebarStatus } from '../../actions/sidebar';
 import { connect } from 'react-redux';
+import { layout } from '../../styles/theme'
 
 
 const { Item } = Menu;
@@ -14,6 +15,8 @@ const LogoItem = styled(Item)``;
 
 const Sider = styled(Layout.Sider)`
   background-color: #f76600;
+   position: sticky;
+   top: 0;
 `;
 
 const StyledLogo = styled.span`
@@ -58,14 +61,12 @@ class SideBar extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
       this.setState({ collapsed: nextProps.sidebarCollapsed });
     }
   }
 
   toggle = () => {
-    console.log(this.props.sidebarCollapsed);
     this.props.changeSB(!this.props.sidebarCollapsed);
   };
 
@@ -79,7 +80,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={mainTheme.sideBarWidth}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={layout.sideBarWidth} collapsedWidth={layout.sidebarCollapsedWidth}>
           <StyledMenu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
