@@ -7,6 +7,8 @@ import mainTheme from "../../styles/theme"
 import { changeSidebarStatus } from '../../actions/sidebar';
 import { connect } from 'react-redux';
 import { layout } from '../../styles/theme'
+// import { withRouter } from 'react-router-dom'
+
 
 
 const { Item } = Menu;
@@ -186,4 +188,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (withTheme(SideBar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(SideBar)));
