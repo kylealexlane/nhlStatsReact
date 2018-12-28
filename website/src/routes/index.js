@@ -1,9 +1,10 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import styled, { withTheme } from "styled-components";
 import { history } from "../store";
 import { SideBar } from "../components/SideBar";
+import { connect } from 'react-redux';
 
 import {
   BaseContainer,
@@ -33,7 +34,7 @@ const Content = styled.div`
 
 function Routes() {
   return (
-    <ConnectedRouter history={history}>
+    <Router>
       <Container>
         <SideBar
           render={
@@ -55,8 +56,12 @@ function Routes() {
         />
         {/* <TopBar /> */}
       </Container>
-    </ConnectedRouter>
+    </Router>
   );
 }
+
+// export default withRouter(connect(mapStateToProps)(Something))
+
+// export default withRouter(connect(mapStateToProps)) (withTheme(Routes));
 
 export default withTheme(Routes);
