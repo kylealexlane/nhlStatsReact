@@ -80,7 +80,7 @@ class SideBar extends React.Component {
   };
 
   handleClick = e => {
-    console.log("click ", e);
+    // console.log("click ", e);
     this.setState({
       current: e.key
     });
@@ -131,13 +131,13 @@ class SideBar extends React.Component {
             >
               {/*<ItemGroup title="Offensive">*/}
               <Item key="offensiveteams">
-                <StyledLink to="/teams" params={{ type: "offensive" }}>
+                <StyledLink to={{ pathname: "/teams", state: {situation: "offensive"} }}>
                   <StyledIcon type="user" />
                   <span>Offensive</span>
                 </StyledLink>
               </Item>
               <Item key="defensiveteams">
-                <StyledLink to="/teams" params={{ type: "defensive" }}>
+                <StyledLink to={{ pathname: "/teams", state: {situation: "defensive"} }}>
                   <StyledIcon type="table" />
                   <span>Defensive</span>
                 </StyledLink>

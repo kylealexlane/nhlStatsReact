@@ -4,7 +4,7 @@ import "react-typist/dist/Typist.css";
 import { Table as AntTable } from "antd";
 import compareByAlph from "../../functions/helpers";
 import { Input, Button, Icon, Select, Layout } from "antd";
-import {layout} from "../../styles/theme";
+// import {layout} from "../../styles/theme";
 
 
 
@@ -37,10 +37,9 @@ class Table extends React.Component {
   render() {
     const fixedColWidth = this.props.fixedColWidth ? this.props.fixedColWidth : 100;
     const colWidth = this.props.colWidth ? this.props.colWidth : 100;
-    console.log(fixedColWidth, 'fcw');
-    console.log(colWidth, 'colwidth');
 
     const columns = [];
+    // Names and Titles - Fixed value
     if(this.props.cols.indexOf("last_name") > -1) {
       columns.push({
         title: "Last",
@@ -114,6 +113,80 @@ class Table extends React.Component {
       })
     }
 
+    if(this.props.cols.indexOf("name") > -1) {
+      columns.push({
+        title: "Name",
+        dataIndex: "name",
+        defaultSortOrder: "descend",
+        filterDropdown: ({
+                           setSelectedKeys,
+                           selectedKeys,
+                           confirm,
+                           clearFilters
+                         }) => (
+          <div className="custom-filter-dropdown">
+            <Input
+              ref={ele => (this.searchInput = ele)}
+              placeholder="Search name"
+              value={selectedKeys[0]}
+              onChange={e =>
+                setSelectedKeys(e.target.value ? [e.target.value] : [])
+              }
+              onPressEnter={this.handleSearch(selectedKeys, confirm)}
+            />
+            <Button
+              type="primary"
+              onClick={this.handleSearch(selectedKeys, confirm)}
+            >
+              Search
+            </Button>
+            <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
+          </div>
+        ),
+        filterIcon: filtered => (
+          <Icon
+            type="filter"
+            style={{ color: filtered ? "#108ee9" : "#aaa" }}
+          />
+        ),
+        onFilter: (value, record) =>
+          record.name.toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: visible => {
+          if (visible) {
+            setTimeout(() => {
+              this.searchInput.focus();
+            });
+          }
+        },
+        render: text => {
+          const { searchText } = this.state;
+          return searchText ? (
+            <span>
+              {text
+                .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, "i"))
+                .map(
+                  (fragment, i) =>
+                    fragment.toLowerCase() === searchText.toLowerCase() ? (
+                      <span key={i} className="highlight">
+                        {fragment}
+                      </span>
+                    ) : (
+                      fragment
+                    ) // eslint-disable-line
+                )}
+            </span>
+          ) : (
+            text
+          );
+        },
+        sorter: (a, b) => compareByAlph(a.name, b.name),
+
+        width: fixedColWidth,
+        fixed: 'left'
+      })
+    }
+
+    // Not fixed
     if(this.props.cols.indexOf("first_name") > -1) {
       columns.push({
             title: "First",
@@ -302,7 +375,25 @@ class Table extends React.Component {
       })
     }
 
-    // BOTH
+    // Distance and Angle stats
+    if(this.props.cols.indexOf("mean_dist") > -1) {
+      columns.push({
+        title: "Avg Dist",
+        dataIndex: "mean_dist",
+        sorter: (a, b) => a.mean_dist - b.mean_dist,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("mean_ang") > -1) {
+      columns.push({
+        title: "Avg Angle",
+        dataIndex: "mean_ang",
+        sorter: (a, b) => a.mean_ang - b.mean_ang,
+        width: colWidth
+      })
+    }
+
+    // All
     if(this.props.cols.indexOf("shot_quality") > -1) {
       columns.push({
         title: "Shot Quality",

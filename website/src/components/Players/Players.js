@@ -7,9 +7,10 @@ import { layout } from "../../styles/theme"
 import { playersFetchData } from '../../actions/players';
 import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
+import {withRouter} from "react-router-dom";
 
 
-const maxTableWidth = 1000;
+const maxTableWidth = 1200;
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -37,12 +38,14 @@ class Players extends React.Component {
       isLoading: false,
       data: [],
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
+      depth: this.props.depth ? this.props.depth : "basicranks",
       pageNum: maintheme.DefaultNumTableItems
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
     this.handleChangeGameType = this.handleChangeGameType.bind(this);
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
+    this.fetchPlayerData = this.fetchPlayerData.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -50,7 +53,7 @@ class Players extends React.Component {
     document.title = "Players";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.fetchPlayerData();
   }
 
   componentWillUnmount() {
@@ -73,31 +76,36 @@ class Players extends React.Component {
     }
   }
 
+  fetchPlayerData() {
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+  }
+
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log(window.innerWidth, window.innerHeight)
   }
 
   // Handle changing year
   handleChangeYear(value) {
     this.setState({
-      yearSelected: value}, function stateUpdateComplete() {
-      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
-    }.bind(this));
+      yearSelected: value}, () => {
+      this.fetchPlayerData();
+    });
   };
 
   // Handle changing gemetype
   handleChangeGameType(value) {
     this.setState({
-      gametype: value}, function stateUpdateComplete() {
-      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
-      }.bind(this));
+      gametype: value}, () => {
+      this.fetchPlayerData();
+    });
   };
 
   // Handle changing page num
   pageNumChangeCallback(n) {
     this.setState({ pageNum: n })
   }
+
+
 
 
   render() {
@@ -112,6 +120,8 @@ class Players extends React.Component {
       'avg_shoot_perc',
       'avg_xgoals',
       'goals_aa_per_shot',
+      'mean_ang',
+      'mean_dist',
       'shot_quality'
     ];
 
@@ -131,7 +141,7 @@ class Players extends React.Component {
         <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}>
           <TableAbove
             title={"Players"}
-            subTitle={"Player shooting statistics by season."}
+            subTitle={"Player shooting statistics by season and game type"}
             chooseSelects={true}
             selectsOptions={selectsOptions}
             pageNumChangeCallback={this.pageNumChangeCallback}
@@ -171,4 +181,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (withTheme(Players));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(Players)));

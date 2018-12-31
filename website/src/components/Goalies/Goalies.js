@@ -7,9 +7,10 @@ import { layout } from "../../styles/theme"
 import { goaliesFetchData } from '../../actions/goalies';
 import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
+import {withRouter} from "react-router-dom";
 
 
-const maxTableWidth = 1000;
+const maxTableWidth = 1200;
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -50,7 +51,7 @@ class Goalies extends React.Component {
     document.title = "Goalies";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.fetchGoalieData();
   }
 
   componentWillUnmount() {
@@ -73,25 +74,28 @@ class Goalies extends React.Component {
     }
   }
 
+  fetchGoalieData() {
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+  }
+
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log(window.innerWidth, window.innerHeight)
   }
 
   // Handle changing year
   handleChangeYear(value) {
     this.setState({
-      yearSelected: value}, function stateUpdateComplete() {
-      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
-    }.bind(this));
+      yearSelected: value}, () => {
+      this.fetchGoalieData();
+    });
   };
 
   // Handle changing gemetype
   handleChangeGameType(value) {
     this.setState({
-      gametype: value}, function stateUpdateComplete() {
-      this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
-    }.bind(this));
+      gametype: value}, () => {
+      this.fetchGoalieData();
+    });
   };
 
   // Handle changing page num
@@ -112,6 +116,8 @@ class Goalies extends React.Component {
       'save_perc',
       'xsave_perc',
       'saves_aa_per_shot',
+      'mean_ang',
+      'mean_dist',
       'shot_quality'
     ];
 
@@ -131,7 +137,7 @@ class Goalies extends React.Component {
         <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}>
           <TableAbove
             title={"Goalies"}
-            subTitle={"Goalie save statistics by season."}
+            subTitle={"Goalie save statistics by season and game type"}
             chooseSelects={true}
             selectsOptions={selectsOptions}
             pageNumChangeCallback={this.pageNumChangeCallback}
@@ -171,4 +177,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (withTheme(Goalies));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(Goalies)));
