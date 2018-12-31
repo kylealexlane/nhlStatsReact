@@ -121,7 +121,8 @@ export default {
   },
   fontSize: {
     mainHeading: "32px",
-    subHeading: "24px"
+    subHeading: "24px",
+    filterTitle: "16px",
   },
   breakpoints: {
     sm: "576px",

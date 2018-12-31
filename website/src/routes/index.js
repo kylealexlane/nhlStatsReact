@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
+// import { ConnectedRouter } from "connected-react-router";
 import styled, { withTheme } from "styled-components";
 import { history } from "../store";
 import { SideBar } from "../components/SideBar";
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import {
   BaseContainer,
@@ -42,26 +42,28 @@ function Routes() {
               {/*<Route exact path={process.env.PUBLIC_URL + "/"} component={HomeContainer} />*/}
               {/*<Route exact path={"/"} component={HomeContainer} />*/}
               <Route
-                exact
-                path={process.env.PUBLIC_URL + "/"}
-                component={BaseContainer}
+                exact path={process.env.PUBLIC_URL + "/"}
+                render = {(props) => <BaseContainer {...props} />}
               />
               {/*<Route exact path={"/"} component={BaseContainer} />*/}
-              <Route path={"/players"} component={PlayersContainer} />
-              <Route path={"/goalies"} component={GoaliesContainer} />
-              <Route path={"/teams"} component={TeamsContainer} />
+              <Route
+                exact path={"/players"}
+                render = {(props) => <PlayersContainer {...props} />}              />
+              <Route
+                exact path={"/goalies"}
+                render = {(props) => <GoaliesContainer {...props} />}
+              />
+              <Route
+                exact path={"/teams"}
+                component = {(props) => <TeamsContainer {...props} />}
+              />
               <Route path={"/model"} component={ModelContainer} />
             </Content>
           }
         />
-        {/* <TopBar /> */}
       </Container>
     </Router>
   );
 }
-
-// export default withRouter(connect(mapStateToProps)(Something))
-
-// export default withRouter(connect(mapStateToProps)) (withTheme(Routes));
 
 export default withTheme(Routes);
