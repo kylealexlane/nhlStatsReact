@@ -33,12 +33,13 @@ export const layout = {
   paddingHorizInt: 24,
   paddingVertical: "24px",
   paddingVertInt: 24,
-  sideBarWidth: 160,
+  sideBarWidth: 200,
   sidebarCollapsedWidth: 80,
   topBarHeight: "48px",
   topBariHeightInt: 48,
   outerPadding: "16px",
   outerPaddingInt: 16,
+  maxWrapperWidthInt: 1250,
 };
 
 export default {
@@ -54,6 +55,7 @@ export default {
     outerPaddingInt: layout.outerPaddingInt,
     paddingVertical: layout.paddingVertical,
     paddingVertInt: layout.paddingVertInt,
+    maxWrapperWidthInt: layout.maxWrapperWidthInt,
   },
   dimensions: {
     subSection: {
