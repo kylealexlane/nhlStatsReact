@@ -8,6 +8,7 @@ import { playersFetchData } from '../../actions/players';
 import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
+import dataColumns from "../../utils/dataColumns"
 
 
 const maxTableWidth = 1200;
@@ -110,31 +111,10 @@ class Players extends React.Component {
 
   render() {
 
-    const playersColumns = [
-      'last_name',
-      'first_name',
-      'pos_code',
-      'num_shots',
-      'num_goals',
-      'sum_xgoals',
-      'avg_shoot_perc',
-      'avg_xgoals',
-      'goals_aa_per_shot',
-      'mean_ang',
-      'mean_dist',
-      'shot_quality'
-    ];
+    const cols = dataColumns.playersBasicColumns;
+    const opts = dataColumns.playersBasicOptions;
 
-    const selectsOptions = [
-      {label: "Year",
-        val: "year"},
-      {label: "Game Type",
-        val: "gametype"},
-      {label: "Items Per Page",
-      val: "pagenum"}
-    ];
-
-    const defaultSelectOptions = ["year", "gametype"];
+    const defaultopts = dataColumns.playersBasicDefaultOptions;
 
     return (
       <React.Fragment>
@@ -143,16 +123,16 @@ class Players extends React.Component {
             title={"Players"}
             subTitle={"Player shooting statistics by season and game type"}
             chooseSelects={true}
-            selectsOptions={selectsOptions}
+            selectsOptions={opts}
             pageNumChangeCallback={this.pageNumChangeCallback}
-            defaultSelectFilters={defaultSelectOptions}
+            defaultSelectFilters={defaultopts}
             defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
           />
           <Table
             pageSize={this.state.pageNum}
-            cols={playersColumns}
+            cols={cols}
             dataSource={this.state.data}
             scroll={{ x: maxTableWidth }}
             loading={this.state.isLoading}

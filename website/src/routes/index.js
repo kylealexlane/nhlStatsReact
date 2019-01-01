@@ -43,7 +43,7 @@ function Routes() {
               {/*<Route exact path={"/"} component={HomeContainer} />*/}
               <Route
                 exact path={process.env.PUBLIC_URL + "/"}
-                render = {(props) => <BaseContainer {...props} />}
+                render = {(props) => <PlayersContainer {...props} />}
               />
               {/*<Route exact path={"/"} component={BaseContainer} />*/}
               <Route

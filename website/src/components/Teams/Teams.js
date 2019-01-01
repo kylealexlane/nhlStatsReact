@@ -8,6 +8,7 @@ import { teamsFetchData } from '../../actions/teams';
 import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
+import dataColumns from "../../utils/dataColumns"
 
 
 const maxTableWidth = 1100;
@@ -15,15 +16,20 @@ const maxTableWidth = 1100;
 const MainWrapper = styled.div`
   align-self: center;
   margin: 0;
-  width: 100%;
+  // width: 100%;
   height: 100%;
-  max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
+  // max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
+  max-width: ${props => props.theme.layout.maxWrapperWidthInt}px;
   padding-top: ${props => props.theme.layout.paddingVertical};
   padding-bottom: ${props => props.theme.layout.paddingVertical};
   padding-right: ${props => props.theme.layout.paddingHorizontal};
   padding-left: ${props => props.theme.layout.paddingHorizontal};
   background: ${props => props.theme.colors.mainBackground};
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
+`;
+
+const TableWrapper = styled.div`
+  max-width: calc(${maxTableWidth}px);
 `;
 
 class Teams extends React.Component {
@@ -122,79 +128,50 @@ class Teams extends React.Component {
 
 
   render() {
+    const o = this.state.situation === "offensive";
 
-    let teamsColumns = [];
+    const cols = o ? dataColumns.teamsOffensiveBasicColumns : dataColumns.teamsDefensiveBasicColumns;
+    const opts = o ? dataColumns.teamsOffensiveBasicOptions : dataColumns.teamsDefensiveBasicOptions;
 
-    if(this.state.situation=="offensive"){
-      teamsColumns = [
-          'name',
-          'num_shots',
-          'num_goals',
-          'sum_xgoals',
-          'avg_shoot_perc',
-          'avg_xgoals',
-          'goals_aa_per_shot',
-          'shot_quality',
-          'mean_dist',
-          'mean_ang'
-        ];
-    } else if (this.state.situation == "defensive"){
-      teamsColumns = [
-        'name',
-        'num_shots',
-        'num_goals',
-        'sum_xgoals',
-        'save_perc',
-        'xsave_perc',
-        'saves_aa_per_shot',
-        'shot_quality',
-        'mean_dist',
-        'mean_ang'
-      ];
-    }
+    const defaultopts = o ? dataColumns.teamsOffensiveDefaultOptions : dataColumns.teamsDefensiveDefaultOptions;
 
-    const selectsOptions = [
-      {label: "Year",
-        val: "year"},
-      {label: "Game Type",
-        val: "gametype"},
-      {label: "Situation",
-        val: "situation"},
-      {label: "Items Per Page",
-        val: "pagenum"}
-    ];
-
-    const defaultSelectOptions = ["year", "gametype", "situation"];
-
-    const subtitle = this.state.situation == "offensive" ? "Team shooting statistics by season and game type" :
+    const subtitle = o ? "Team shooting statistics by season and game type" :
       "Team save statistics by season and game type";
+
+    const title = o ? "Teams - Offensive" : "Teams - Defensive";
+
+    // Width calculations for proper re-sizing
+    const pw = this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
+    let w = (pw < maintheme.layout.maxWrapperWidthInt) ? pw : maintheme.layout.maxWrapperWidthInt;
 
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}>
+        <MainWrapper style={{ width: w}}>
           <TableAbove
-            title={"Teams"}
+            title={title}
             subTitle={subtitle}
             chooseSelects={true}
-            selectsOptions={selectsOptions}
+            selectsOptions={opts}
             pageNumChangeCallback={this.pageNumChangeCallback}
-            defaultSelectFilters={defaultSelectOptions}
+            defaultSelectFilters={defaultopts}
             defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
             selectSituationCallback={this.handleChangeSituation}
             {...this.props}
           />
-          <Table
-            pageSize={this.state.pageNum}
-            cols={teamsColumns}
-            dataSource={this.state.situation == "offensive" ? this.state.offensiveData : this.state.defensiveData}
-            scroll={{ x: maxTableWidth }}
-            loading={this.state.isLoading}
-            rowKey="id"
-            colWidth={100}
-            fixedColWidth={200}
-          />
+          <TableWrapper>
+            <Table
+              pageSize={this.state.pageNum}
+              cols={cols}
+              dataSource={o ? this.state.offensiveData : this.state.defensiveData}
+              scroll={{ x: maxTableWidth }}
+              loading={this.state.isLoading}
+              rowKey="id"
+              colWidth={100}
+              fixedColWidth={200}
+            />
+          </TableWrapper>
         </MainWrapper>
       </React.Fragment>
     );

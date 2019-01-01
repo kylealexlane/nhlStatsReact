@@ -8,6 +8,7 @@ import { goaliesFetchData } from '../../actions/goalies';
 import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
+import dataColumns from "../../utils/dataColumns"
 
 
 const maxTableWidth = 1200;
@@ -15,9 +16,10 @@ const maxTableWidth = 1200;
 const MainWrapper = styled.div`
   align-self: center;
   margin: 0;
-  width: 100%;
+  // width: 100%;
   height: 100%;
-  max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
+  // max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
+  max-width: ${props => props.theme.layout.maxWrapperWidthInt}px;
   padding-top: ${props => props.theme.layout.paddingVertical};
   padding-bottom: ${props => props.theme.layout.paddingVertical};
   padding-right: ${props => props.theme.layout.paddingHorizontal};
@@ -25,6 +27,11 @@ const MainWrapper = styled.div`
   background: ${props => props.theme.colors.mainBackground};
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
+
+const TableWrapper = styled.div`
+  max-width: calc(${maxTableWidth}px);
+`;
+
 
 class Goalies extends React.Component {
   constructor(props) {
@@ -106,56 +113,41 @@ class Goalies extends React.Component {
 
   render() {
 
-    const goaliesColumns = [
-      'last_name',
-      'first_name',
-      'pos_code',
-      'num_shots',
-      'num_goals',
-      'sum_xgoals',
-      'save_perc',
-      'xsave_perc',
-      'saves_aa_per_shot',
-      'mean_ang',
-      'mean_dist',
-      'shot_quality'
-    ];
+    const cols = dataColumns.goaliesBasicColumns;
+    const opts = dataColumns.goaliesBasicOptions;
 
-    const selectsOptions = [
-      {label: "Year",
-        val: "year"},
-      {label: "Game Type",
-        val: "gametype"},
-      {label: "Items Per Page",
-        val: "pagenum"}
-    ];
+    const defaultopts = dataColumns.goaliesBasicDefaultOptions;
 
-    const defaultSelectOptions = ["year", "gametype"];
+    // Width calculations for proper re-sizing
+    const pw = this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
+    let w = (pw < maintheme.layout.maxWrapperWidthInt) ? pw : maintheme.layout.maxWrapperWidthInt;
 
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}>
+        <MainWrapper style={{ width: w}}>
           <TableAbove
             title={"Goalies"}
             subTitle={"Goalie save statistics by season and game type"}
             chooseSelects={true}
-            selectsOptions={selectsOptions}
+            selectsOptions={opts}
             pageNumChangeCallback={this.pageNumChangeCallback}
-            defaultSelectFilters={defaultSelectOptions}
+            defaultSelectFilters={defaultopts}
             defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
           />
-          <Table
-            pageSize={this.state.pageNum}
-            cols={goaliesColumns}
-            dataSource={this.state.data}
-            scroll={{ x: maxTableWidth }}
-            loading={this.state.isLoading}
-            rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
-          />
+          <TableWrapper>
+            <Table
+              pageSize={this.state.pageNum}
+              cols={cols}
+              dataSource={this.state.data}
+              scroll={{ x: maxTableWidth }}
+              loading={this.state.isLoading}
+              rowKey="id"
+              colWidth={100}
+              fixedColWidth={100}
+            />
+          </TableWrapper>
         </MainWrapper>
       </React.Fragment>
     );
