@@ -39,8 +39,8 @@ const TopBar = props => (
       <Icon type={props.collapsed ? "menu-unfold" : "menu-fold"} />
     </ExpandIcon>
     <span>
-      <RightMenuIcon type="search" />
-      <RightMenuIcon type="question-circle" />
+      {/*<RightMenuIcon type="search" />*/}
+      {/*<RightMenuIcon type="question-circle" />*/}
     </span>
   </Container>
 );

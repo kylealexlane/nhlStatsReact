@@ -40,6 +40,9 @@ export const layout = {
   outerPadding: "16px",
   outerPaddingInt: 16,
   maxWrapperWidthInt: 1250,
+  maxBlogPostWidthInt: 300,
+  sidebarGoneWidth: 600,
+  sidebarExpandedWidth: 800,
 };
 
 export default {
@@ -56,6 +59,9 @@ export default {
     paddingVertical: layout.paddingVertical,
     paddingVertInt: layout.paddingVertInt,
     maxWrapperWidthInt: layout.maxWrapperWidthInt,
+    maxBlogPostWidthInt: layout.maxBlogPostWidthInt,
+    sidebarGoneWidth: layout.sidebarGoneWidth,
+    sidebarExpandedWidth: layout.sidebarExpandedWidth,
   },
   dimensions: {
     subSection: {

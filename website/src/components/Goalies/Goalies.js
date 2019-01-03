@@ -16,9 +16,8 @@ const maxTableWidth = 1200;
 const MainWrapper = styled.div`
   align-self: center;
   margin: 0;
-  // width: 100%;
+  width: 100%;
   height: 100%;
-  // max-width: calc(${maxTableWidth}px + ${props => props.theme.layout.paddingHorizontal} * 2);
   max-width: ${props => props.theme.layout.maxWrapperWidthInt}px;
   padding-top: ${props => props.theme.layout.paddingVertical};
   padding-bottom: ${props => props.theme.layout.paddingVertical};
@@ -119,7 +118,9 @@ class Goalies extends React.Component {
     const defaultopts = dataColumns.goaliesBasicDefaultOptions;
 
     // Width calculations for proper re-sizing
-    const pw = this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
+    let pw = this.props.sidebarGone ?
+      this.state.width - (layout.outerPaddingInt*2) :
+      this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
     let w = (pw < maintheme.layout.maxWrapperWidthInt) ? pw : maintheme.layout.maxWrapperWidthInt;
 
     return (
@@ -165,7 +166,8 @@ const mapStateToProps = (state) => {
     goalies: state.goalies,
     hasErrored: state.goaliesHasErrored,
     isLoading: state.goaliesIsLoading,
-    sidebarCollapsed: state.sidebarCollapsed
+    sidebarCollapsed: state.sidebarCollapsed,
+    sidebarGone: state.sidebarGone,
   };
 };
 

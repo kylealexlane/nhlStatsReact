@@ -45,7 +45,7 @@ class TableAbove extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOpts: this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype'],
+      selectedOpts: this.props.defaultSelectFilters ? this.props.defaultSelectFilters : [],
       situationValue: this.props.defaultSituation ? this.props.defaultSituation : "offensive"
     };
     this.handleChange = this.handleChange.bind(this);
