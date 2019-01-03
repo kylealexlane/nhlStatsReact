@@ -4,7 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
 import mainTheme from "../../styles/theme"
-import { changeSidebarStatus } from '../../actions/sidebar';
+import { changeSidebarStatus, changeSidebarGoneStatus } from '../../actions/sidebar';
 import { connect } from 'react-redux';
 import { layout } from '../../styles/theme'
 // import { withRouter } from 'react-router-dom'
@@ -64,14 +64,29 @@ const StyledLink = styled(Link)``;
 const StyledIcon = styled(Icon)``;
 
 class SideBar extends React.Component {
-  state = {
-    current: "players",
-    collapsed: this.props.sidebarCollapsed
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: "players",
+      collapsed: this.props.sidebarCollapsed,
+      width: 0,
+      height: 0,
+      gone: this.props.sidebarGone,
+    };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
       this.setState({ collapsed: nextProps.sidebarCollapsed });
+    }
+    if (nextProps.sidebarGone !== this.state.sidebarGone) {
+      this.setState({ gone: nextProps.sidebarGone });
     }
   }
 
@@ -86,10 +101,34 @@ class SideBar extends React.Component {
     });
   };
 
+  updateWindowDimensions() {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+    if(window.innerWidth < mainTheme.layout.sidebarGoneWidth){
+      this.props.changeSBGone(true);
+      this.props.changeSB(true);
+    }
+    if(window.innerWidth >= mainTheme.layout.sidebarGoneWidth){
+      this.props.changeSBGone(false);
+      this.props.changeSB(true);
+    }
+    if(window.innerWidth >= mainTheme.layout.sidebarExpandedWidth){
+      this.props.changeSBGone(false);
+      this.props.changeSB(false);
+    }
+  }
+
   render() {
+    console.log("gone", this.state.gone);
+    console.log("state", this.state);
+    console.log("props", this.props);
+
+
     return (
       <React.Fragment>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={layout.sideBarWidth} collapsedWidth={layout.sidebarCollapsedWidth}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width={layout.sideBarWidth} collapsedWidth={this.state.gone ? 0 : layout.sidebarCollapsedWidth}>
           <StyledMenu
             onClick={this.handleClick}
             selectedKeys={[this.state.current]}
@@ -115,12 +154,6 @@ class SideBar extends React.Component {
                 <span>Goalies</span>
               </StyledLink>
             </Item>
-            {/*<Item key="goalies">*/}
-              {/*<StyledLink to="/goalies">*/}
-                {/*<StyledIcon type="table" />*/}
-                {/*<span>Goalies</span>*/}
-              {/*</StyledLink>*/}
-            {/*</Item>*/}
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">
@@ -129,7 +162,6 @@ class SideBar extends React.Component {
                 </span>
               }
             >
-              {/*<ItemGroup title="Offensive">*/}
               <Item key="offensiveteams">
                 <StyledLink to={{ pathname: "/teams", state: {situation: "offensive"} }}>
                   <StyledIcon type="user" />
@@ -142,20 +174,15 @@ class SideBar extends React.Component {
                   <span>Defensive</span>
                 </StyledLink>
               </Item>
-              {/*</ItemGroup>*/}
-              {/*<ItemGroup title="East">*/}
-                {/*<Item key="leafs">Leafs</Item>*/}
-                {/*<Item key="bruins">Bruins</Item>*/}
-              {/*</ItemGroup>*/}
             </SubMenu>
             <Item key="model" disabled>
-              <StyledLink to="/model">
+              <StyledLink to={{ pathname: "/post/model-general-overview" }}>
                 <StyledIcon type="radar-chart" />
                 <span>Model</span>
               </StyledLink>
             </Item>
-            <Item key="blog" disabled>
-              <StyledLink to="/model">
+            <Item key="blog" >
+              <StyledLink to="/blog">
                 <StyledIcon type="laptop" />
                 <span>Blog</span>
               </StyledLink>
@@ -178,13 +205,15 @@ class SideBar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeSB: (bool) => dispatch(changeSidebarStatus(bool))
+    changeSB: (bool) => dispatch(changeSidebarStatus(bool)),
+    changeSBGone: (bool) => dispatch(changeSidebarGoneStatus(bool))
   };
 };
 
 const mapStateToProps = (state) => {
   return {
-    sidebarCollapsed: state.sidebarCollapsed
+    sidebarCollapsed: state.sidebarCollapsed,
+    sidebarGone: state.sidebarGone
   };
 };
 

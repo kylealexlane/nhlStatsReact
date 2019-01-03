@@ -4,3 +4,10 @@ export function changeSidebarStatus(bool) {
     hasCollapsed: bool
   };
 }
+
+export function changeSidebarGoneStatus(bool) {
+  return {
+    type: 'SIDEBAR_GONE',
+    isGone: bool
+  };
+}
