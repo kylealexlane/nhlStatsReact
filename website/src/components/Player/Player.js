@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { IndividualAbove } from "../IndividualAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
+import { PlayerGraph } from "../PlayerGraph";
 
 
 const maxTableWidth = 1200;
@@ -26,6 +27,21 @@ const MainWrapper = styled.div`
   background: ${props => props.theme.colors.mainBackground};
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
+
+const Section = styled.div`
+  margin-top: 16px;
+  margin-left: 16px;
+  border-left: 5px solid ${props => props.theme.colors.mainAccent};
+  padding-left: 16px;
+`;
+
+const SectionTitle = styled.h2`
+  margin-left: 16px;
+  margin-top: 16px;
+  text-transform: none;
+  color: ${props => props.theme.colors.mainAccent};
+`;
+
 
 class Player extends React.Component {
   constructor(props) {
@@ -77,7 +93,7 @@ class Player extends React.Component {
   }
 
   fetchPlayerData(slug) {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players/${slug}?returntype=list&depth=allsummaries&gametype=R`);
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players/${slug}?returntype=list&depth=allsummaries`);
     this.props.fetchBio(`https://statsapi.web.nhl.com/api/v1/people/${slug}`);
   }
 
@@ -100,6 +116,10 @@ class Player extends React.Component {
           <IndividualAbove
             isLoading={this.state.isLoading}
           />
+          <SectionTitle >Shooting</SectionTitle>
+          <Section>
+            <PlayerGraph />
+          </Section>
         </MainWrapper>
       </React.Fragment>
     );
