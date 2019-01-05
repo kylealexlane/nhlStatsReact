@@ -1,12 +1,18 @@
 import React from "react";
-// import styled, { withTheme } from "styled-components";
+import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
 import { Table as AntTable } from "antd";
 import compareByAlph from "../../functions/helpers";
 import { Input, Button, Icon, Select, Layout } from "antd";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+
 // import {layout} from "../../styles/theme";
 
 
+const StyledLink = styled(Link)`
+  color: ${props => props.theme.colors.linkColor}
+`;
 
 class Table extends React.Component {
   constructor(props) {
@@ -85,7 +91,7 @@ class Table extends React.Component {
             });
           }
         },
-        render: text => {
+        render: (text, record) => {
           const { searchText } = this.state;
           return searchText ? (
             <span>
@@ -94,22 +100,24 @@ class Table extends React.Component {
                 .map(
                   (fragment, i) =>
                     fragment.toLowerCase() === searchText.toLowerCase() ? (
-                      <span key={i} className="highlight">
+                      <StyledLink to={`/players/${record.id}`}>
+                        <span key={i} className="highlight">
                         {fragment}
-                      </span>
+                        </span>
+                      </StyledLink>
                     ) : (
                       fragment
                     ) // eslint-disable-line
                 )}
             </span>
           ) : (
-            text
+            <StyledLink to={`/players/${record.id}`}>{text}</StyledLink>
           );
         },
         sorter: (a, b) => compareByAlph(a.last_name, b.last_name),
 
         width: fixedColWidth,
-        fixed: 'left'
+        fixed: 'left',
       })
     }
 
@@ -158,7 +166,7 @@ class Table extends React.Component {
             });
           }
         },
-        render: text => {
+        render: (text, record) => {
           const { searchText } = this.state;
           return searchText ? (
             <span>
@@ -168,7 +176,7 @@ class Table extends React.Component {
                   (fragment, i) =>
                     fragment.toLowerCase() === searchText.toLowerCase() ? (
                       <span key={i} className="highlight">
-                        {fragment}
+                        <StyledLink to={`/teams/${record.id}`}>{fragment}</StyledLink>
                       </span>
                     ) : (
                       fragment
@@ -176,7 +184,7 @@ class Table extends React.Component {
                 )}
             </span>
           ) : (
-            text
+            <StyledLink to={`/teams/${record.id}`}>{text}</StyledLink>
           );
         },
         sorter: (a, b) => compareByAlph(a.name, b.name),
@@ -231,7 +239,7 @@ class Table extends React.Component {
                 });
               }
             },
-            render: text => {
+            render: (text, record) => {
               const { searchText } = this.state;
               return searchText ? (
                 <span>
@@ -241,7 +249,7 @@ class Table extends React.Component {
                       (fragment, i) =>
                         fragment.toLowerCase() === searchText.toLowerCase() ? (
                           <span key={i} className="highlight">
-                            {fragment}
+                            <StyledLink to={`/players/${record.id}`}>{fragment}</StyledLink>
                           </span>
                         ) : (
                           fragment
@@ -249,7 +257,7 @@ class Table extends React.Component {
                     )}
                 </span>
               ) : (
-                text
+                <StyledLink to={`/players/${record.id}`}>{text}</StyledLink>
               );
             },
             sorter: (a, b) => compareByAlph(a.first_name, b.first_name),
@@ -422,4 +430,4 @@ class Table extends React.Component {
   }
 }
 
-export default Table;
+export default withRouter((withTheme(Table)));

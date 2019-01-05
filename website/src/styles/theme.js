@@ -43,6 +43,7 @@ export const layout = {
   maxBlogPostWidthInt: 300,
   sidebarGoneWidth: 600,
   sidebarExpandedWidth: 800,
+  individualAboveHeightInt: 300,
 };
 
 export default {
@@ -62,6 +63,7 @@ export default {
     maxBlogPostWidthInt: layout.maxBlogPostWidthInt,
     sidebarGoneWidth: layout.sidebarGoneWidth,
     sidebarExpandedWidth: layout.sidebarExpandedWidth,
+    individualAboveHeightInt: layout.individualAboveHeightInt,
   },
   dimensions: {
     subSection: {
@@ -82,6 +84,7 @@ export default {
   },
   colors: {
     primary: colors.blue,
+    linkColor: colors.blue,
     primaryHover: colors.yellowGreen,
     text: {
       black: colors.black /* base */,
