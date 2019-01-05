@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { players, playersHasErrored, playersIsLoading } from '../reducers/players';
 import { player, playerHasErrored, playerIsLoading, playerBio, playerBioHasErrored, playerBioIsLoading } from '../reducers/player';
-import { teams, teamsHasErrored, teamsIsLoading } from '../reducers/teams';
+import { teams, teamsHasErrored, teamsIsLoading, teamInfo, teamInfoHasErrored, teamInfoIsLoading } from '../reducers/teams';
 import { goalies, goaliesHasErrored, goaliesIsLoading } from '../reducers/goalies';
 import { sidebarCollapsed, sidebarGone } from '../reducers/sidebar'
 
@@ -24,6 +24,9 @@ const rootReducer = combineReducers({
   playerBio,
   playerBioHasErrored,
   playerBioIsLoading,
+  teamInfo,
+  teamInfoHasErrored,
+  teamInfoIsLoading,
 });
 
 export default rootReducer;

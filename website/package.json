@@ -24,6 +24,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "react-slick": "^0.23.1",
+    "react-svg": "^7.2.2",
     "react-transition-group": "^1.2.1",
     "react-typist": "^2.0.4",
     "redux": "^3.7.0",

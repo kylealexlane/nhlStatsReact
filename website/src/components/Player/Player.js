@@ -78,7 +78,7 @@ class Player extends React.Component {
 
   fetchPlayerData(slug) {
     this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players/${slug}?returntype=list&depth=allsummaries&gametype=R`);
-    this.props.fetchBio(`https://statsapi.web.nhl.com/api/v1/people/${slug}`)
+    this.props.fetchBio(`https://statsapi.web.nhl.com/api/v1/people/${slug}`);
   }
 
   updateWindowDimensions() {
@@ -109,7 +109,7 @@ class Player extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: (url) => dispatch(playerFetchData(url)),
-    fetchBio: (url) => dispatch(playerFetchBio(url))
+    fetchBio: (url) => dispatch(playerFetchBio(url)),
   };
 };
 

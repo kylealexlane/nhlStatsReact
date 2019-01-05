@@ -1,12 +1,11 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
-import {Select, InputNumber} from "antd/lib/index";
-import theme, {layout} from "../../styles/theme"
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {playerFetchBio, playerFetchData} from "../../actions/player";
-import { Avatar, Spin } from 'antd';
+import { Spin } from 'antd';
+import {teamInfoFetchData} from "../../actions/teams";
+
 
 
 const WrapperDiv = styled.div`
@@ -20,18 +19,23 @@ const WrapperDiv = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
 `;
 
 const LeftDiv = styled.div`
   display: flex;
   flex-basis: 50%;
-  height: 100%;
+  height: 90%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  border-left: 5px solid ${props => props.theme.colors.mainAccent};
   padding: 16px;
+  margin-bottom: 16px;
+  // margin-top: 16px;
+  border-left: 5px solid ${props => props.theme.colors.mainAccent};
+  position: relative;
 `;
 
 const RightDiv = styled.div`
@@ -39,8 +43,9 @@ const RightDiv = styled.div`
   flex-basis: 50%;
   height: 100%;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
 `;
 
 const LoadingWrapper = styled.div`
@@ -55,12 +60,44 @@ const FirstName = styled.h2`
   // color: ${props => props.theme.colors.mainAccent};
   color: #ffffff;
   text-transform: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const HeadingText = styled.h3`
+  // color: ${props => props.theme.colors.mainAccent};
+  color: #fafafa;
+  text-transform: none;
+  margin: 0;
+  padding: 0;
 `;
 
 const LastName = styled.h1`
   // color: ${props => props.theme.colors.mainAccent};
   color: #ffffff;
   text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+`;
+
+const FaceImage = styled.img`
+  height: 80%;
+  width: auto;
+`;
+
+const LogoNum =  styled.div`
+  display: flex;  
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+const SmallLogo = styled.img`
+  height: 50px;
+  width: auto;
+  padding-left: 16px;
 `;
 
 
@@ -71,7 +108,11 @@ class IndividualAbove extends React.Component {
       isLoading: this.props.isLoading? this.props.isLoading : true,
       data: [],
       bio: [],
+      teamInfoLoading: false,
+      teamInfo: {},
+      teamid: 0,
     };
+    this.fetchTeamInfoAfter = this.fetchTeamInfoAfter.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -80,18 +121,33 @@ class IndividualAbove extends React.Component {
     if (nextProps.player !== this.state.player) {
       this.setState({ data: nextProps.player });
     }
-    if (nextProps.playerBio !== this.state.playerBio) {
-      this.setState({ bio: nextProps.playerBio });
+    if (nextProps.playerBio !== this.state.bio && !nextProps.isLoading) {
+      this.setState({
+        bio: nextProps.playerBio,
+        teamid: nextProps.playerBio.currentTeam.id
+      });
+      this.fetchTeamInfoAfter(nextProps.playerBio.currentTeam.id);
     }
     if (nextProps.isLoading !== this.state.isLoading) {
       this.setState({ isLoading: nextProps.isLoading });
     }
+    if (nextProps.teamInfo !== this.state.teamInfo) {
+      this.setState({ teamInfo: nextProps.teamInfo });
+    }
+  }
+
+  fetchTeamInfoAfter(teamid) {
+    this.props.fetchTeamInfo(`https://statsapi.web.nhl.com/api/v1/teams/${teamid}`);
   }
 
   render() {
-    let teamid = "";
+    let teamid = 0;
+    let teamabbr = "";
     if (!this.state.isLoading){
       teamid = this.state.bio.currentTeam.id
+    }
+    if(this.state.teamInfo.teams){
+      teamabbr = this.state.teamInfo.teams[0].abbreviation
     }
     console.log("teamid", teamid);
     let content = (
@@ -100,15 +156,19 @@ class IndividualAbove extends React.Component {
         </Spin>
       </LoadingWrapper>
     );
-    if (!this.state.isLoading) {
+    if (!this.state.isLoading && this.state.teamInfo.teams) {
       content = (
         <WrapperDiv style={{ backgroundImage: `url(https://nhl.bamcontent.com/images/arena/scoreboard/${teamid}@2x.jpg)`}}>
           <LeftDiv>
             <FirstName>{this.state.bio.firstName}</FirstName>
             <LastName>{this.state.bio.lastName}</LastName>
+            <HeadingText>{this.state.bio.height} | {this.state.bio.currentAge} | {this.state.bio.weight}lbs</HeadingText>
           </LeftDiv>
           <RightDiv>
-
+            <LogoNum>
+              <SmallLogo src={`https://assets.nhle.com/nhl/images/logos/teams/${teamabbr}_logo.svgz?v=12.16`}/>
+            </LogoNum>
+            <FaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
           </RightDiv>
         </WrapperDiv>
       );
@@ -123,6 +183,7 @@ class IndividualAbove extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchTeamInfo: (url) => dispatch(teamInfoFetchData(url)),
   };
 };
 
@@ -134,6 +195,8 @@ const mapStateToProps = (state) => {
     isLoading: (state.playerIsLoading|| state.playerBioIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    teamInfo: state.teamInfo,
+    teamInfoLoading: state.teamInfoIsLoading,
   };
 };
 
