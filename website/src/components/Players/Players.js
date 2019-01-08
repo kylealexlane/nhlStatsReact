@@ -78,7 +78,7 @@ class Players extends React.Component {
   }
 
   fetchPlayerData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   updateWindowDimensions() {
@@ -111,7 +111,7 @@ class Players extends React.Component {
 
   render() {
 
-    const cols = dataColumns.playersBasicColumns;
+    const cols = dataColumns.allSummariesPlayer;
     const opts = dataColumns.playersBasicOptions;
 
     const defaultopts = dataColumns.playersBasicDefaultOptions;

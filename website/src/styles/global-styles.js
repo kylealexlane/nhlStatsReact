@@ -50,10 +50,22 @@ injectGlobal`
     font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
   a {
-    // color: green;
+    color: #f76600;
     // :hover, :focus, :active {
     //   color: red;
     // }
+  }
+  .ant-tabs-nav .ant-tabs-tab-active {
+    color: #f76600;
+  }
+  .ant-tabs-nav .ant-tabs-tab:hover{
+    color: #f76600;
+  }
+  .ant-tabs-ink-bar {
+    background-color: #f76600;
+  }
+  .ant-table-thead > tr > th .ant-table-column-sorter-up.on, .ant-table-thead > tr > th .ant-table-column-sorter-down.on {
+    color: #f76600;
   }
   @media only screen and (max-width: 768px) {
     h1 {

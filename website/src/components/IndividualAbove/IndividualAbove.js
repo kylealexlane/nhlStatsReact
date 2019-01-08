@@ -121,7 +121,7 @@ class IndividualAbove extends React.Component {
     if (nextProps.player !== this.state.player) {
       this.setState({ data: nextProps.player });
     }
-    if (nextProps.playerBio !== this.state.bio && !nextProps.isLoading) {
+    if (nextProps.playerBio !== this.state.bio && !nextProps.isLoading && nextProps.playerBio.currentTeam) {
       this.setState({
         bio: nextProps.playerBio,
         teamid: nextProps.playerBio.currentTeam.id

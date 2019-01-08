@@ -9,10 +9,13 @@ import { connect } from 'react-redux';
 import { IndividualAbove } from "../IndividualAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
-import { PlayerGraph } from "../PlayerGraph";
-
+import { PlayerGraphs } from "../PlayerGraphs";
+import { Tabs } from 'antd';
 
 const maxTableWidth = 1200;
+
+const TabPane = Tabs.TabPane;
+
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -54,9 +57,11 @@ class Player extends React.Component {
       bio: [],
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
       depth: this.props.depth ? this.props.depth : "basicranks",
+      pageNum: maintheme.DefaultNumTableItems,
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.fetchPlayerData =  this.fetchPlayerData.bind(this);
+    this.tabchange = this.tabchange.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -101,6 +106,10 @@ class Player extends React.Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
+  tabchange(key){
+    console.log(key)
+  }
+
 
 
   render() {
@@ -110,16 +119,44 @@ class Player extends React.Component {
       this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
     let w = (pw < maintheme.layout.maxWrapperWidthInt) ? pw : maintheme.layout.maxWrapperWidthInt;
 
+    // const cols = dataColumns.playersBasicColumns;
+    const cols = dataColumns.test;
+
+
     return (
       <React.Fragment>
         <MainWrapper style={{ width: w}}>
           <IndividualAbove
             isLoading={this.state.isLoading}
           />
-          <SectionTitle >Shooting</SectionTitle>
-          <Section>
-            <PlayerGraph />
-          </Section>
+          <Tabs defaultActiveKey="1" onChange={this.tabchange}>
+            <TabPane tab="Shooting" key="1">
+              <SectionTitle >Shooting</SectionTitle>
+              <Section>
+                <PlayerGraphs />
+              </Section>
+            </TabPane>
+            <TabPane tab="Results" key="2">
+              <SectionTitle >Results</SectionTitle>
+              <Section>
+                <Table
+                  pageSize={this.state.pageNum}
+                  cols={cols}
+                  dataSource={this.state.data}
+                  scroll={{ x: maxTableWidth }}
+                  loading={this.state.isLoading}
+                  rowKey="id"
+                  colWidth={100}
+                  fixedColWidth={100}
+                />
+              </Section>
+            </TabPane>
+            <TabPane tab="Ranking" key="3" disabled>Content of Tab Pane 3</TabPane>
+            <TabPane tab="Bio" key="4" disabled>Content of Tab Pane 4</TabPane>
+
+          </Tabs>
+
+
         </MainWrapper>
       </React.Fragment>
     );
@@ -138,7 +175,7 @@ const mapStateToProps = (state) => {
     player: state.player,
     playerBio: state.playerBio,
     hasErrored: (state.playerHasErrored || state.playerBioHasErrored),
-    isLoading: (state.playerIsLoading|| state.playerBioIsLoading),
+    isLoading: (state.playerIsLoading || state.playerBioIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
   };

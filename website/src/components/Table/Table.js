@@ -23,7 +23,6 @@ class Table extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.pageSize !== this.state.pageSize) {
       this.setState({ pageSize: nextProps.pageSize });
     }
@@ -45,7 +44,8 @@ class Table extends React.Component {
     const colWidth = this.props.colWidth ? this.props.colWidth : 100;
 
     const columns = [];
-    // Names and Titles - Fixed value
+    // These are fixed - either last_name, name, or month/year
+    // Last name - fixed
     if(this.props.cols.indexOf("last_name") > -1) {
       columns.push({
         title: "Last",
@@ -79,7 +79,7 @@ class Table extends React.Component {
         filterIcon: filtered => (
           <Icon
             type="filter"
-            style={{ color: filtered ? "#108ee9" : "#aaa" }}
+            style={{ color: filtered ? "#f76600" : "#aaa" }}
           />
         ),
         onFilter: (value, record) =>
@@ -121,6 +121,7 @@ class Table extends React.Component {
       })
     }
 
+    // Name (generally team names) - fixed
     if(this.props.cols.indexOf("name") > -1) {
       columns.push({
         title: "Name",
@@ -154,7 +155,7 @@ class Table extends React.Component {
         filterIcon: filtered => (
           <Icon
             type="filter"
-            style={{ color: filtered ? "#108ee9" : "#aaa" }}
+            style={{ color: filtered ? "#f76600" : "#aaa" }}
           />
         ),
         onFilter: (value, record) =>
@@ -194,7 +195,10 @@ class Table extends React.Component {
       })
     }
 
-    // Not fixed
+
+    // Not fixed //
+
+    // First name
     if(this.props.cols.indexOf("first_name") > -1) {
       columns.push({
             title: "First",
@@ -227,7 +231,7 @@ class Table extends React.Component {
             filterIcon: filtered => (
               <Icon
                 type="filter"
-                style={{ color: filtered ? "#108ee9" : "#aaa" }}
+                style={{ color: filtered ? "#f76600" : "#aaa" }}
               />
             ),
             onFilter: (value, record) =>
@@ -309,6 +313,69 @@ class Table extends React.Component {
             width: colWidth
           })
     }
+    if(this.props.cols.indexOf("wrist_shot_num") > -1) {
+      columns.push({
+        title: "Wrist Shots",
+        dataIndex: "wrist_shot_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrist_shot_num - b.wrist_shot_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("slap_shot_num") > -1) {
+      columns.push({
+        title: "Slap Shots",
+        dataIndex: "slap_shot_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.slap_shot_num - b.slap_shot_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("snap_shot_num") > -1) {
+      columns.push({
+        title: "Snap Shots",
+        dataIndex: "snap_shot_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.snap_shot_num - b.snap_shot_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("backhand_num") > -1) {
+      columns.push({
+        title: "Backhands",
+        dataIndex: "backhand_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.backhand_num - b.backhand_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("tip_in_num") > -1) {
+      columns.push({
+        title: "Tipped Shots",
+        dataIndex: "tip_in_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.tip_in_num - b.tip_in_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("deflected_num") > -1) {
+      columns.push({
+        title: "Deflected Shots",
+        dataIndex: "deflected_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.deflected_num - b.deflected_num,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("wrap_around_num") > -1) {
+      columns.push({
+        title: "Wrap Arounds",
+        dataIndex: "wrap_around_num",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrap_around_num - b.wrap_around_num,
+        width: colWidth
+      })
+    }
     if(this.props.cols.indexOf("num_goals") > -1) {
       columns.push({
         title: "Goals",
@@ -318,6 +385,105 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+    if(this.props.cols.indexOf("num_goals_wrist_shot") > -1) {
+      columns.push({
+        title: "Wrist Shot Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.wrist_shot_num * a.wrist_shot_shooting_perc) - (b.wrist_shot_num * b.wrist_shot_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.wrist_shot_num * record.wrist_shot_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_slap_shot") > -1) {
+      columns.push({
+        title: "Slap Shot Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.slap_shot_num * a.slap_shot_shooting_perc) - (b.slap_shot_num * b.slap_shot_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.slap_shot_num * record.slap_shot_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_snap_shot") > -1) {
+      columns.push({
+        title: "Snap Shot Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.snap_shot_num * a.snap_shot_shooting_perc) - (b.snap_shot_num * b.snap_shot_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.snap_shot_num * record.snap_shot_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_backhand") > -1) {
+      columns.push({
+        title: "Backhand Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.backhand_num * a.backhand_shooting_perc) - (b.backhand_num * b.backhand_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.backhand_num * record.backhand_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_tip_in") > -1) {
+      columns.push({
+        title: "Tipped Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.tip_in_num * a.tip_in_shooting_perc) - (b.tip_in_num * b.tip_in_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.tip_in_num * record.tip_in_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_deflected") > -1) {
+      columns.push({
+        title: "Deflected Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.deflected_num * a.deflected_shooting_perc) - (b.deflected_num * b.deflected_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.deflected_num * record.deflected_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+    if(this.props.cols.indexOf("num_goals_wrap_around") > -1) {
+      columns.push({
+        title: "Wrap Around Goals",
+        // dataIndex: "num_goals",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => (a.wrap_around_num * a.wrap_around_shooting_perc) - (b.wrap_around_num * b.wrap_around_shooting_perc),
+        width: colWidth,
+        render: (text, record) => (
+          <span>
+            {Math.round(record.wrap_around_num * record.wrap_around_shooting_perc)}
+          </span>
+        ),
+      })
+    }
+
     if(this.props.cols.indexOf("sum_xgoals") > -1) {
       columns.push({
             title: "xGoals",
@@ -327,8 +493,145 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+    if(this.props.cols.indexOf("wrist_shot_pred") > -1) {
+      columns.push({
+        title: "xGoals Wrist Shot",
+        dataIndex: "wrist_shot_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrist_shot_pred - b.wrist_shot_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("slap_shot_pred") > -1) {
+      columns.push({
+        title: "xGoals Slap Shot",
+        dataIndex: "slap_shot_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.slap_shot_pred - b.slap_shot_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("snap_shot_pred") > -1) {
+      columns.push({
+        title: "xGoals Snap Shot",
+        dataIndex: "snap_shot_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.snap_shot_pred - b.snap_shot_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("backhand_pred") > -1) {
+      columns.push({
+        title: "xGoals Backhand",
+        dataIndex: "backhand_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.backhand_pred - b.backhand_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("tip_in_pred") > -1) {
+      columns.push({
+        title: "xGoals Tipped",
+        dataIndex: "tip_in_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.tip_in_pred - b.tip_in_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("deflected_pred") > -1) {
+      columns.push({
+        title: "xGoals Deflected",
+        dataIndex: "deflected_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.deflected_pred - b.deflected_pred,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("wrap_around_pred") > -1) {
+      columns.push({
+        title: "xGoals Wrap Around",
+        dataIndex: "wrap_around_pred",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrap_around_pred - b.wrap_around_pred,
+        width: colWidth
+      })
+    }
 
-    // SHOOTER STATS
+
+    // Frequency shooting stats
+    if(this.props.cols.indexOf("wrist_shot_freq") > -1) {
+      columns.push({
+        title: "Freq Wrist Shot",
+        dataIndex: "wrist_shot_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrist_shot_freq - b.wrist_shot_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("slap_shot_freq") > -1) {
+      columns.push({
+        title: "Freq Slap Shot",
+        dataIndex: "slap_shot_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.slap_shot_freq - b.slap_shot_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("snap_shot_freq") > -1) {
+      columns.push({
+        title: "Freq Snap Shot",
+        dataIndex: "snap_shot_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.snap_shot_freq - b.snap_shot_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("backhand_freq") > -1) {
+      columns.push({
+        title: "Freq Backhand",
+        dataIndex: "backhand_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.backhand_freq - b.backhand_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("tip_in_freq") > -1) {
+      columns.push({
+        title: "Freq Tipped",
+        dataIndex: "tip_in_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.tip_in_freq - b.tip_in_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("deflected_freq") > -1) {
+      columns.push({
+        title: "Freq Deflected",
+        dataIndex: "deflected_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.deflected_freq - b.deflected_freq,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("wrap_around_freq") > -1) {
+      columns.push({
+        title: "Freq Wrap Around",
+        dataIndex: "wrap_around_freq",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrap_around_freq - b.wrap_around_freq,
+        width: colWidth
+      })
+    }
+
+
+
+
+
+
+
+
+
+    // Shooting percent
     if(this.props.cols.indexOf("avg_shoot_perc") > -1) {
       columns.push({
             title: "S%",
@@ -338,6 +641,78 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+    if(this.props.cols.indexOf("wrist_shot_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Wrist Shot",
+        dataIndex: "wrist_shot_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrist_shot_shooting_perc - b.wrist_shot_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("slap_shot_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Slap Shot",
+        dataIndex: "slap_shot_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.slap_shot_shooting_perc - b.slap_shot_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("snap_shot_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Snap Shot",
+        dataIndex: "snap_shot_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.snap_shot_shooting_perc - b.snap_shot_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("backhand_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Backhand",
+        dataIndex: "backhand_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.backhand_shooting_perc - b.backhand_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("tip_in_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Tipped",
+        dataIndex: "tip_in_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.tip_in_shooting_perc - b.tip_in_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("deflected_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Deflected",
+        dataIndex: "deflected_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.deflected_shooting_perc - b.deflected_shooting_perc,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("wrap_around_shooting_perc") > -1) {
+      columns.push({
+        title: "S% Wrap Around",
+        dataIndex: "wrap_around_shooting_perc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.wrap_around_shooting_perc - b.wrap_around_shooting_perc,
+        width: colWidth
+      })
+    }
+
+
+
+
+
+
+
+
+    // xShooting percent
     if(this.props.cols.indexOf("avg_xgoals") > -1) {
       columns.push({
             title: "xS%",
@@ -347,6 +722,79 @@ class Table extends React.Component {
             width: colWidth
       })
     }
+    if(this.props.cols.indexOf("avg_xgoals_wrist_shot") > -1) {
+      columns.push({
+        title: "xS% Wrist Shot",
+        dataIndex: "avg_xgoals_wrist_shot",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_wrist_shot - b.avg_xgoals_wrist_shot,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_slap_shot") > -1) {
+      columns.push({
+        title: "xS% Slap Shot",
+        dataIndex: "avg_xgoals_slap_shot",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_slap_shot - b.avg_xgoals_slap_shot,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_snap_shot") > -1) {
+      columns.push({
+        title: "xS% Snap Shot",
+        dataIndex: "avg_xgoals_snap_shot",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_snap_shot - b.avg_xgoals_snap_shot,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_backhand") > -1) {
+      columns.push({
+        title: "xS% Backhand",
+        dataIndex: "avg_xgoals_backhand",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_backhand - b.avg_xgoals_backhand,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_tip_in") > -1) {
+      columns.push({
+        title: "xS% Tipped",
+        dataIndex: "avg_xgoals_tip_in",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_tip_in - b.avg_xgoals_tip_in,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_deflected") > -1) {
+      columns.push({
+        title: "xS% Deflected",
+        dataIndex: "avg_xgoals_deflected",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_deflected - b.avg_xgoals_deflected,
+        width: colWidth
+      })
+    }
+    if(this.props.cols.indexOf("avg_xgoals_wrap_around") > -1) {
+      columns.push({
+        title: "xS% Wrap Around",
+        dataIndex: "avg_xgoals_wrap_around",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a.avg_xgoals_wrap_around - b.avg_xgoals_wrap_around,
+        width: colWidth
+      })
+    }
+
+
+
+
+
+
+
+
+
+    // Goals above average per shot
     if(this.props.cols.indexOf("goals_aa_per_shot") > -1) {
       columns.push({
             title: "goalsAA/s",
@@ -358,6 +806,7 @@ class Table extends React.Component {
     }
 
     // GOALIE STATS
+    // save percentage
     if(this.props.cols.indexOf("save_perc") > -1) {
       columns.push({
         title: "Save %",
@@ -366,6 +815,7 @@ class Table extends React.Component {
         width: colWidth
       })
     }
+    // x save percentage
     if(this.props.cols.indexOf("xsave_perc") > -1) {
       columns.push({
         title: "xSave %",
@@ -374,6 +824,7 @@ class Table extends React.Component {
         width: colWidth
       })
     }
+    // saves above average per shot
     if(this.props.cols.indexOf("saves_aa_per_shot") > -1) {
       columns.push({
         title: "SavesAA/s",
@@ -384,6 +835,7 @@ class Table extends React.Component {
     }
 
     // Distance and Angle stats
+    // average distance
     if(this.props.cols.indexOf("mean_dist") > -1) {
       columns.push({
         title: "Avg Dist",
@@ -392,6 +844,7 @@ class Table extends React.Component {
         width: colWidth
       })
     }
+    // average angle
     if(this.props.cols.indexOf("mean_ang") > -1) {
       columns.push({
         title: "Avg Angle",
@@ -401,7 +854,8 @@ class Table extends React.Component {
       })
     }
 
-    // All
+    // All - flexible to fit table
+    // Shot quality
     if(this.props.cols.indexOf("shot_quality") > -1) {
       columns.push({
         title: "Shot Quality",
