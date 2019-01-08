@@ -25,8 +25,6 @@ const GraphTitle = styled.h3`
   color: ${props => props.theme.colors.mainAccent};
 `;
 
-// TODO: CREATE COMPONENT FOR EACH GRAPH TO CLEAN THIS UP
-
 class PlayerGraphs extends React.Component {
   constructor(props) {
     super(props);
@@ -142,7 +140,7 @@ const mapStateToProps = (state) => {
     player: state.player,
     playerBio: state.playerBio,
     hasErrored: (state.playerHasErrored || state.playerBioHasErrored),
-    isLoading: (state.playerIsLoading|| state.playerBioIsLoading),
+    isLoading: (state.playerIsLoading || state.playerBioIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
     teamInfo: state.teamInfo,

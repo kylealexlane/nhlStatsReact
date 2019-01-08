@@ -143,7 +143,7 @@ class IndividualAbove extends React.Component {
   render() {
     let teamid = 0;
     let teamabbr = "";
-    if (!this.state.isLoading){
+    if (!this.state.isLoading && this.state.bio.currentTeam){
       teamid = this.state.bio.currentTeam.id
     }
     if(this.state.teamInfo.teams){

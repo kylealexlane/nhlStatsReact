@@ -11,6 +11,7 @@ import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
 import { PlayerGraphs } from "../PlayerGraphs";
 import { Tabs } from 'antd';
+import { PlayerTables } from "../PlayerTables"
 
 const maxTableWidth = 1200;
 
@@ -130,25 +131,16 @@ class Player extends React.Component {
             isLoading={this.state.isLoading}
           />
           <Tabs defaultActiveKey="1" onChange={this.tabchange}>
-            <TabPane tab="Shooting" key="1">
-              <SectionTitle >Shooting</SectionTitle>
+            <TabPane tab="Puck Luck" key="1">
+              <SectionTitle >Puck Luck</SectionTitle>
               <Section>
                 <PlayerGraphs />
               </Section>
             </TabPane>
-            <TabPane tab="Results" key="2">
-              <SectionTitle >Results</SectionTitle>
+            <TabPane tab="Stats" key="2">
+              <SectionTitle >Stats</SectionTitle>
               <Section>
-                <Table
-                  pageSize={this.state.pageNum}
-                  cols={cols}
-                  dataSource={this.state.data}
-                  scroll={{ x: maxTableWidth }}
-                  loading={this.state.isLoading}
-                  rowKey="id"
-                  colWidth={100}
-                  fixedColWidth={100}
-                />
+                <PlayerTables />
               </Section>
             </TabPane>
             <TabPane tab="Ranking" key="3" disabled>Content of Tab Pane 3</TabPane>

@@ -3,12 +3,10 @@ import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
 import { Table as AntTable } from "antd";
 import compareByAlph from "../../functions/helpers";
-import { Input, Button, Icon, Select, Layout } from "antd";
+import { Input, Button, Icon } from "antd";
 import {Link, withRouter} from "react-router-dom";
-import {connect} from "react-redux";
 
-// import {layout} from "../../styles/theme";
-
+// TODO: Check if there is cleaner way to do this.. hard to manage with the customizability I want with this table and the functions the options need
 
 const StyledLink = styled(Link)`
   color: ${props => props.theme.colors.linkColor}
@@ -194,6 +192,44 @@ class Table extends React.Component {
         fixed: 'left'
       })
     }
+
+    // year
+    if(this.props.cols.indexOf("year") > -1) {
+      columns.push({
+        title: "Year",
+        dataIndex: "year_code",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => compareByAlph(a.year_code, b.year_code),
+        render: (text, record) => (
+          <span>
+            {text.toString().slice(0, 4) + "-" + text.toString().slice(4)}
+          </span>
+        ),
+        width: fixedColWidth,
+        fixed: 'left',
+      })
+    }
+    // month
+    if(this.props.cols.indexOf("month") > -1) {
+      columns.push({
+        title: "Month",
+        dataIndex: "month",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => compareByAlph(a.month, b.month),
+        render: (text, record) => (
+          <span>
+            {text}
+          </span>
+        ),
+        width: fixedColWidth,
+        fixed: 'left',
+      })
+    }
+
+
+
+
+
 
 
     // Not fixed //
@@ -695,7 +731,7 @@ class Table extends React.Component {
         width: colWidth
       })
     }
-    if(this.props.cols.indexOf("wrap_around_shooting_perc") > -1) {
+    if(this.props.cols.indexOf("deflected_shooting_perc") > -1) {
       columns.push({
         title: "S% Wrap Around",
         dataIndex: "wrap_around_shooting_perc",
