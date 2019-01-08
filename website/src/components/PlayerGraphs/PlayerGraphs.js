@@ -43,8 +43,6 @@ class PlayerGraphs extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("player graph next props", nextProps);
-    // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.player !== this.state.data && !nextProps.isLoading) {
       this.setState({ data: nextProps.player });
       this.transformData(nextProps.player);

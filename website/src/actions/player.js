@@ -24,7 +24,6 @@ export function playerFetchData(url) {
     dispatch(playerIsLoading(true));
     fetch(url)
       .then((response) => {
-        console.log("player response", response);
         if (!response.ok) {
           throw Error(response.statusText);
         }

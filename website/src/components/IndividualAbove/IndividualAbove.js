@@ -116,8 +116,6 @@ class IndividualAbove extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("player next props", nextProps);
-    // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.player !== this.state.player) {
       this.setState({ data: nextProps.player });
     }

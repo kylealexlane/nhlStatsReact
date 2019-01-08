@@ -70,7 +70,6 @@ class Player extends React.Component {
     document.title = "Player";
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    console.log("player props", this.props);
     this.fetchPlayerData(this.props.match.params.slug);
   }
 
