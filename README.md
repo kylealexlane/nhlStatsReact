@@ -1,4 +1,6 @@
-## Front end for probabilistic nhl stats website thepuckluck.com
+# Front end for probabilistic nhl stats website
+
+## thepuckluck.com
 
 Built with React and Redux
 
