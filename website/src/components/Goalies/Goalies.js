@@ -41,6 +41,7 @@ class Goalies extends React.Component {
       height: 0,
       yearSelected: '20182019',
       gametype: 'R',
+      statsType: 'basic',
       isLoading: false,
       data: [],
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
@@ -50,6 +51,9 @@ class Goalies extends React.Component {
     this.handleChangeYear = this.handleChangeYear.bind(this);
     this.handleChangeGameType = this.handleChangeGameType.bind(this);
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
+    this.fetchGoalieData = this.fetchGoalieData.bind(this);
+    this.changeSelectStatsTypeCallback = this.changeSelectStatsTypeCallback.bind(this);
+    this.getCols = this.getCols.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -81,7 +85,7 @@ class Goalies extends React.Component {
   }
 
   fetchGoalieData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   updateWindowDimensions() {
@@ -109,10 +113,35 @@ class Goalies extends React.Component {
     this.setState({ pageNum: n })
   }
 
+  // Handle changing
+  changeSelectStatsTypeCallback(value) {
+    this.setState({ statsType: value })
+  }
+
+  getCols() {
+    switch(this.state.statsType) {
+      case "basic":
+        return(dataColumns.goaliesBasicColumns);
+      case "freq":
+        return(dataColumns.goaliesFreqColumns);
+      case "shootpercs":
+        return(dataColumns.goaliesShootPercColumns);
+      case "goaldata":
+        return(dataColumns.goaliesGoalDataColumns);
+      case "actualvals":
+        return(dataColumns.goaliesActualValsColumns);
+      case "expectedvals":
+        return(dataColumns.goaliesExpectedValsColumns);
+      case "all":
+        return(dataColumns.goaliesAllSummariesColumns);
+      default:
+        return(dataColumns.goaliesBasicColumns);
+    }
+  }
+
 
   render() {
-
-    const cols = dataColumns.goaliesBasicColumns;
+    const cols = this.getCols();
     const opts = dataColumns.goaliesBasicOptions;
 
     const defaultopts = dataColumns.goaliesBasicDefaultOptions;
@@ -136,13 +165,14 @@ class Goalies extends React.Component {
             defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
+            changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
           />
           <TableWrapper>
             <Table
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={this.state.data}
-              scroll={{ x: maxTableWidth }}
+              scroll={{ x: cols.length * 100 }}
               loading={this.state.isLoading}
               rowKey="id"
               colWidth={100}

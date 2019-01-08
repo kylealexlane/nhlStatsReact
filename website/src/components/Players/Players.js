@@ -131,7 +131,8 @@ class Players extends React.Component {
         return(dataColumns.playersAllSummariesColumns);
       default:
         return(dataColumns.playersBasicColumns);
-    }  }
+    }
+  }
 
 
   render() {
@@ -165,7 +166,7 @@ class Players extends React.Component {
             pageSize={this.state.pageNum}
             cols={cols}
             dataSource={this.state.data}
-            scroll={{ x: maxTableWidth }}
+            scroll={{ x: cols.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}

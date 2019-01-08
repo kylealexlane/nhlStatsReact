@@ -833,7 +833,7 @@ class Table extends React.Component {
     // Goals above average per shot
     if(this.props.cols.indexOf("goals_aa_per_shot") > -1) {
       columns.push({
-            title: "goalsAA/s",
+            title: "GoalsAA/s",
             dataIndex: "goals_aa_per_shot",
             defaultSortOrder: "descend",
             sorter: (a, b) => a.goals_aa_per_shot - b.goals_aa_per_shot,

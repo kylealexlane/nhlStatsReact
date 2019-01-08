@@ -28,7 +28,7 @@ const GraphTitle = styled.h3`
   color: ${props => props.theme.colors.mainAccent};
 `;
 
-class PlayerTables extends React.Component {
+class GoalieTables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,9 +47,9 @@ class PlayerTables extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.player !== this.state.data && !this.props.isLoading) {
-      this.setState({ data: this.props.player });
-      this.transformData(this.props.player);
+    if (this.props.goalie !== this.state.data && !this.props.isLoading) {
+      this.setState({ data: this.props.goalie });
+      this.transformData(this.props.goalie);
     }
     if (this.props.isLoading !== this.state.isLoading) {
       this.setState({ isLoading: this.props.isLoading });
@@ -57,9 +57,9 @@ class PlayerTables extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.player !== this.state.data && !nextProps.isLoading) {
-      this.setState({ data: nextProps.player });
-      this.transformData(nextProps.player);
+    if (nextProps.goalie !== this.state.data && !nextProps.isLoading) {
+      this.setState({ data: nextProps.goalie });
+      this.transformData(nextProps.goalie);
     }
     if (nextProps.isLoading !== this.state.isLoading) {
       this.setState({ isLoading: nextProps.isLoading });
@@ -124,9 +124,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Basic</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerBasicColumns}
+            cols={dataColumns.goalieBasicColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerBasicColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieBasicColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -135,9 +135,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Frequencies</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerFreqColumns}
+            cols={dataColumns.goalieFreqColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerFreqColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieFreqColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -146,9 +146,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Shooting Percents</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerShootPercColumns}
+            cols={dataColumns.goalieShootPercColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerShootPercColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieShootPercColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -157,9 +157,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Actual Values</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerActualValsColumns}
+            cols={dataColumns.goalieActualValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerActualValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieActualValsColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -168,9 +168,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Expected Values</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerExpectedValsColumns}
+            cols={dataColumns.goalieExpectedValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerExpectedValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieExpectedValsColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -179,9 +179,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>Goals</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerGoalDataColumns}
+            cols={dataColumns.goalieGoalDataColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerGoalDataColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieGoalDataColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -190,9 +190,9 @@ class PlayerTables extends React.Component {
           <GraphTitle>All</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
-            cols={dataColumns.playerAllSummariesColumns}
+            cols={dataColumns.goalieAllSummariesColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerAllSummariesColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieAllSummariesColumns.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}
@@ -217,13 +217,13 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    player: state.player,
-    hasErrored: (state.playerHasErrored),
-    isLoading: (state.playerIsLoading),
+    goalie: state.goalie,
+    hasErrored: (state.goalieHasErrored),
+    isLoading: (state.goalieIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
   };
 };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(PlayerTables)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(GoalieTables)));
