@@ -50,36 +50,48 @@ injectGlobal`
     font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
   a {
-    color: green;
-    :hover, :focus, :active {
-      color: red;
-    }
+    color: #f76600;
+    // :hover, :focus, :active {
+    //   color: red;
+    // }
   }
-  @media only screen and (max-width: 600px) {
+  .ant-tabs-nav .ant-tabs-tab-active {
+    color: #f76600;
+  }
+  .ant-tabs-nav .ant-tabs-tab:hover{
+    color: #f76600;
+  }
+  .ant-tabs-ink-bar {
+    background-color: #f76600;
+  }
+  .ant-table-thead > tr > th .ant-table-column-sorter-up.on, .ant-table-thead > tr > th .ant-table-column-sorter-down.on {
+    color: #f76600;
+  }
+  @media only screen and (max-width: 768px) {
     h1 {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 500;
     line-height: 64px;
     }
     h2 {
-      font-size: 44px;
+      font-size: 24px;
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 3px;
     }
     h3 {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 300;
       text-transform: uppercase;
       letter-spacing: 2px;
     }
     h4 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 300;
       letter-spacing: 1px;
     }
     p {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 300;
       line-height: 30px;
     }

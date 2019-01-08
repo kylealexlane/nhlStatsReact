@@ -22,20 +22,54 @@ export function teamsFetchDataSuccess(teams) {
 export function teamsFetchData(url) {
   return (dispatch) => {
     dispatch(teamsIsLoading(true));
-
     fetch(url)
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw Error(response.statusText);
         }
-
         dispatch(teamsIsLoading(false));
-
         return response;
       })
       .then((response) => response.json())
       .then((teams) => dispatch(teamsFetchDataSuccess(teams)))
       .catch(() => dispatch(teamsHasErrored(true)));
+  };
+}
+
+export function teamInfoHasErrored(bool) {
+  return {
+    type: 'TEAM_INFO_HAS_ERRORED',
+    hasErrored: bool
+  };
+}
+
+export function teamInfoIsLoading(bool) {
+  return {
+    type: 'TEAM_INFO_IS_LOADING',
+    isLoading: bool
+  };
+}
+
+export function teamInfoFetchDataSuccess(teamInfo) {
+  return {
+    type: 'TEAM_INFO_FETCH_DATA_SUCCESS',
+    teamInfo
+  };
+}
+
+export function teamInfoFetchData(url) {
+  return (dispatch) => {
+    dispatch(teamInfoIsLoading(true));
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(teamInfoIsLoading(false));
+        return response;
+      })
+      .then((response) => response.json())
+      .then((teamInfo) => dispatch(teamInfoFetchDataSuccess(teamInfo)))
+      .catch(() => dispatch(teamInfoHasErrored(true)));
   };
 }

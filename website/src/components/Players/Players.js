@@ -36,10 +36,10 @@ class Players extends React.Component {
       height: 0,
       yearSelected: '20182019',
       gametype: 'R',
+      statsType: 'basic',
       isLoading: false,
       data: [],
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
-      depth: this.props.depth ? this.props.depth : "basicranks",
       pageNum: maintheme.DefaultNumTableItems
     };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -47,6 +47,8 @@ class Players extends React.Component {
     this.handleChangeGameType = this.handleChangeGameType.bind(this);
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
     this.fetchPlayerData = this.fetchPlayerData.bind(this);
+    this.changeSelectStatsTypeCallback = this.changeSelectStatsTypeCallback.bind(this);
+    this.getCols = this.getCols.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -78,7 +80,7 @@ class Players extends React.Component {
   }
 
   fetchPlayerData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   updateWindowDimensions() {
@@ -106,12 +108,35 @@ class Players extends React.Component {
     this.setState({ pageNum: n })
   }
 
+  // Handle changing
+  changeSelectStatsTypeCallback(value) {
+    this.setState({ statsType: value })
+  }
 
+  getCols() {
+    switch(this.state.statsType) {
+      case "basic":
+        return(dataColumns.playersBasicColumns);
+      case "freq":
+        return(dataColumns.playersFreqColumns);
+      case "shootpercs":
+        return(dataColumns.playersShootPercColumns);
+      case "goaldata":
+        return(dataColumns.playersGoalDataColumns);
+      case "actualvals":
+        return(dataColumns.playersActualValsColumns);
+      case "expectedvals":
+        return(dataColumns.playersExpectedValsColumns);
+      case "all":
+        return(dataColumns.playersAllSummariesColumns);
+      default:
+        return(dataColumns.playersBasicColumns);
+    }
+  }
 
 
   render() {
-
-    const cols = dataColumns.playersBasicColumns;
+    const cols = this.getCols();
     const opts = dataColumns.playersBasicOptions;
 
     const defaultopts = dataColumns.playersBasicDefaultOptions;
@@ -135,12 +160,13 @@ class Players extends React.Component {
             defaultPageNum={maintheme.DefaultNumTableItems}
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
+            changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
           />
           <Table
             pageSize={this.state.pageNum}
             cols={cols}
             dataSource={this.state.data}
-            scroll={{ x: maxTableWidth }}
+            scroll={{ x: cols.length * 100 }}
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}

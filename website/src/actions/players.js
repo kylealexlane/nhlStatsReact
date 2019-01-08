@@ -25,7 +25,6 @@ export function playersFetchData(url) {
 
     fetch(url)
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw Error(response.statusText);
         }

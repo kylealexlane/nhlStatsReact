@@ -35,7 +35,6 @@ class BlogPost extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
     let slug = this.props.match.params.slug;
 
     butter.post.retrieve(slug).then((resp) => {

@@ -157,7 +157,31 @@ class TableAbove extends React.Component {
       selectNumPerPage =
         <SelectDiv>
           <FilterTitle>Items Per Page</FilterTitle>
-          <InputNumber min={1} max={1000} style={{width: 135}} defaultValue={this.props.deafultPageNum? this.props.deafultPageNum: theme.DefaultNumTableItems} onChange={this.props.pageNumChangeCallback} />
+          <InputNumber
+            min={1} max={1000}
+            style={{width: 135}}
+            defaultValue={this.props.deafultPageNum? this.props.deafultPageNum: theme.DefaultNumTableItems}
+            onChange={this.props.pageNumChangeCallback} />
+        </SelectDiv>
+    }
+
+    // Stats type filter
+    if(this.state.selectedOpts.indexOf("statstype") > -1){
+      selectSituationType =
+        <SelectDiv>
+          <FilterTitle>Stats Type</FilterTitle>
+          <Select
+            defaultValue={this.props.defaultStatstype ? this.props.defaultStatstype : "basic"}
+            style={{width: 160}}
+            onChange={(value) => this.props.changeSelectStatsTypeCallback(value)}
+          >
+            <Option value="basic">Basic</Option>
+            <Option value="freq">Frequencies</Option>
+            <Option value="shootpercs">Shooting %s</Option>
+            <Option value="actualvals">Actual Values</Option>
+            <Option value="expectedvals">Expected Values</Option>
+            <Option value="all">All</Option>
+          </Select>
         </SelectDiv>
     }
 

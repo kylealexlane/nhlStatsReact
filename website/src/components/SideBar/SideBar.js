@@ -121,10 +121,6 @@ class SideBar extends React.Component {
   }
 
   render() {
-    console.log("gone", this.state.gone);
-    console.log("state", this.state);
-    console.log("props", this.props);
-
 
     return (
       <React.Fragment>
