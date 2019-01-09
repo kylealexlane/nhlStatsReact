@@ -113,7 +113,7 @@ class Goalies extends React.Component {
     this.setState({ pageNum: n })
   }
 
-  // Handle changing
+  // Handle changing stats type
   changeSelectStatsTypeCallback(value) {
     this.setState({ statsType: value })
   }
@@ -124,7 +124,7 @@ class Goalies extends React.Component {
         return(dataColumns.goaliesBasicColumns);
       case "freq":
         return(dataColumns.goaliesFreqColumns);
-      case "shootpercs":
+      case "savepercs":
         return(dataColumns.goaliesShootPercColumns);
       case "goaldata":
         return(dataColumns.goaliesGoalDataColumns);
@@ -158,6 +158,7 @@ class Goalies extends React.Component {
           <TableAbove
             title={"Goalies"}
             subTitle={"Goalie save statistics by season and game type"}
+            goalieStats={true}
             chooseSelects={true}
             selectsOptions={opts}
             pageNumChangeCallback={this.pageNumChangeCallback}
@@ -169,6 +170,7 @@ class Goalies extends React.Component {
           />
           <TableWrapper>
             <Table
+              goalieStats={true}
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={this.state.data}

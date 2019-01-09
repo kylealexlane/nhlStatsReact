@@ -6,6 +6,7 @@ import ModelContainer from "./Model";
 import BlogHomeContainer from "./BlogHome";
 import BlogPostContainer from "./BlogPost";
 import PlayerContainer from "./Player";
+import GoalieContainer from "./Goalie"
 
 
 export {
@@ -17,4 +18,5 @@ export {
   BlogPostContainer,
   BlogHomeContainer,
   PlayerContainer,
+  GoalieContainer,
 };

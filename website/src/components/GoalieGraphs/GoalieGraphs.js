@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import { Spin } from 'antd';
 import {teamInfoFetchData} from "../../actions/teams";
-import ShootingSkillGraph from "./ShootingSkillGraph"
+import SaveSkillGraph from "./SaveSkillGraph"
 import ShotQualityGraph from "./ShotQualityGraph"
 import ShotTypesGraph from "./ShotTypesGraph"
 
@@ -109,7 +109,7 @@ class GoalieGraphs extends React.Component {
       content = (
         <div style={{width: "100%", position: "relative"}}>
           <GraphTitle>Shooting Skill</GraphTitle>
-          <ShootingSkillGraph getMetricList={this.getMetricList}/>
+          <SaveSkillGraph getMetricList={this.getMetricList}/>
 
           <GraphTitle>Shot Quality</GraphTitle>
           <ShotQualityGraph getMetricList={this.getMetricList}/>

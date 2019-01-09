@@ -166,7 +166,7 @@ class Players extends React.Component {
             pageSize={this.state.pageNum}
             cols={cols}
             dataSource={this.state.data}
-            scroll={{ x: cols.length * 100 }}
+            scroll={{ x: cols.length * 100 }} // each column has a fixed width of 100
             loading={this.state.isLoading}
             rowKey="id"
             colWidth={100}

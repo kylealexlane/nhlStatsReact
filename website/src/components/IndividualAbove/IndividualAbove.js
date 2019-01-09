@@ -116,19 +116,34 @@ class IndividualAbove extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.player !== this.state.player) {
-      this.setState({ data: nextProps.player });
+    let bio = "playerBio";
+    let loading = "isLoading";
+    let d = "player";
+
+    if(this.props.type === "goalie"){
+      bio = "goalieBio";
+      loading = "goalieIsLoading";
+      d = "goalie";
+    } else if(this.props.type === "player"){
+      bio = "playerBio";
+      loading = "isLoading";
+      d = "player";
     }
-    if (nextProps.playerBio !== this.state.bio && !nextProps.isLoading && nextProps.playerBio.currentTeam) {
+
+    if (nextProps[bio] !== this.state.data) {
+      this.setState({ data: nextProps[d] });
+    }
+    if (nextProps[bio] !== this.state.bio && !nextProps[loading] && nextProps[bio].currentTeam) {
       this.setState({
-        bio: nextProps.playerBio,
-        teamid: nextProps.playerBio.currentTeam.id
+        bio: nextProps[bio],
+        teamid: nextProps[bio].currentTeam.id
       });
-      this.fetchTeamInfoAfter(nextProps.playerBio.currentTeam.id);
+      this.fetchTeamInfoAfter(nextProps[bio].currentTeam.id);
     }
-    if (nextProps.isLoading !== this.state.isLoading) {
-      this.setState({ isLoading: nextProps.isLoading });
+    if (nextProps[loading] !== this.state.isLoading) {
+      this.setState({ isLoading: nextProps[loading] });
     }
+
     if (nextProps.teamInfo !== this.state.teamInfo) {
       this.setState({ teamInfo: nextProps.teamInfo });
     }
@@ -191,6 +206,12 @@ const mapStateToProps = (state) => {
     playerBio: state.playerBio,
     hasErrored: (state.playerHasErrored || state.playerBioHasErrored),
     isLoading: (state.playerIsLoading|| state.playerBioIsLoading),
+
+    goalie: state.goalie,
+    goalieBio: state.goalieBio,
+    goalieHasErrored: (state.goalieHasErrored || state.goalieBioHasErrored),
+    goalieIsLoading: (state.goalieIsLoading || state.goalieBioIsLoading),
+
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
     teamInfo: state.teamInfo,
