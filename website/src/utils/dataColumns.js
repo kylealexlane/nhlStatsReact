@@ -13,32 +13,6 @@ const playersBasicColumns = [
   'shot_quality'
 ];
 
-const teamsOffensiveBasicColumns = [
-  'name',
-  'num_shots',
-  'num_goals',
-  'sum_xgoals',
-  'avg_shoot_perc',
-  'avg_xgoals',
-  'goals_aa_per_shot',
-  'shot_quality',
-  'mean_dist',
-  'mean_ang'
-];
-
-const teamsDefensiveBasicColumns = [
-  'name',
-  'num_shots',
-  'num_goals',
-  'sum_xgoals',
-  'save_perc',
-  'xsave_perc',
-  'saves_aa_per_shot',
-  'shot_quality',
-  'mean_dist',
-  'mean_ang'
-];
-
 const playersFreqColumns = [
   'last_name',
   'first_name',
@@ -255,6 +229,8 @@ const playersAllSummariesColumns = [
 
 
 
+
+
 // Get player column data from players - just remove last_name, etc... and add in proper start
 function GetPlayerCols(playerscols) {
   let list = ["year", "month"];
@@ -271,6 +247,8 @@ const playerActualValsColumns = GetPlayerCols(playersActualValsColumns);
 const playerExpectedValsColumns = GetPlayerCols(playersExpectedValsColumns);
 const playerGoalDataColumns = GetPlayerCols(playersGoalDataColumns);
 const playerAllSummariesColumns = GetPlayerCols(playersAllSummariesColumns);
+
+
 
 
 
@@ -295,56 +273,105 @@ function GetGoalieCols(playerscols) {
 
 const goaliesBasicColumns = GetGoalieCols(playersBasicColumns);
 const goaliesFreqColumns = GetGoalieCols(playersFreqColumns);
-const goaliesShootPercColumns = GetPlayerCols(playersShootPercColumns);
-const goaliesActualValsColumns = GetPlayerCols(playersActualValsColumns);
-const goaliesExpectedValsColumns = GetPlayerCols(playersExpectedValsColumns);
-const goaliesGoalDataColumns = GetPlayerCols(playersGoalDataColumns);
-const goaliesAllSummariesColumns = GetPlayerCols(playersAllSummariesColumns);
+const goaliesShootPercColumns = GetGoalieCols(playersShootPercColumns);
+const goaliesActualValsColumns = GetGoalieCols(playersActualValsColumns);
+const goaliesExpectedValsColumns = GetGoalieCols(playersExpectedValsColumns);
+const goaliesGoalDataColumns = GetGoalieCols(playersGoalDataColumns);
+const goaliesAllSummariesColumns = GetGoalieCols(playersAllSummariesColumns);
 
 const goalieBasicColumns = GetGoalieCols(playerBasicColumns);
 const goalieFreqColumns = GetGoalieCols(playerFreqColumns);
-const goalieShootPercColumns = GetPlayerCols(playerShootPercColumns);
-const goalieActualValsColumns = GetPlayerCols(playerActualValsColumns);
-const goalieExpectedValsColumns = GetPlayerCols(playerExpectedValsColumns);
-const goalieGoalDataColumns = GetPlayerCols(playerGoalDataColumns);
-const goalieAllSummariesColumns = GetPlayerCols(playerAllSummariesColumns);
+const goalieShootPercColumns = GetGoalieCols(playerShootPercColumns);
+const goalieActualValsColumns = GetGoalieCols(playerActualValsColumns);
+const goalieExpectedValsColumns = GetGoalieCols(playerExpectedValsColumns);
+const goalieGoalDataColumns = GetGoalieCols(playerGoalDataColumns);
+const goalieAllSummariesColumns = GetGoalieCols(playerAllSummariesColumns);
+
+
+
+
+// Get Team column data from players, goalies, palayer, and goalie - just replace first name and last name and pos to name, etc...
+function GetTeamCols(regCols) {
+  let list = ["name"];
+  regCols.forEach(function(metric) {
+    if(!metric.includes("last_name") && !metric.includes("first_name") && !metric.includes("pos_code")){
+      list.push(metric)
+    }
+  });
+  return(list);
+}
+
+const teamsOffensiveBasicColumns = GetTeamCols(playersBasicColumns);
+const teamsOffensiveFreqColumns = GetTeamCols(playersFreqColumns);
+const teamsOffensiveShootPercColumns = GetTeamCols(playersShootPercColumns);
+const teamsOffensiveActualValsColumns = GetTeamCols(playersActualValsColumns);
+const teamsOffensiveExpectedValsColumns = GetTeamCols(playersExpectedValsColumns);
+const teamsOffensiveGoalDataColumns = GetTeamCols(playersGoalDataColumns);
+const teamsOffensiveAllSummariesColumns = GetTeamCols(playersAllSummariesColumns);
+
+const teamOffensiveBasicColumns = GetTeamCols(playerBasicColumns);
+const teamOffensiveFreqColumns = GetTeamCols(playerFreqColumns);
+const teamOffensiveShootPercColumns = GetTeamCols(playerShootPercColumns);
+const teamOffensiveActualValsColumns = GetTeamCols(playerActualValsColumns);
+const teamOffensiveExpectedValsColumns = GetTeamCols(playerExpectedValsColumns);
+const teamOffensiveGoalDataColumns = GetTeamCols(playerGoalDataColumns);
+const teamOffensiveAllSummariesColumns = GetTeamCols(playerAllSummariesColumns);
+
+const teamsDefensiveBasicColumns = GetTeamCols(goaliesBasicColumns);
+const teamsDefensiveFreqColumns = GetTeamCols(goaliesFreqColumns);
+const teamsDefensiveShootPercColumns = GetTeamCols(goaliesShootPercColumns);
+const teamsDefensiveActualValsColumns = GetTeamCols(goaliesActualValsColumns);
+const teamsDefensiveExpectedValsColumns = GetTeamCols(goaliesExpectedValsColumns);
+const teamsDefensiveGoalDataColumns = GetTeamCols(goaliesGoalDataColumns);
+const teamsDefensiveAllSummariesColumns = GetTeamCols(goaliesAllSummariesColumns);
+
+const teamDefensiveBasicColumns = GetTeamCols(goalieBasicColumns);
+const teamDefensiveFreqColumns = GetTeamCols(goalieFreqColumns);
+const teamDefensiveShootPercColumns = GetTeamCols(goalieShootPercColumns);
+const teamDefensiveActualValsColumns = GetTeamCols(goalieActualValsColumns);
+const teamDefensiveExpectedValsColumns = GetTeamCols(goalieExpectedValsColumns);
+const teamDefensiveGoalDataColumns = GetTeamCols(goalieGoalDataColumns);
+const teamDefensiveAllSummariesColumns = GetTeamCols(goalieAllSummariesColumns);
 
 
 // Options for columns - what is displayed at the top for filtering
 const basicOptions = [
   {label: "Year",
-    val: "year"},
+    val: "year"
+  },
   {label: "Game Type",
-    val: "gametype"},
+    val: "gametype"
+  },
   {label: "Stats Type",
-    val: "statstype"},
+    val: "statstype"
+  },
   {label: "Items Per Page",
-    val: "pagenum"}
+    val: "pagenum"
+  }
 ];
 
 const basicPlusSituationOptions = [
   {label: "Year",
-    val: "year"},
+    val: "year"
+  },
   {label: "Game Type",
-    val: "gametype"},
+    val: "gametype"
+  },
   {label: "Situation",
-    val: "situation"},
+    val: "situation"
+  },
+  {label: "Stats Type",
+    val: "statstype"
+  },
   {label: "Items Per Page",
-    val: "pagenum"}
+    val: "pagenum"
+  }
 ];
 
 const basicDefaultOptions = ["year", "gametype", "statstype"];
-const basicPlusSituationDefaultOptions = ["year", "gametype", "situation"];
+const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype"];
 
 export default {
-  teamsOffensiveBasicColumns: teamsOffensiveBasicColumns,
-  teamsOffensiveBasicOptions: basicPlusSituationOptions,
-  teamsOffensiveDefaultOptions: basicPlusSituationDefaultOptions,
-
-  teamsDefensiveBasicColumns: teamsDefensiveBasicColumns,
-  teamsDefensiveBasicOptions: basicPlusSituationOptions,
-  teamsDefensiveDefaultOptions: basicPlusSituationDefaultOptions,
-
   // Players
   playersBasicOptions: basicOptions,
   playersBasicDefaultOptions: basicDefaultOptions,
@@ -355,6 +382,14 @@ export default {
   playersExpectedValsColumns: playersExpectedValsColumns,
   playersGoalDataColumns: playersGoalDataColumns,
   playersAllSummariesColumns: playersAllSummariesColumns,
+  // Player (individual)
+  playerBasicColumns: playerBasicColumns,
+  playerFreqColumns: playerFreqColumns,
+  playerShootPercColumns: playerShootPercColumns,
+  playerActualValsColumns: playerActualValsColumns,
+  playerExpectedValsColumns: playerExpectedValsColumns,
+  playerGoalDataColumns: playerGoalDataColumns,
+  playerAllSummariesColumns: playerAllSummariesColumns,
 
   // Goalies
   goaliesBasicOptions: basicOptions,
@@ -366,16 +401,6 @@ export default {
   goaliesExpectedValsColumns: goaliesExpectedValsColumns,
   goaliesGoalDataColumns: goaliesGoalDataColumns,
   goaliesAllSummariesColumns: goaliesAllSummariesColumns,
-
-  // Player (individual)
-  playerBasicColumns: playerBasicColumns,
-  playerFreqColumns: playerFreqColumns,
-  playerShootPercColumns: playerShootPercColumns,
-  playerActualValsColumns: playerActualValsColumns,
-  playerExpectedValsColumns: playerExpectedValsColumns,
-  playerGoalDataColumns: playerGoalDataColumns,
-  playerAllSummariesColumns: playerAllSummariesColumns,
-
   // Goalie (individual)
   goalieBasicColumns: goalieBasicColumns,
   goalieFreqColumns: goalieFreqColumns,
@@ -384,4 +409,46 @@ export default {
   goalieExpectedValsColumns: goalieExpectedValsColumns,
   goalieGoalDataColumns: goalieGoalDataColumns,
   goalieAllSummariesColumns: goalieAllSummariesColumns,
+
+
+
+  // Teams Offensive
+  teamsOffensiveOptions: basicPlusSituationOptions,
+  teamsOffensiveDefaultOptions: basicPlusSituationDefaultOptions,
+  teamsOffensiveBasicColumns: teamsOffensiveBasicColumns,
+  teamsOffensiveFreqColumns: teamsOffensiveFreqColumns,
+  teamsOffensiveShootPercColumns: teamsOffensiveShootPercColumns,
+  teamsOffensiveActualValsColumns: teamsOffensiveActualValsColumns,
+  teamsOffensiveExpectedValsColumns: teamsOffensiveExpectedValsColumns,
+  teamsOffensiveGoalDataColumns: teamsOffensiveGoalDataColumns,
+  teamsOffensiveAllSummariesColumns: teamsOffensiveAllSummariesColumns,
+  // Team Offensive (individual)
+  teamOffensiveBasicColumns: teamOffensiveBasicColumns,
+  teamOffensiveFreqColumns: teamOffensiveFreqColumns,
+  teamOffensiveShootPercColumns: teamOffensiveShootPercColumns,
+  teamOffensiveActualValsColumns: teamOffensiveActualValsColumns,
+  teamOffensiveExpectedValsColumns: teamOffensiveExpectedValsColumns,
+  teamOffensiveGoalDataColumns: teamOffensiveGoalDataColumns,
+  teamOffensiveAllSummariesColumns: teamOffensiveAllSummariesColumns,
+
+
+
+  // Teams Defensive
+  teamsDefensiveOptions: basicPlusSituationOptions,
+  teamsDefensiveDefaultOptions: basicPlusSituationDefaultOptions,
+  teamsDefensiveBasicColumns: teamsDefensiveBasicColumns,
+  teamsDefensiveFreqColumns: teamsDefensiveFreqColumns,
+  teamsDefensiveShootPercColumns: teamsDefensiveShootPercColumns,
+  teamsDefensiveActualValsColumns: teamsDefensiveActualValsColumns,
+  teamsDefensiveExpectedValsColumns: teamsDefensiveExpectedValsColumns,
+  teamsDefensiveGoalDataColumns: teamsDefensiveGoalDataColumns,
+  teamsDefensiveAllSummariesColumns: teamsDefensiveAllSummariesColumns,
+  // Team Defensive (individual)
+  teamDefensiveBasicColumns: teamDefensiveBasicColumns,
+  teamDefensiveFreqColumns: teamDefensiveFreqColumns,
+  teamDefensiveShootPercColumns: teamDefensiveShootPercColumns,
+  teamDefensiveActualValsColumns: teamDefensiveActualValsColumns,
+  teamDefensiveExpectedValsColumns: teamDefensiveExpectedValsColumns,
+  teamDefensiveGoalDataColumns: teamDefensiveGoalDataColumns,
+  teamDefensiveAllSummariesColumns: teamDefensiveAllSummariesColumns,
 }

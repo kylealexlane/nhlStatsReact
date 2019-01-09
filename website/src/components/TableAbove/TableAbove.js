@@ -75,6 +75,7 @@ class TableAbove extends React.Component {
     let chooseSelect;
     let selectNumPerPage;
     let selectSituationType;
+    let selectStatsType;
 
     // Selector for choosing which filters to show/display
     if(this.props.chooseSelects) {
@@ -152,6 +153,27 @@ class TableAbove extends React.Component {
         </SelectDiv>
     }
 
+    // Stats type filter
+    if(this.state.selectedOpts.indexOf("statstype") > -1){
+      selectStatsType =
+        <SelectDiv>
+          <FilterTitle>Stats Type</FilterTitle>
+          <Select
+            defaultValue={this.props.defaultStatstype ? this.props.defaultStatstype : "basic"}
+            style={{width: 160}}
+            onChange={(value) => this.props.changeSelectStatsTypeCallback(value)}
+          >
+            <Option value="basic">Basic</Option>
+            <Option value="freq">Frequencies</Option>
+            {this.props.goalieStats ? <Option value="savepercs">Save %s</Option> :
+              <Option value="shootpercs">Shooting %s</Option>}
+            <Option value="actualvals">Actual Values</Option>
+            <Option value="expectedvals">Expected Values</Option>
+            <Option value="all">All</Option>
+          </Select>
+        </SelectDiv>
+    }
+
     // page number filter for pagination
     if(this.state.selectedOpts.indexOf("pagenum") > -1){
       selectNumPerPage =
@@ -165,26 +187,6 @@ class TableAbove extends React.Component {
         </SelectDiv>
     }
 
-    // Stats type filter
-    if(this.state.selectedOpts.indexOf("statstype") > -1){
-      selectSituationType =
-        <SelectDiv>
-          <FilterTitle>Stats Type</FilterTitle>
-          <Select
-            defaultValue={this.props.defaultStatstype ? this.props.defaultStatstype : "basic"}
-            style={{width: 160}}
-            onChange={(value) => this.props.changeSelectStatsTypeCallback(value)}
-          >
-            <Option value="basic">Basic</Option>
-            <Option value="freq">Frequencies</Option>
-            <Option value="shootpercs">Shooting %s</Option>
-            <Option value="actualvals">Actual Values</Option>
-            <Option value="expectedvals">Expected Values</Option>
-            <Option value="all">All</Option>
-          </Select>
-        </SelectDiv>
-    }
-
       return(
     <Header>
       <TitleDiv>
@@ -195,8 +197,9 @@ class TableAbove extends React.Component {
       {selectYear}
       {selectGameType}
       {selectSituationType}
+      {selectStatsType}
       {selectNumPerPage}
     </Header>)}
-};
+}
 
 export default withTheme(TableAbove);

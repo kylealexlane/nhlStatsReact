@@ -32,7 +32,7 @@ class GoalieTables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: this.props.isLoading? this.props.isLoading : true,
+      isLoading: this.props.isLoading ? this.props.isLoading : true,
       data: [],
       yearlyPlayoffData: [],
       yearlyRegData: [],
@@ -123,6 +123,7 @@ class GoalieTables extends React.Component {
         <div style={{width: "100%", position: "relative"}}>
           <GraphTitle>Basic</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieBasicColumns}
             dataSource={d}
@@ -134,6 +135,7 @@ class GoalieTables extends React.Component {
           />
           <GraphTitle>Frequencies</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieFreqColumns}
             dataSource={d}
@@ -145,6 +147,7 @@ class GoalieTables extends React.Component {
           />
           <GraphTitle>Shooting Percents</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieShootPercColumns}
             dataSource={d}
@@ -156,6 +159,7 @@ class GoalieTables extends React.Component {
           />
           <GraphTitle>Actual Values</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieActualValsColumns}
             dataSource={d}
@@ -168,6 +172,7 @@ class GoalieTables extends React.Component {
           <GraphTitle>Expected Values</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
+            goalieStats={true}
             cols={dataColumns.goalieExpectedValsColumns}
             dataSource={d}
             scroll={{ x: dataColumns.goalieExpectedValsColumns.length * 100 }}
@@ -178,6 +183,7 @@ class GoalieTables extends React.Component {
           />
           <GraphTitle>Goals</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieGoalDataColumns}
             dataSource={d}
@@ -189,6 +195,7 @@ class GoalieTables extends React.Component {
           />
           <GraphTitle>All</GraphTitle>
           <Table
+            goalieStats={true}
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieAllSummariesColumns}
             dataSource={d}

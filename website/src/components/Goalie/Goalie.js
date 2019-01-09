@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
-import { Table } from "../Table";
 import maintheme from "../../styles/theme"
 import { layout } from "../../styles/theme"
 import { goalieFetchData, goalieFetchBio } from '../../actions/goalie';
@@ -119,15 +118,12 @@ class Goalie extends React.Component {
       this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2);
     let w = (pw < maintheme.layout.maxWrapperWidthInt) ? pw : maintheme.layout.maxWrapperWidthInt;
 
-    // const cols = dataColumns.goaliesBasicColumns;
-    const cols = dataColumns.test;
-
-
     return (
       <React.Fragment>
         <MainWrapper style={{ width: w}}>
           <IndividualAbove
             isLoading={this.state.isLoading}
+            type={"goalie"}
           />
           <Tabs defaultActiveKey="1" onChange={this.tabchange}>
             <TabPane tab="Puck Luck" key="1">
@@ -142,8 +138,8 @@ class Goalie extends React.Component {
                 <GoalieTables />
               </Section>
             </TabPane>
-            <TabPane tab="Ranking" key="3" disabled>Content of Tab Pane 3</TabPane>
-            <TabPane tab="Bio" key="4" disabled>Content of Tab Pane 4</TabPane>
+            <TabPane tab="Ranking" key="3" disabled>Coming soon!</TabPane>
+            <TabPane tab="Bio" key="4" disabled>Coming soon!</TabPane>
 
           </Tabs>
 

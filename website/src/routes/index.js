@@ -15,6 +15,7 @@ import {
   BlogHomeContainer,
   BlogPostContainer,
   PlayerContainer,
+  GoalieContainer,
 } from "../containers";
 
 const Container = styled.div`
@@ -60,6 +61,10 @@ function Routes() {
               <Route
                 exact path={"/goalies"}
                 render = {(props) => <GoaliesContainer {...props} />}
+              />
+              <Route
+                path={"/goalies/:slug"}
+                render = {(props) => <GoalieContainer {...props} />}
               />
               <Route
                 exact path={"/teams"}

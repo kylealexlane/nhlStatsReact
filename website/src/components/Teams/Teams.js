@@ -44,6 +44,7 @@ class Teams extends React.Component {
       height: 0,
       yearSelected: '20182019',
       gametype: 'R',
+      statsType: 'basic',
       isLoading: false,
       offensiveData: [],
       defensiveData: [],
@@ -57,6 +58,8 @@ class Teams extends React.Component {
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
     this.handleChangeSituation = this.handleChangeSituation.bind(this);
     this.fetchTeamData = this.fetchTeamData.bind(this);
+    this.changeSelectStatsTypeCallback = this.changeSelectStatsTypeCallback.bind(this);
+    this.getCols = this.getCols.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -94,7 +97,7 @@ class Teams extends React.Component {
   }
 
   fetchTeamData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/teams?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list`);
+    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/teams?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   // Handle changing year
@@ -125,12 +128,59 @@ class Teams extends React.Component {
     this.setState({ pageNum: n })
   }
 
+  // Handle changing stats type
+  changeSelectStatsTypeCallback(value) {
+    this.setState({ statsType: value })
+  }
+
+  getCols() {
+    if(this.state.situation === "offensive"){
+      switch(this.state.statsType) {
+        case "basic":
+          return(dataColumns.teamsOffensiveBasicColumns);
+        case "freq":
+          return(dataColumns.teamsOffensiveFreqColumns);
+        case "shootpercs":
+          return(dataColumns.teamsOffensiveShootPercColumns);
+        case "goaldata":
+          return(dataColumns.teamsOffensiveGoalDataColumns);
+        case "actualvals":
+          return(dataColumns.teamsOffensiveActualValsColumns);
+        case "expectedvals":
+          return(dataColumns.teamsOffensiveExpectedValsColumns);
+        case "all":
+          return(dataColumns.teamsOffensiveAllSummariesColumns);
+        default:
+          return(dataColumns.teamsOffensiveBasicColumns);
+      }
+    } else {
+      switch(this.state.statsType) {
+        case "basic":
+          return(dataColumns.teamsDefensiveBasicColumns);
+        case "freq":
+          return(dataColumns.teamsDefensiveFreqColumns);
+        case "savepercs":
+          return(dataColumns.teamsDefensiveShootPercColumns);
+        case "goaldata":
+          return(dataColumns.teamsDefensiveGoalDataColumns);
+        case "actualvals":
+          return(dataColumns.teamsDefensiveActualValsColumns);
+        case "expectedvals":
+          return(dataColumns.teamsDefensiveExpectedValsColumns);
+        case "all":
+          return(dataColumns.teamsDefensiveAllSummariesColumns);
+        default:
+          return(dataColumns.teamsDefensiveBasicColumns);
+      }
+    }
+  }
+
 
   render() {
     const o = this.state.situation === "offensive";
 
-    const cols = o ? dataColumns.teamsOffensiveBasicColumns : dataColumns.teamsDefensiveBasicColumns;
-    const opts = o ? dataColumns.teamsOffensiveBasicOptions : dataColumns.teamsDefensiveBasicOptions;
+    const cols = this.getCols();
+    const opts = o ? dataColumns.teamsOffensiveOptions : dataColumns.teamsDefensiveOptions;
 
     const defaultopts = o ? dataColumns.teamsOffensiveDefaultOptions : dataColumns.teamsDefensiveDefaultOptions;
 
@@ -159,14 +209,16 @@ class Teams extends React.Component {
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
             selectSituationCallback={this.handleChangeSituation}
+            changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
             {...this.props}
           />
           <TableWrapper>
             <Table
+              goalieStats={!o}
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={o ? this.state.offensiveData : this.state.defensiveData}
-              scroll={{ x: maxTableWidth }}
+              scroll={{ x: (cols.length * 100) + 100 }} // Extra for the fixed column at the start being 200 width
               loading={this.state.isLoading}
               rowKey="id"
               colWidth={100}

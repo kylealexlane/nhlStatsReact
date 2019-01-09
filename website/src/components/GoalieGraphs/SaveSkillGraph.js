@@ -7,10 +7,9 @@ import ReactEcharts from 'echarts-for-react';
 function getGenShootingOption(props) {
   const colors = ['#f76600', '#5793f3', '#d14a61', '#675bba'];
   const numShots = props.getMetricList("num_shots", "yearlyRegData");
-  const shootPerc = props.getMetricList("avg_shoot_perc", "yearlyRegData");
-  const xShootPerc = props.getMetricList("avg_xgoals", "yearlyRegData");
-  const sq = props.getMetricList("shot_quality", "yearlyRegData");
-  const gaapers = props.getMetricList("goals_aa_per_shot", "yearlyRegData");
+  const savePerc = props.getMetricList("save_perc", "yearlyRegData");
+  const xsavePerc = props.getMetricList("xsave_perc", "yearlyRegData");
+  const saapers = props.getMetricList("saves_aa_per_shot", "yearlyRegData");
   return(
     {
       color: colors,
@@ -31,7 +30,7 @@ function getGenShootingOption(props) {
         }
       },
       legend: {
-        data:['Num Shots', 'Shooting %','xShooting %','GoalsAA/s']
+        data:['Num Shots', 'Save %','xSave %','SavesAA/s']
       },
       xAxis: [
         {
@@ -60,9 +59,9 @@ function getGenShootingOption(props) {
         },
         {
           type: 'value',
-          name: 'Shooting %',
-          min: 0,
-          max: 0.25,
+          name: 'Save %',
+          min: Math.min(...xsavePerc) < .85 ? Math.min(...xsavePerc) : .85,
+          max: Math.max(...xsavePerc) > .95 ? Math.max(...xsavePerc) : .95,
           position: 'right',
           axisLine: {
             lineStyle: {
@@ -75,9 +74,9 @@ function getGenShootingOption(props) {
         },
         {
           type: 'value',
-          name: 'xShooting %',
-          min: 0,
-          max: 0.25,
+          name: 'xSave %',
+          min: Math.min(...xsavePerc) < .875 ? Math.min(...xsavePerc) : .875,
+          max: Math.max(...xsavePerc) > .94 ? Math.max(...xsavePerc) : .94,
           position: 'right',
           offset: 80,
           axisLine: {
@@ -92,8 +91,8 @@ function getGenShootingOption(props) {
         {
           type: 'value',
           name: 'GoalsAA/s',
-          min: Math.min(...gaapers),
-          max: Math.max(...gaapers),
+          min: Math.min(...saapers),
+          max: Math.max(...saapers),
           position: 'right',
           offset: 160,
           axisLine: {
@@ -113,22 +112,22 @@ function getGenShootingOption(props) {
           data: numShots
         },
         {
-          name:'Shooting %',
+          name:'Save %',
           type:'line',
           yAxisIndex: 1,
-          data: shootPerc
+          data: savePerc
         },
         {
-          name:'xShooting %',
+          name:'xSave %',
           type:'line',
           yAxisIndex: 2,
-          data: xShootPerc
+          data: xsavePerc
         },
         {
-          name:'GoalsAA/s',
+          name:'SavesAA/s',
           type:'line',
           yAxisIndex: 3,
-          data: gaapers
+          data: saapers
         }
       ]
     }

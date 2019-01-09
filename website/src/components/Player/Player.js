@@ -128,6 +128,7 @@ class Player extends React.Component {
         <MainWrapper style={{ width: w}}>
           <IndividualAbove
             isLoading={this.state.isLoading}
+            type={"player"}
           />
           <Tabs defaultActiveKey="1" onChange={this.tabchange}>
             <TabPane tab="Puck Luck" key="1">
