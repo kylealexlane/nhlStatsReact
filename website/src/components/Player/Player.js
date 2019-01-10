@@ -98,7 +98,7 @@ class Player extends React.Component {
   }
 
   fetchPlayerData(slug) {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players/${slug}?returntype=list&depth=allsummaries`);
+    this.props.fetchData(`https://www.api.thepuckluck.com/api/v1/players/${slug}?returntype=list&depth=allsummaries`);
     this.props.fetchBio(`https://statsapi.web.nhl.com/api/v1/people/${slug}`);
   }
 

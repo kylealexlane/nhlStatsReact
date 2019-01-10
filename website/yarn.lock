@@ -6572,6 +6572,10 @@ react-animations@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-animations/-/react-animations-1.0.0.tgz#d96222920dfeabec8984d9b2ef2c5a5aadb40f06"
 
+react-component@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/react-component/-/react-component-0.0.0.tgz#4bece46dd1e85747e18ab4debc1095abf8357206"
+
 react-dev-utils@^5.0.0:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.3.tgz#92f97668f03deb09d7fa11ea288832a8c756e35e"

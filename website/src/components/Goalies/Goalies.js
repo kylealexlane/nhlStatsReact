@@ -85,7 +85,7 @@ class Goalies extends React.Component {
   }
 
   fetchGoalieData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
+    this.props.fetchData(`https://www.api.thepuckluck.com/api/v1/goalies?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   updateWindowDimensions() {

@@ -80,7 +80,7 @@ class Players extends React.Component {
   }
 
   fetchPlayerData() {
-    this.props.fetchData(`http://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
+    this.props.fetchData(`https://www.api.thepuckluck.com/api/v1/players?season=${this.state.yearSelected}&gametype=${this.state.gametype}&returntype=list&depth=allsummaries`);
   }
 
   updateWindowDimensions() {
