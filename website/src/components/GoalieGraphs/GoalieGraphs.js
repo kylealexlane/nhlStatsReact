@@ -109,13 +109,13 @@ class GoalieGraphs extends React.Component {
       content = (
         <div style={{width: "100%", position: "relative"}}>
           <GraphTitle>Shooting Skill</GraphTitle>
-          <SaveSkillGraph getMetricList={this.getMetricList}/>
+          <SaveSkillGraph getMetricList={this.getMetricList} m={this.props.isMobile}/>
 
           <GraphTitle>Shot Quality</GraphTitle>
-          <ShotQualityGraph getMetricList={this.getMetricList}/>
+          <ShotQualityGraph getMetricList={this.getMetricList} m={this.props.isMobile}/>
 
           <GraphTitle>Shot Types</GraphTitle>
-          <ShotTypesGraph getMetricList={this.getMetricList}/>
+          <ShotTypesGraph getMetricList={this.getMetricList} m={this.props.isMobile}/>
         </div>
       );
     }
@@ -143,6 +143,7 @@ const mapStateToProps = (state) => {
     sidebarGone: state.sidebarGone,
     teamInfo: state.teamInfo,
     teamInfoLoading: state.teamInfoIsLoading,
+    isMobile: state.isMobileMode,
   };
 };
 

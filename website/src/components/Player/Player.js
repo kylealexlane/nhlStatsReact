@@ -143,8 +143,8 @@ class Player extends React.Component {
                 <PlayerTables />
               </Section>
             </TabPane>
-            <TabPane tab="Ranking" key="3" disabled>Content of Tab Pane 3</TabPane>
-            <TabPane tab="Bio" key="4" disabled>Content of Tab Pane 4</TabPane>
+            {/*<TabPane tab="Ranking" key="3" disabled>Content of Tab Pane 3</TabPane>*/}
+            {/*<TabPane tab="Bio" key="4" disabled>Content of Tab Pane 4</TabPane>*/}
 
           </Tabs>
 

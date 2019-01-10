@@ -4,7 +4,7 @@ import { player, playerHasErrored, playerIsLoading, playerBio, playerBioHasError
 import { teams, teamsHasErrored, teamsIsLoading, teamInfo, teamInfoHasErrored, teamInfoIsLoading } from '../reducers/teams';
 import { goalies, goaliesHasErrored, goaliesIsLoading } from '../reducers/goalies';
 import { goalie, goalieHasErrored, goalieIsLoading, goalieBio, goalieBioHasErrored, goalieBioIsLoading } from '../reducers/goalie';
-import { sidebarCollapsed, sidebarGone } from '../reducers/sidebar'
+import { sidebarCollapsed, sidebarGone, screenWidth, isMobileMode } from '../reducers/sidebar'
 
 
 const rootReducer = combineReducers({
@@ -33,7 +33,9 @@ const rootReducer = combineReducers({
   goalieIsLoading,
   goalieBio,
   goalieBioHasErrored,
-  goalieBioIsLoading
+  goalieBioIsLoading,
+  screenWidth,
+  isMobileMode,
 });
 
 export default rootReducer;

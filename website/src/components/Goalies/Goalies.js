@@ -143,6 +143,7 @@ class Goalies extends React.Component {
   render() {
     const cols = this.getCols();
     const opts = dataColumns.goaliesBasicOptions;
+    const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
 
     const defaultopts = dataColumns.goaliesBasicDefaultOptions;
 
@@ -174,11 +175,11 @@ class Goalies extends React.Component {
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={this.state.data}
-              scroll={{ x: cols.length * 100 }}
+              scroll={{ x: cols.length * colWidth }}
               loading={this.state.isLoading}
               rowKey="id"
-              colWidth={100}
-              fixedColWidth={100}
+              colWidth={colWidth}
+              fixedColWidth={colWidth}
             />
           </TableWrapper>
         </MainWrapper>
@@ -200,6 +201,7 @@ const mapStateToProps = (state) => {
     isLoading: state.goaliesIsLoading,
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    isMobile: state.isMobileMode,
   };
 };
 

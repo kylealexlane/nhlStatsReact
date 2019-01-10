@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
+import {isMobileMode} from "../../reducers/sidebar";
 
 
 const maxTableWidth = 1200;
@@ -138,6 +139,7 @@ class Players extends React.Component {
   render() {
     const cols = this.getCols();
     const opts = dataColumns.playersBasicOptions;
+    const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
 
     const defaultopts = dataColumns.playersBasicDefaultOptions;
 
@@ -166,11 +168,11 @@ class Players extends React.Component {
             pageSize={this.state.pageNum}
             cols={cols}
             dataSource={this.state.data}
-            scroll={{ x: cols.length * 100 }} // each column has a fixed width of 100
+            scroll={{ x: cols.length * colWidth }} // each column has a fixed width of 100
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
         </MainWrapper>
       </React.Fragment>
@@ -191,6 +193,7 @@ const mapStateToProps = (state) => {
     isLoading: state.playersIsLoading,
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    isMobile: state.isMobileMode,
   };
 };
 

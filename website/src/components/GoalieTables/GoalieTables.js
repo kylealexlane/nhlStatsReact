@@ -111,6 +111,8 @@ class GoalieTables extends React.Component {
 
   render() {
     let d = this.state.yearlyRegData;
+    const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
+
 
     let content = (
       <LoadingWrapper>
@@ -127,11 +129,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieBasicColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieBasicColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieBasicColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Frequencies</GraphTitle>
           <Table
@@ -139,11 +141,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieFreqColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieFreqColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieFreqColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Shooting Percents</GraphTitle>
           <Table
@@ -151,11 +153,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieShootPercColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieShootPercColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieShootPercColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Actual Values</GraphTitle>
           <Table
@@ -163,11 +165,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieActualValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieActualValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieActualValsColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Expected Values</GraphTitle>
           <Table
@@ -175,11 +177,11 @@ class GoalieTables extends React.Component {
             goalieStats={true}
             cols={dataColumns.goalieExpectedValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieExpectedValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieExpectedValsColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Goals</GraphTitle>
           <Table
@@ -187,11 +189,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieGoalDataColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieGoalDataColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieGoalDataColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>All</GraphTitle>
           <Table
@@ -199,11 +201,11 @@ class GoalieTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.goalieAllSummariesColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.goalieAllSummariesColumns.length * 100 }}
+            scroll={{ x: dataColumns.goalieAllSummariesColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
         </div>
       );
@@ -229,6 +231,7 @@ const mapStateToProps = (state) => {
     isLoading: (state.goalieIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    isMobile: state.isMobileMode,
   };
 };
 

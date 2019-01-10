@@ -18,10 +18,8 @@ function getShotTypeOption(props) {
   });
 
   return(
-    {
-      // title: {
-      //   text: 'Shot Types'
-      // },
+    props.m ?
+    { // Mobile version -  simpler
       tooltip : {
         trigger: 'axis',
         axisPointer: {
@@ -30,19 +28,6 @@ function getShotTypeOption(props) {
             backgroundColor: '#6a7985'
           }
         }
-      },
-      legend: {
-        data:['Wrist Shot Freq','Snap Shot Freq','Slap Shot Freq', 'Backhand Freq', 'Wrap Around Freq', 'Tipped / Deflected Freq' ]
-      },
-      toolbox: {
-        feature: {
-          dataView: {show: true, readOnly: false},
-          restore: {show: true},
-          saveAsImage: {show: true}
-        }
-      },
-      grid: {
-        right: '25%'
       },
       xAxis : [
         {
@@ -64,29 +49,10 @@ function getShotTypeOption(props) {
         }
       ],
       series : [
-        // {
-        //   name:'Deflected Freq',
-        //   type:'line',
-        //   stack: '总量',
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: 'top'
-        //     }
-        //   },
-        //   areaStyle: {normal: {}},
-        //   data:deflectedShotFreq
-        // },
         {
           name:'Tipped / Deflected Freq',
           type:'line',
           stack: '总量',
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     position: 'top'
-          //   }
-          // },
           areaStyle: {normal: {}},
           data:tipDeflectedShotFreq
         },
@@ -94,12 +60,6 @@ function getShotTypeOption(props) {
           name:'Wrap Around Freq',
           type:'line',
           stack: '总量',
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     position: 'top'
-          //   }
-          // },
           areaStyle: {normal: {}},
           data:wrapShotFreq
         },
@@ -108,12 +68,6 @@ function getShotTypeOption(props) {
           type:'line',
           stack: '总量',
           color: colors[3],
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     position: 'top'
-          //   }
-          // },
           areaStyle: {normal: {}},
           data:backhandShotFeq
         },
@@ -122,12 +76,6 @@ function getShotTypeOption(props) {
           type:'line',
           stack: '总量',
           color: colors[2],
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     position: 'top'
-          //   }
-          // },
           areaStyle: {},
           data: slapShotFreq
         },
@@ -136,12 +84,6 @@ function getShotTypeOption(props) {
           type:'line',
           stack: '总量',
           color: colors[1],
-          // label: {
-          //   normal: {
-          //     show: true,
-          //     position: 'top'
-          //   }
-          // },
           areaStyle: {},
           data: snapShotFreq
         },
@@ -150,17 +92,151 @@ function getShotTypeOption(props) {
           type:'line',
           stack: '总量',
           color: colors[0],
-          label: {
-            normal: {
-              show: true,
-              position: 'top'
-            }
-          },
           areaStyle: {},
           data: wristShotFreq
         }
       ]
-    }
+    } :
+      { // Normal, non mobile mode
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data:['Wrist Shot Freq','Snap Shot Freq','Slap Shot Freq', 'Backhand Freq', 'Wrap Around Freq', 'Tipped / Deflected Freq' ]
+        },
+        toolbox: {
+          feature: {
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        grid: {
+          right: '25%'
+        },
+        xAxis : [
+          {
+            type : 'category',
+            boundaryGap : false,
+            data: props.getMetricList("year_code", "yearlyRegData")
+          }
+        ],
+        yAxis : [
+          {
+            type : 'value',
+            min: 0,
+            max: 1,
+            axisLine: {
+              lineStyle: {
+                color: colors[0]
+              }
+            },
+          }
+        ],
+        series : [
+          // {
+          //   name:'Deflected Freq',
+          //   type:'line',
+          //   stack: '总量',
+          //   label: {
+          //     normal: {
+          //       show: true,
+          //       position: 'top'
+          //     }
+          //   },
+          //   areaStyle: {normal: {}},
+          //   data:deflectedShotFreq
+          // },
+          {
+            name:'Tipped / Deflected Freq',
+            type:'line',
+            stack: '总量',
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            areaStyle: {normal: {}},
+            data:tipDeflectedShotFreq
+          },
+          {
+            name:'Wrap Around Freq',
+            type:'line',
+            stack: '总量',
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            areaStyle: {normal: {}},
+            data:wrapShotFreq
+          },
+          {
+            name:'Backhand Freq',
+            type:'line',
+            stack: '总量',
+            color: colors[3],
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            areaStyle: {normal: {}},
+            data:backhandShotFeq
+          },
+          {
+            name:'Slap Shot Freq',
+            type:'line',
+            stack: '总量',
+            color: colors[2],
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            areaStyle: {},
+            data: slapShotFreq
+          },
+          {
+            name:'Snap Shot Freq',
+            type:'line',
+            stack: '总量',
+            color: colors[1],
+            // label: {
+            //   normal: {
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            areaStyle: {},
+            data: snapShotFreq
+          },
+          {
+            name:'Wrist Shot Freq',
+            type:'line',
+            stack: '总量',
+            color: colors[0],
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            areaStyle: {},
+            data: wristShotFreq
+          }
+        ]
+      }
   )
 }
 

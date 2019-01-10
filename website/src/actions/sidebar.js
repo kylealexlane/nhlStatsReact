@@ -11,3 +11,17 @@ export function changeSidebarGoneStatus(bool) {
     isGone: bool
   };
 }
+
+export function changeScreenWidth(int) {
+  return {
+    type: 'SCREEN_WIDTH_CHANGE',
+    screenWidth: int
+  };
+}
+
+export function isMobileMode(bool) {
+  return {
+    type: 'IS_MOBILE_MODE',
+    isMobileMode: bool
+  };
+}

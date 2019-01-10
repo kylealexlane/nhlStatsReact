@@ -138,8 +138,8 @@ class Goalie extends React.Component {
                 <GoalieTables />
               </Section>
             </TabPane>
-            <TabPane tab="Ranking" key="3" disabled>Coming soon!</TabPane>
-            <TabPane tab="Bio" key="4" disabled>Coming soon!</TabPane>
+            {/*<TabPane tab="Ranking" key="3" disabled>Coming soon!</TabPane>*/}
+            {/*<TabPane tab="Bio" key="4" disabled>Coming soon!</TabPane>*/}
 
           </Tabs>
 
