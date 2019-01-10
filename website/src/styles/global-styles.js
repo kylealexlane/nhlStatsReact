@@ -55,6 +55,9 @@ injectGlobal`
     //   color: red;
     // }
   }
+  .ant-table {
+    font-size: 14px;
+  }
   .ant-tabs-nav .ant-tabs-tab-active {
     color: #f76600;
   }
@@ -91,9 +94,12 @@ injectGlobal`
       letter-spacing: 1px;
     }
     p {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 300;
       line-height: 30px;
+    }
+    .ant-table {
+      font-size: 10px;
     }
   }
   

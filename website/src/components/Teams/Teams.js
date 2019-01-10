@@ -181,6 +181,7 @@ class Teams extends React.Component {
 
     const cols = this.getCols();
     const opts = o ? dataColumns.teamsOffensiveOptions : dataColumns.teamsDefensiveOptions;
+    const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
 
     const defaultopts = o ? dataColumns.teamsOffensiveDefaultOptions : dataColumns.teamsDefensiveDefaultOptions;
 
@@ -218,11 +219,11 @@ class Teams extends React.Component {
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={o ? this.state.offensiveData : this.state.defensiveData}
-              scroll={{ x: (cols.length * 100) + 100 }} // Extra for the fixed column at the start being 200 width
+              scroll={{ x: (cols.length * colWidth) + colWidth }} // Extra for the fixed column at the start being 200 width
               loading={this.state.isLoading}
               rowKey="id"
-              colWidth={100}
-              fixedColWidth={200}
+              colWidth={colWidth}
+              fixedColWidth={colWidth*1.5}
             />
           </TableWrapper>
         </MainWrapper>
@@ -244,6 +245,7 @@ const mapStateToProps = (state) => {
     isLoading: state.teamsIsLoading,
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    isMobile: state.isMobileMode,
   };
 };
 

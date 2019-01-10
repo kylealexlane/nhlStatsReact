@@ -94,6 +94,13 @@ const LogoNum =  styled.div`
   top: 0;
   right: 0;
 `;
+
+const MobileFaceImage =  styled.img`
+  bottom: 0;
+  right: 0;
+  height: 100px;
+`;
+
 const SmallLogo = styled.img`
   height: 50px;
   width: auto;
@@ -181,7 +188,11 @@ class IndividualAbove extends React.Component {
             <LogoNum>
               <SmallLogo src={`https://assets.nhle.com/nhl/images/logos/teams/${teamabbr}_logo.svgz?v=12.16`}/>
             </LogoNum>
-            <FaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
+            {this.props.isMobile ?
+              <MobileFaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
+              :
+              <FaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
+            }
           </RightDiv>
         </WrapperDiv>
       );
@@ -216,6 +227,8 @@ const mapStateToProps = (state) => {
     sidebarGone: state.sidebarGone,
     teamInfo: state.teamInfo,
     teamInfoLoading: state.teamInfoIsLoading,
+
+    isMobile: state.isMobileMode,
   };
 };
 

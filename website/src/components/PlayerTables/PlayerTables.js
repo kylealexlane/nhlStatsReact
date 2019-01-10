@@ -111,6 +111,8 @@ class PlayerTables extends React.Component {
 
   render() {
     let d = this.state.yearlyRegData;
+    const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
+
 
     let content = (
       <LoadingWrapper>
@@ -126,77 +128,77 @@ class PlayerTables extends React.Component {
             pageSize={this.state.pageNum}
             cols={dataColumns.playerBasicColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerBasicColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerBasicColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Frequencies</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerFreqColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerFreqColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerFreqColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Shooting Percents</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerShootPercColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerShootPercColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerShootPercColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Actual Values</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerActualValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerActualValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerActualValsColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Expected Values</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerExpectedValsColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerExpectedValsColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerExpectedValsColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>Goals</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerGoalDataColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerGoalDataColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerGoalDataColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
           <GraphTitle>All</GraphTitle>
           <Table
             pageSize={this.state.pageNum}
             cols={dataColumns.playerAllSummariesColumns}
             dataSource={d}
-            scroll={{ x: dataColumns.playerAllSummariesColumns.length * 100 }}
+            scroll={{ x: dataColumns.playerAllSummariesColumns.length * colWidth }}
             loading={this.state.isLoading}
             rowKey="id"
-            colWidth={100}
-            fixedColWidth={100}
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
           />
         </div>
       );
@@ -222,6 +224,7 @@ const mapStateToProps = (state) => {
     isLoading: (state.playerIsLoading),
     sidebarCollapsed: state.sidebarCollapsed,
     sidebarGone: state.sidebarGone,
+    isMobile: state.isMobileMode,
   };
 };
 

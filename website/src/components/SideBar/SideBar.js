@@ -4,7 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import { TopBar } from "../TopBar";
 import mainTheme from "../../styles/theme"
-import { changeSidebarStatus, changeSidebarGoneStatus } from '../../actions/sidebar';
+import { changeSidebarStatus, changeSidebarGoneStatus, changeScreenWidth, isMobileMode } from '../../actions/sidebar';
 import { connect } from 'react-redux';
 import { layout } from '../../styles/theme'
 // import { withRouter } from 'react-router-dom'
@@ -106,6 +106,8 @@ class SideBar extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight,
     });
+    this.props.changeWidth(window.innerWidth);
+    this.props.isMobile(window.innerWidth < mainTheme.layout.sidebarGoneWidth);
     if(window.innerWidth < mainTheme.layout.sidebarGoneWidth){
       this.props.changeSBGone(true);
       this.props.changeSB(true);
@@ -202,7 +204,9 @@ class SideBar extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeSB: (bool) => dispatch(changeSidebarStatus(bool)),
-    changeSBGone: (bool) => dispatch(changeSidebarGoneStatus(bool))
+    changeSBGone: (bool) => dispatch(changeSidebarGoneStatus(bool)),
+    changeWidth: (int) => dispatch(changeScreenWidth(int)),
+    isMobile: (bool) => dispatch(isMobileMode(bool)),
   };
 };
 

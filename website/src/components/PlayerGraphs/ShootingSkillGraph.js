@@ -12,26 +12,14 @@ function getGenShootingOption(props) {
   const sq = props.getMetricList("shot_quality", "yearlyRegData");
   const gaapers = props.getMetricList("goals_aa_per_shot", "yearlyRegData");
   return(
-    {
+    props.m ?
+    { // Mobile option - simpler
       color: colors,
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'cross'
         }
-      },
-      grid: {
-        right: '25%'
-      },
-      toolbox: {
-        feature: {
-          dataView: {show: true, readOnly: false},
-          restore: {show: true},
-          saveAsImage: {show: true}
-        }
-      },
-      legend: {
-        data:['Num Shots', 'Shooting %','xShooting %','GoalsAA/s']
       },
       xAxis: [
         {
@@ -79,7 +67,7 @@ function getGenShootingOption(props) {
           min: 0,
           max: 0.25,
           position: 'right',
-          offset: 80,
+          offset: 1000, // TODO: FIX THIS HACK!!!!!!!!!!!!!!!
           axisLine: {
             lineStyle: {
               color: colors[2]
@@ -95,7 +83,7 @@ function getGenShootingOption(props) {
           min: Math.min(...gaapers),
           max: Math.max(...gaapers),
           position: 'right',
-          offset: 160,
+          offset: 1000, // TODO: FIX THIS HACK!!!!!!!!!!!!!!!
           axisLine: {
             lineStyle: {
               color: colors[3]
@@ -131,7 +119,127 @@ function getGenShootingOption(props) {
           data: gaapers
         }
       ]
-    }
+    } : //  Non mobile option
+      {
+        color: colors,
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        grid: {
+          right: '25%'
+        },
+        toolbox: {
+          feature: {
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
+            saveAsImage: {show: true}
+          }
+        },
+        legend: {
+          data:['Num Shots', 'Shooting %','xShooting %','GoalsAA/s']
+        },
+        xAxis: [
+          {
+            type: 'category',
+            axisTick: {
+              alignWithLabel: true
+            },
+            data: props.getMetricList("year_code", "yearlyRegData")
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            name: 'Num Shots',
+            min: 0,
+            max: Math.max(...numShots),
+            position: 'left',
+            axisLine: {
+              lineStyle: {
+                color: colors[0]
+              }
+            },
+            axisLabel: {
+              formatter: '{value}'
+            }
+          },
+          {
+            type: 'value',
+            name: 'Shooting %',
+            min: 0,
+            max: 0.25,
+            position: 'right',
+            axisLine: {
+              lineStyle: {
+                color: colors[1]
+              }
+            },
+            axisLabel: {
+              formatter: '{value}'
+            }
+          },
+          {
+            type: 'value',
+            name: 'xShooting %',
+            min: 0,
+            max: 0.25,
+            position: 'right',
+            offset: 80,
+            axisLine: {
+              lineStyle: {
+                color: colors[2]
+              }
+            },
+            axisLabel: {
+              formatter: '{value}'
+            }
+          },
+          {
+            type: 'value',
+            name: 'GoalsAA/s',
+            min: Math.min(...gaapers),
+            max: Math.max(...gaapers),
+            position: 'right',
+            offset: 160,
+            axisLine: {
+              lineStyle: {
+                color: colors[3]
+              }
+            },
+            axisLabel: {
+              formatter: '{value}'
+            }
+          }
+        ],
+        series: [
+          {
+            name:'Shots',
+            type:'bar',
+            data: numShots
+          },
+          {
+            name:'Shooting %',
+            type:'line',
+            yAxisIndex: 1,
+            data: shootPerc
+          },
+          {
+            name:'xShooting %',
+            type:'line',
+            yAxisIndex: 2,
+            data: xShootPerc
+          },
+          {
+            name:'GoalsAA/s',
+            type:'line',
+            yAxisIndex: 3,
+            data: gaapers
+          }
+        ]
+      }
   );
 }
 

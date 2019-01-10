@@ -44,6 +44,8 @@ export const layout = {
   sidebarGoneWidth: 768,
   sidebarExpandedWidth: 992,
   individualAboveHeightInt: 300,
+  colWidth: 100,
+  mobileColWidth: 50,
 };
 
 export default {
@@ -64,6 +66,8 @@ export default {
     sidebarGoneWidth: layout.sidebarGoneWidth,
     sidebarExpandedWidth: layout.sidebarExpandedWidth,
     individualAboveHeightInt: layout.individualAboveHeightInt,
+    mobileColWidth: layout.mobileColWidth,
+    colWidth: layout.colWidth,
   },
   dimensions: {
     subSection: {
