@@ -22,6 +22,23 @@ const MainWrapper = styled.div`
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
 
+const TopImage = styled.div`
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+`;
+
+const TopText = styled.p`
+  color: ${props => props.theme.colors.secondaryText};
+`;
+
+const Section = styled.div`
+  margin-top: 32px;
+  border-left: 5px solid ${props => props.theme.colors.mainAccent};
+  padding-left: 16px;
+`;
 
 class BlogPost extends Component {
   constructor(props) {
@@ -68,6 +85,7 @@ class BlogPost extends Component {
     );
     if (this.state.loaded) {
       const post = this.state.post;
+      console.log("post", post);
       content = (
         <div className={"post-container"}>
           <Helmet>
@@ -76,8 +94,13 @@ class BlogPost extends Component {
             <meta name="og:image" content={post.featured_image} />
           </Helmet>
 
+          <TopImage style={{ backgroundImage: "url(" + post.featured_image + ")" }} />
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{__html: post.body}} />
+          <TopText>{post.author.first_name.charAt(0).toUpperCase()}. {post.author.last_name} | {new Date(post.published).toLocaleDateString()}</TopText>
+          <p>{post.summary}</p>
+          <Section>
+            <div dangerouslySetInnerHTML={{__html: post.body}} />
+          </Section>
         </div>
       );
     }

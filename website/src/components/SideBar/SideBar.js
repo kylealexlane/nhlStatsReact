@@ -173,11 +173,11 @@ class SideBar extends React.Component {
                 </StyledLink>
               </Item>
             </SubMenu>
-            <Item key="model" disabled>
-              <StyledLink to={{ pathname: "/post/model-general-overview" }}>
-                <StyledIcon type="radar-chart" />
-                <span>Model</span>
-              </StyledLink>
+            <Item key="apidocs">
+              <a href={"https://docs.thepuckluck.com"}>
+                <StyledIcon type="cloud" />
+                <span>API Docs</span>
+              </a>
             </Item>
             <Item key="blog" >
               <StyledLink to="/blog">

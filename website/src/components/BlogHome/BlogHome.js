@@ -110,14 +110,14 @@ class BlogHome extends Component {
                   cover={<img alt="example" src={post.featured_image} />}
                   actions={[
                     <Link to={`/post/${post.slug}`}><Icon type="file-text" /></Link>,
-                    <BottomText>{post.author.first_name.charAt(0)}. {post.author.last_name}</BottomText>,
+                    <BottomText>{post.author.first_name.charAt(0).toUpperCase()}. {post.author.last_name}</BottomText>,
                     <BottomText>{new Date(post.published).toLocaleDateString()}</BottomText>]}
                 >
                   <Link to={`/post/${post.slug}`}>
                     <Meta
                       avatar={<Avatar src={post.featured_image} />}
                       title={post.title}
-                      description={post.meta_description}
+                      description={post.summary}
                     />
                   </Link>
                 </Card>
