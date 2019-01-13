@@ -48,8 +48,8 @@ function getGenShootingOption(props) {
         {
           type: 'value',
           name: 'Save %',
-          min: Math.min(...xsavePerc) < .85 ? Math.min(...xsavePerc) : .85,
-          max: Math.max(...xsavePerc) > .95 ? Math.max(...xsavePerc) : .95,
+          min: Math.min(...savePerc) < .88 ? Math.min(...savePerc) : .88,
+          max: Math.max(...savePerc) > .93 ? Math.max(...savePerc) : .93,
           position: 'right',
           axisLine: {
             lineStyle: {
@@ -63,8 +63,8 @@ function getGenShootingOption(props) {
         {
           type: 'value',
           name: 'xSave %',
-          min: Math.min(...xsavePerc) < .875 ? Math.min(...xsavePerc) : .875,
-          max: Math.max(...xsavePerc) > .94 ? Math.max(...xsavePerc) : .94,
+          min: Math.min(...savePerc) < .88 ? Math.min(...savePerc) : .88,
+          max: Math.max(...savePerc) > .93 ? Math.max(...savePerc) : .93,
           position: 'right',
           offset: 1000, // TODO: FIGURE OUT HOW TO FIX THIS HACK - THIS SUCKS
           axisLine: {
@@ -168,8 +168,8 @@ function getGenShootingOption(props) {
           {
             type: 'value',
             name: 'Save %',
-            min: Math.min(...xsavePerc) < .85 ? Math.min(...xsavePerc) : .85,
-            max: Math.max(...xsavePerc) > .95 ? Math.max(...xsavePerc) : .95,
+            min: Math.min(...savePerc) < .88 ? Math.min(...savePerc) : .88,
+            max: Math.max(...savePerc) > .93 ? Math.max(...savePerc) : .93,
             position: 'right',
             axisLine: {
               lineStyle: {
@@ -183,8 +183,8 @@ function getGenShootingOption(props) {
           {
             type: 'value',
             name: 'xSave %',
-            min: Math.min(...xsavePerc) < .875 ? Math.min(...xsavePerc) : .875,
-            max: Math.max(...xsavePerc) > .94 ? Math.max(...xsavePerc) : .94,
+            min: Math.min(...savePerc) < .88 ? Math.min(...savePerc) : .88,
+            max: Math.max(...savePerc) > .93 ? Math.max(...savePerc) : .93,
             position: 'right',
             offset: 80,
             axisLine: {
