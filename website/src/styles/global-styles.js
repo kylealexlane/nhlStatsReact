@@ -23,6 +23,7 @@ injectGlobal`
     // text-transform: uppercase;
   }
   h2 {
+    // color: #f76600;
     font-size: 36px;
     font-weight: 400;
     text-transform: uppercase;
@@ -30,9 +31,10 @@ injectGlobal`
     font-family: 'Open Sans', sans-serif;
   }
   h3 {
+    color: #f76600;
     font-size: 24px;
     font-weight: 300;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     // letter-spacing: 2px;
     font-family: 'Open Sans', sans-serif;
   }
@@ -54,6 +56,14 @@ injectGlobal`
     // :hover, :focus, :active {
     //   color: red;
     // }
+  }
+  ul {
+    // list-style: none;
+    padding-left: 40px;
+    font-size: 18px;
+  }
+  .ant-select ul {
+    font-size: 14px;
   }
   .ant-table {
     font-size: 14px;
@@ -98,16 +108,16 @@ injectGlobal`
       font-weight: 300;
       line-height: 30px;
     }
+    ul {
+      // list-style: none;
+      padding-left: 40px;
+      font-size: 14px;
+    }
     .ant-table {
       font-size: 10px;
     }
   }
   
-
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
   
   .post-container {
     h1, h2, h3, h4, h5 {
@@ -130,7 +140,7 @@ injectGlobal`
         // line-height: 1.58;
         margin-bottom: 1.25em;
         // font-weight: 400;
-        letter-spacing: -.003em;
+        // letter-spacing: -.003em;
     }
 
     /* Responsive default image width */

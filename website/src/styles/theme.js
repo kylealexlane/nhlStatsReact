@@ -12,7 +12,7 @@ const colors = {
 
 
   mainText: "#171717",
-  secondaryText: "#333333",
+  secondaryText: "#aaa",
 
   mainAccent: "#f76600",
   mainAccentDark: "#d15600",
