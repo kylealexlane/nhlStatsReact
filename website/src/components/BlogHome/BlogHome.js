@@ -105,7 +105,6 @@ class BlogHome extends Component {
               <BlogItem key={post.slug}>
                 <Card
                   style={{ width: "100%", maxWidth: maintheme.layout.maxBlogPostWidthInt }}
-                  // style={{ width: "100%" }}
 
                   cover={<img alt="example" src={post.featured_image} />}
                   actions={[
