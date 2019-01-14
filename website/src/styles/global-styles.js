@@ -65,6 +65,9 @@ injectGlobal`
   .ant-select ul {
     font-size: 14px;
   }
+  .ant-select-dropdown-menu-item {
+    font-size: 14px;
+  }
   .ant-table {
     font-size: 14px;
   }
