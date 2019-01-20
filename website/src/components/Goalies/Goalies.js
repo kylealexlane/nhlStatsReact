@@ -181,6 +181,7 @@ class Goalies extends React.Component {
               colWidth={colWidth}
               fixedColWidth={colWidth}
             />
+
           </TableWrapper>
         </MainWrapper>
       </React.Fragment>

@@ -108,7 +108,7 @@ class GoalieGraphs extends React.Component {
     if (!this.state.isLoading && this.state.dataTransformed) {
       content = (
         <div style={{width: "100%", position: "relative"}}>
-          <GraphTitle>Shooting Skill</GraphTitle>
+          <GraphTitle>Goalie Skill</GraphTitle>
           <SaveSkillGraph getMetricList={this.getMetricList} m={this.props.isMobile}/>
 
           <GraphTitle>Shot Quality</GraphTitle>
