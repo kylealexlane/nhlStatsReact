@@ -26,6 +26,18 @@ const MainWrapper = styled.div`
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
 
+const lookupDict = {
+  avg_shoot_perc: "S%",
+  avg_xgoals: "xS%",
+  goals_aa_per_shot: "GoalsAA/s",
+  num_goals: "Goals",
+  sum_xgoals: "xGoals",
+  shot_quality: "SQ",
+  mean_dist: "feet",
+  mean_ang: "Degrees",
+  num_shots: "Shots",
+};
+
 class Players extends React.Component {
   constructor(props) {
     super(props);
@@ -38,16 +50,16 @@ class Players extends React.Component {
       statsType: 'basic',
       isLoading: false,
       data: [],
-      yAxis: "avg_xgoals",
-      yAxisName: "xS%",
-      xAxis: "avg_shoot_perc",
-      xAxisName: "S%",
+      xAxis: "avg_xgoals",
+      xAxisName: "xS%",
+      yAxis: "avg_shoot_perc",
+      yAxisName: "S%",
       colourMetric: "num_shots",
       colourMetricName: "Shots",
       nameMetric: "last_name",
       minMetric: "num_shots",
       minMetricValue: 50,
-      graph: true,
+      chart: false,
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
       pageNum: maintheme.DefaultNumTableItems
     };
@@ -57,7 +69,12 @@ class Players extends React.Component {
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
     this.fetchPlayerData = this.fetchPlayerData.bind(this);
     this.changeSelectStatsTypeCallback = this.changeSelectStatsTypeCallback.bind(this);
+    this.minShotsChangeCallback = this.minShotsChangeCallback.bind(this);
+    this.changeXAxisCallback = this.changeXAxisCallback.bind(this);
+    this.changeYAxisCallback = this.changeYAxisCallback.bind(this);
     this.getCols = this.getCols.bind(this);
+    this.getOpts = this.getOpts.bind(this);
+    this.getDefaultOpts = this.getDefaultOpts.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -73,9 +90,13 @@ class Players extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("next props!!s", nextProps);
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.players !== this.state.players) {
       this.setState({ data: nextProps.players });
+    }
+    if (nextProps.chart !== this.state.chart) {
+      this.setState({ chart: nextProps.chart });
     }
     if (nextProps.isLoading !== this.state.isLoading) {
       this.setState({ isLoading: nextProps.isLoading });
@@ -122,6 +143,21 @@ class Players extends React.Component {
     this.setState({ statsType: value })
   }
 
+  //Handle changing min shots
+  minShotsChangeCallback(n){
+    this.setState({ minMetricValue: n })
+  }
+
+  // Handle change of X axis
+  changeXAxisCallback(value){
+    this.setState({ xAxis: value, xAxisName: lookupDict[value] })
+  }
+
+  // handle change of Y axis
+  changeYAxisCallback(value){
+    this.setState({ yAxis: value, yAxisName: lookupDict[value] })
+  }
+
   getCols() {
     switch(this.state.statsType) {
       case "basic":
@@ -143,13 +179,34 @@ class Players extends React.Component {
     }
   }
 
+  getOpts() {
+    let opts =[];
+    if(this.state.chart) {
+      opts= dataColumns.playersBasicOptionsGraph;
+    } else {
+      opts = dataColumns.playersBasicOptions;
+    }
+    return opts;
+  }
+
+  getDefaultOpts() {
+    let optsDef =[];
+    if(this.state.chart) {
+      optsDef= dataColumns.playersBasicDefaultOptionsGraph;
+    } else {
+      optsDef = dataColumns.playersBasicDefaultOptions;
+    }
+    return optsDef;
+  }
+
 
   render() {
     const cols = this.getCols();
-    const opts = dataColumns.playersBasicOptions;
+    const opts = this.getOpts();
+    const defaultopts = this.getDefaultOpts();
+    console.log("OPTS", opts, defaultopts);
     const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
 
-    const defaultopts = dataColumns.playersBasicDefaultOptions;
 
     // Width calculations for proper re-sizing
     let pw = this.props.sidebarGone ?
@@ -171,17 +228,20 @@ class Players extends React.Component {
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
             changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
+            minShotsChangeCallback={this.minShotsChangeCallback}
+            changeXAxisCallback={this.changeXAxisCallback}
+            changeYAxisCallback={this.changeYAxisCallback}
           />
-          {this.state.graph ?
+          {this.state.chart ?
             <PlayersGraphs
               style={{ height: "100%" }}
               // minHeight={this.props.isMobile ? 700 : 1000}
               dataSource={this.state.data}
               loading={this.state.isLoading}
-              metric1={this.state.yAxis}
-              metric1Name={this.state.yAxisName}
-              metric2={this.state.xAxis}
-              metric2Name={this.state.xAxisName}
+              yAxis={this.state.yAxis}
+              yAxisName={this.state.yAxisName}
+              xAxis={this.state.xAxis}
+              xAxisName={this.state.xAxisName}
               colourMetric={this.state.colourMetric}
               colourMetricName={this.state.colourMetricName}
               nameMetric={this.state.nameMetric}
@@ -189,6 +249,7 @@ class Players extends React.Component {
               minMetricValue={this.state.minMetricValue}
               parseByForward = {true}
             /> :
+
             <Table
               pageSize={this.state.pageNum}
               cols={cols}

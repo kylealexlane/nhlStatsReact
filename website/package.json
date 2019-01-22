@@ -46,6 +46,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "gh-pages": "^1.1.0"
+    "@babel/core": "^7.2.2",
+    "@babel/helper-module-transforms": "^7.2.2",
+    "babel": "^6.23.0",
+    "gh-pages": "^1.1.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.1"
   }
 }

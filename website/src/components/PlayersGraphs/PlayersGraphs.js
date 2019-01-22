@@ -25,6 +25,12 @@ class PlayersGraphs extends React.Component {
       lwData: [],
       rwData: [],
       cData: [],
+      xAxis: "",
+      yAxis: "",
+      colourMetric: "",
+      nameMetric: "",
+      minMetric: "",
+      minMetricValue: 0,
       parseBy: "",
     };
     this.getMetricList = this.getMetricList.bind(this);
@@ -32,14 +38,24 @@ class PlayersGraphs extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const np = nextProps;
-    if (np.dataSource !== this.state.dataSource && !np.isLoading &&
-      np.metric1 && np.metric2 && np.colourMetric) {
-      this.setState({ dataSource: np.dataSource });
-      this.getMetricList(np.metric1, np.metric2, np.colourMetric, np.nameMetric, np.dataSource, np.minMetric, np.minMetricValue);
+    const s = this.state;
+    console.log("np", np);
+    console.log("s", s);
+    if (!np.isLoading && (np.dataSource !== s.dataSource || np.xAxis !== s.xAxis || np.yAxis !== s.yAxis || np.colourMetric !== s.colourMetric || np.minMetric !== s.minMetric || np.minMetricValue !== s.minMetricValue)) {
+      this.getMetricList(np.xAxis, np.yAxis, np.colourMetric, np.nameMetric, np.dataSource, np.minMetric, np.minMetricValue);
+      this.setState({
+        dataSource: np.dataSource,
+        xAxis: np.xAxis,
+        yAxis: np.yAxis,
+        colourMetric: np.colourMetric,
+        nameMetric: np.nameMetric,
+        minMetric: np.minMetric,
+        minMetricValue: np.minMetricValue,
+      });
     }
   }
 
-  getMetricList(metric1, metric2, colourMetric, nameMetric, objToParse, minMetric, minMetricValue) {
+  getMetricList(xAxis, yAxis, colourMetric, nameMetric, objToParse, minMetric, minMetricValue) {
     console.log("transforming...");
     console.log(objToParse);
     this.setState({ isProcessing: true });
@@ -54,16 +70,16 @@ class PlayersGraphs extends React.Component {
         if(data[minMetric] >= minMetricValue) {
           if(parseByForward){
             if(data["pos_code"] === "C") {
-              c.push([ data[metric1], data[metric2], data[colourMetric], data[nameMetric] ])
+              c.push([ data[xAxis], data[yAxis], data[colourMetric], data[nameMetric] ])
             } else if(data["pos_code"] === "D") {
-              d.push([ data[metric1], data[metric2], data[colourMetric], data[nameMetric] ])
+              d.push([ data[xAxis], data[yAxis], data[colourMetric], data[nameMetric] ])
             } else if(data["pos_code"] === "L") {
-              lw.push([ data[metric1], data[metric2], data[colourMetric], data[nameMetric] ])
+              lw.push([ data[xAxis], data[yAxis], data[colourMetric], data[nameMetric] ])
             } else if(data["pos_code"] === "R") {
-              rw.push([ data[metric1], data[metric2], data[colourMetric], data[nameMetric] ])
+              rw.push([ data[xAxis], data[yAxis], data[colourMetric], data[nameMetric] ])
             }
           } else {
-            l.push([ data[metric1], data[metric2], data[colourMetric], data[nameMetric] ])
+            l.push([ data[xAxis], data[yAxis], data[colourMetric], data[nameMetric] ])
           }
         }
       }

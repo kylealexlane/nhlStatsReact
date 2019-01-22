@@ -65,6 +65,9 @@ class TableAbove extends React.Component {
     if (nextProps.location && nextProps.location.state && (nextProps.location.state.situation !== this.state.situationValue)) {
       this.changeSelectSituation(nextProps.location.state.situation);
     }
+    if(nextProps.defaultSelectFilters !== this.state.selectedOpts){
+      this.setState({ selectedOpts: nextProps.defaultSelectFilters });
+    }
   }
 
   render() {
@@ -76,6 +79,9 @@ class TableAbove extends React.Component {
     let selectNumPerPage;
     let selectSituationType;
     let selectStatsType;
+    let minShotNum;
+    let xAxis;
+    let yAxis;
 
     // Selector for choosing which filters to show/display
     if(this.props.chooseSelects) {
@@ -88,10 +94,11 @@ class TableAbove extends React.Component {
           <FilterTitle>Add/Remove Options</FilterTitle>
           <Select
             mode="multiple"
-            style={{ minWidth: 220 }}
+            style={{ minWidth: 260 }}
             placeholder="Choose Filters"
             defaultValue={this.props.defaultSelectFilters ? this.props.defaultSelectFilters : ['year', 'gametype']}
             onChange={this.handleChange}
+            value={this.state.selectedOpts}
           >
             {children}
           </Select>
@@ -187,6 +194,65 @@ class TableAbove extends React.Component {
         </SelectDiv>
     }
 
+    // Min Shots filter
+    if(this.state.selectedOpts.indexOf("minshots") > -1){
+      minShotNum =
+        <SelectDiv>
+          <FilterTitle>Min Shots</FilterTitle>
+          <InputNumber
+            min={1} max={5000}
+            style={{width: 135}}
+            defaultValue={this.props.defaultMinShots? this.props.defaultMinShots: theme.defaultMinShotsGraph}
+            onChange={this.props.minShotsChangeCallback} />
+        </SelectDiv>
+    }
+
+    // Select Y Axis filter
+    if(this.state.selectedOpts.indexOf("yaxisplayers") > -1){
+      yAxis =
+        <SelectDiv>
+          <FilterTitle>Y Axis Metric</FilterTitle>
+          <Select
+            defaultValue="avg_shoot_perc"
+            style={{width: 160}}
+            onChange={(value) => this.props.changeYAxisCallback(value)}
+          >
+            <Option value="avg_shoot_perc">Shooting %</Option>
+            <Option value="avg_xgoals">xShooting %</Option>
+            <Option value="goals_aa_per_shot">GoalsAA/s</Option>
+            <Option value="num_goals">Goals</Option>
+            <Option value="sum_xgoals">xGoals</Option>
+            <Option value="shot_quality">Shot Quality</Option>
+            <Option value="mean_dist">Avg Dist</Option>
+            <Option value="mean_ang">Avg Ang</Option>
+            <Option value="num_shots">Shots</Option>
+          </Select>
+        </SelectDiv>
+    }
+
+    // Select X Axis filter
+    if(this.state.selectedOpts.indexOf("xaxisplayers") > -1){
+      xAxis =
+        <SelectDiv>
+          <FilterTitle>X Axis Metric</FilterTitle>
+          <Select
+            defaultValue="avg_xgoals"
+            style={{width: 160}}
+            onChange={(value) => this.props.changeXAxisCallback(value)}
+          >
+            <Option value="avg_shoot_perc">Shooting %</Option>
+            <Option value="avg_xgoals">xShooting %</Option>
+            <Option value="goals_aa_per_shot">GoalsAA/s</Option>
+            <Option value="num_goals">Goals</Option>
+            <Option value="sum_xgoals">xGoals</Option>
+            <Option value="shot_quality">Shot Quality</Option>
+            <Option value="mean_dist">Avg Dist</Option>
+            <Option value="mean_ang">Avg Ang</Option>
+            <Option value="num_shots">Shots</Option>
+          </Select>
+        </SelectDiv>
+    }
+
       return(
     <Header>
       <TitleDiv>
@@ -199,6 +265,9 @@ class TableAbove extends React.Component {
       {selectSituationType}
       {selectStatsType}
       {selectNumPerPage}
+      {minShotNum}
+      {yAxis}
+      {xAxis}
     </Header>)}
 }
 

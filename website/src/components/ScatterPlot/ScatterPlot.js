@@ -14,8 +14,8 @@ function getOptions(props) {
   // const xShootPerc = props.getMetricList("avg_xgoals", "yearlyRegData");
   // const sq = props.getMetricList("shot_quality", "yearlyRegData");
   // const gaapers = props.getMetricList("goals_aa_per_shot", "yearlyRegData");
-  const metric1Name = props.metric1Name ? props.metric1Name : props.metric1;
-  const metric2Name = props.metric2Name ? props.metric2Name : props.metric2;
+  const xAxisName = props.xAxisName ? props.xAxisName : props.xAxis;
+  const yAxisName = props.yAxisName ? props.yAxisName : props.yAxis;
   const colourMetricName = props.colourMetricName ? props.colourMetricName : props.colourMetric;
   const legendArray =  props.parseByForward ? ['Defense', 'Center', 'Left Wing', 'Right Wing'] : ["All"];
 
@@ -38,8 +38,8 @@ function getOptions(props) {
           console.log("params", params);
           return params.data[3] + '<br/>'
             + colourMetricName + ' :' + params.data[2] + '<br/>'
-            + metric2Name + ' :' + params.data[1] + ' <br/>'
-            + metric1Name + ' :' + params.data[0] + ' <br/>';
+            + yAxisName + ' :' + params.data[1] + ' <br/>'
+            + xAxisName + ' :' + params.data[0] + ' <br/>';
         },
         axisPointer:{
           show: true,
@@ -69,7 +69,7 @@ function getOptions(props) {
           type : 'value',
           scale:true,
           axisLabel : {
-            formatter: '{value} ' + metric1Name
+            formatter: '{value} ' + xAxisName
           },
           splitLine: {
             show: false
@@ -81,7 +81,7 @@ function getOptions(props) {
           type : 'value',
           scale:true,
           axisLabel : {
-            formatter: '{value} ' + metric2Name
+            formatter: '{value} ' + yAxisName
           },
           splitLine: {
             show: false
@@ -191,7 +191,7 @@ function getOptions(props) {
 
 const ScatterPlot = props => (
   <ReactEcharts
-    style={{ height: "95vh", width: "100%"}}
+    style={{ height: "90vh", width: "100%"}}
     notMerge={true}
     lazyUpdate={true}
     option={getOptions(props)}

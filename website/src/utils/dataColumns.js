@@ -350,31 +350,32 @@ const basicOptions = [
   }
 ];
 
+const basicOptionsGraph = [
+  {label: "Year", val: "year"},
+  {label: "Game Type", val: "gametype"},
+  {label: "Min Shots", val: "minshots"},
+  {label: "X Axis Metric", val: "xaxisplayers"},
+  {label: "Y Axis Metric", val: "yaxisplayers"}
+];
+
 const basicPlusSituationOptions = [
-  {label: "Year",
-    val: "year"
-  },
-  {label: "Game Type",
-    val: "gametype"
-  },
-  {label: "Situation",
-    val: "situation"
-  },
-  {label: "Stats Type",
-    val: "statstype"
-  },
-  {label: "Items Per Page",
-    val: "pagenum"
-  }
+  {label: "Year", val: "year"},
+  {label: "Game Type", val: "gametype"},
+  {label: "Situation", val: "situation"},
+  {label: "Stats Type", val: "statstype"},
+  {label: "Items Per Page", val: "pagenum"}
 ];
 
 const basicDefaultOptions = ["year", "gametype", "statstype"];
+const basicDefaultOptionsGraph =["year", "gametype", "minshots", "xaxisplayers", "yaxisplayers"];
 const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype"];
 
 export default {
   // Players
   playersBasicOptions: basicOptions,
+  playersBasicOptionsGraph: basicOptionsGraph,
   playersBasicDefaultOptions: basicDefaultOptions,
+  playersBasicDefaultOptionsGraph: basicDefaultOptionsGraph,
   playersBasicColumns: playersBasicColumns,
   playersFreqColumns: playersFreqColumns,
   playersShootPercColumns: playersShootPercColumns,

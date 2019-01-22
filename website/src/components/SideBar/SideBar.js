@@ -154,14 +154,14 @@ class SideBar extends React.Component {
             >
               <Item key="players">
                 <StyledLink to="/players">
-                  <StyledIcon type="user" />
+                  <StyledIcon type="database" />
                   <span>Table</span>
                 </StyledLink>
               </Item>
               <Item key="playersgraph">
-                <StyledLink to={{ pathname: "/players", search: "?view=graph" }}>
-                  <StyledIcon type="user" />
-                  <span>Graph</span>
+                <StyledLink to="/players-chart">
+                  <StyledIcon type="dot-chart" />
+                  <span>Chart</span>
                 </StyledLink>
               </Item>
             </SubMenu>

@@ -53,7 +53,11 @@ function Routes(location) {
               {/*<Route exact path={"/"} component={BaseContainer} />*/}
               <Route
                 exact path={"/players"}
-                render = {(props) => <PlayersContainer {...props} />}
+                render = {(props) => <PlayersContainer {...props} chart={false}/>}
+              />
+              <Route
+                exact path={"/players-chart"}
+                render = {(props) => <PlayersContainer {...props} chart={true} />}
               />
               <Route
                 path={"/players/:slug"}
