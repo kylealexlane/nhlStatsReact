@@ -39,8 +39,6 @@ class PlayersGraphs extends React.Component {
   componentWillReceiveProps(nextProps) {
     const np = nextProps;
     const s = this.state;
-    console.log("np", np);
-    console.log("s", s);
     if (!np.isLoading && (np.dataSource !== s.dataSource || np.xAxis !== s.xAxis || np.yAxis !== s.yAxis || np.colourMetric !== s.colourMetric || np.minMetric !== s.minMetric || np.minMetricValue !== s.minMetricValue)) {
       this.getMetricList(np.xAxis, np.yAxis, np.colourMetric, np.nameMetric, np.dataSource, np.minMetric, np.minMetricValue);
       this.setState({
@@ -56,8 +54,6 @@ class PlayersGraphs extends React.Component {
   }
 
   getMetricList(xAxis, yAxis, colourMetric, nameMetric, objToParse, minMetric, minMetricValue) {
-    console.log("transforming...");
-    console.log(objToParse);
     this.setState({ isProcessing: true });
     const parseByForward = this.props.parseByForward;
     let l = [];

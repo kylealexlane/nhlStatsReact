@@ -165,12 +165,35 @@ class SideBar extends React.Component {
                 </StyledLink>
               </Item>
             </SubMenu>
-            <Item key="goalies">
-              <StyledLink to="/goalies">
-                <StyledIcon type="table" />
-                <span>Goalies</span>
-              </StyledLink>
-            </Item>
+
+            <SubMenu
+              title={
+                <span className="submenu-title-wrapper">
+                  <Icon type="table" />
+                  <span>Goalies</span>
+                </span>
+              }
+            >
+              <Item key="goalies">
+                <StyledLink to="/goalies">
+                  <StyledIcon type="database" />
+                  <span>Table</span>
+                </StyledLink>
+              </Item>
+              <Item key="goaliesgraph">
+                <StyledLink to="/goalies-chart">
+                  <StyledIcon type="dot-chart" />
+                  <span>Chart</span>
+                </StyledLink>
+              </Item>
+            </SubMenu>
+
+            {/*<Item key="goalies">*/}
+              {/*<StyledLink to="/goalies">*/}
+                {/*<StyledIcon type="table" />*/}
+                {/*<span>Goalies</span>*/}
+              {/*</StyledLink>*/}
+            {/*</Item>*/}
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">

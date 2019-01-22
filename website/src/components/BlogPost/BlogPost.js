@@ -85,7 +85,6 @@ class BlogPost extends Component {
     );
     if (this.state.loaded) {
       const post = this.state.post;
-      console.log("post", post);
       content = (
         <div className={"post-container"}>
           <Helmet>

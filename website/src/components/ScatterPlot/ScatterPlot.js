@@ -8,14 +8,6 @@ import {playersFetchData} from "../../actions/players";
 
 function getOptions(props) {
   const colors = ['#f76600', '#5793f3', '#d14a61', '#675bba'];
-  console.log("props data: ", props.data);
-  console.log("props : ", props);
-
-  // const numShots = props.getMetricList("num_shots", "yearlyRegData");
-  // const shootPerc = props.getMetricList("avg_shoot_perc", "yearlyRegData");
-  // const xShootPerc = props.getMetricList("avg_xgoals", "yearlyRegData");
-  // const sq = props.getMetricList("shot_quality", "yearlyRegData");
-  // const gaapers = props.getMetricList("goals_aa_per_shot", "yearlyRegData");
   const xAxisName = props.xAxisName ? props.xAxisName : props.xAxis;
   const yAxisName = props.yAxisName ? props.yAxisName : props.yAxis;
   const colourMetricName = props.colourMetricName ? props.colourMetricName : props.colourMetric;
@@ -23,10 +15,6 @@ function getOptions(props) {
 
   return(
     {
-      // title : {
-      //   text: props.title,
-      //   // subtext: '抽样调查来自: Heinz  2003'
-      // },
       grid: {
         left: '3%',
         right: '7%',
@@ -37,11 +25,10 @@ function getOptions(props) {
         // trigger: 'axis',
         showDelay : 0,
         formatter : function (params) {
-          console.log("params", params);
           return params.data[3] + '<br/>'
-            + colourMetricName + ' :' + params.data[2] + '<br/>'
-            + yAxisName + ' :' + params.data[1] + ' <br/>'
-            + xAxisName + ' :' + params.data[0] + ' <br/>';
+            + colourMetricName + ': ' + params.data[2] + '<br/>'
+            + yAxisName + ': ' + params.data[1] + ' <br/>'
+            + xAxisName + ': ' + params.data[0] + ' <br/>';
         },
         axisPointer:{
           show: true,

@@ -106,7 +106,6 @@ class TableAbove extends React.Component {
     }
 
     // year filter
-    console.log("state", this.state);
     if(this.state.selectedOpts.indexOf("year") > -1){
       selectYear =
         <SelectDiv>
@@ -209,7 +208,7 @@ class TableAbove extends React.Component {
     }
 
     // Select Y Axis filter
-    if(this.state.selectedOpts.indexOf("yaxisplayers") > -1){
+    if(this.state.selectedOpts.indexOf("yaxisplayers") > -1){ // Players
       yAxis =
         <SelectDiv>
           <FilterTitle>Y Axis Metric</FilterTitle>
@@ -230,9 +229,30 @@ class TableAbove extends React.Component {
           </Select>
         </SelectDiv>
     }
+    if(this.state.selectedOpts.indexOf("yaxisplayers") > -1){ // Goalies
+      yAxis =
+        <SelectDiv>
+          <FilterTitle>Y Axis Metric</FilterTitle>
+          <Select
+            defaultValue="save_perc"
+            style={{width: 160}}
+            onChange={(value) => this.props.changeYAxisCallback(value)}
+          >
+            <Option value="save_perc">Save %</Option>
+            <Option value="xsave_perc">xSave %</Option>
+            <Option value="saves_aa_per_shot">SavesAA/s</Option>
+            <Option value="num_goals">Goals</Option>
+            <Option value="sum_xgoals">xGoals</Option>
+            <Option value="shot_quality">Shot Quality</Option>
+            <Option value="mean_dist">Avg Dist</Option>
+            <Option value="mean_ang">Avg Ang</Option>
+            <Option value="num_shots">Shots</Option>
+          </Select>
+        </SelectDiv>
+    }
 
     // Select X Axis filter
-    if(this.state.selectedOpts.indexOf("xaxisplayers") > -1){
+    if(this.state.selectedOpts.indexOf("xaxisplayers") > -1){ // Players
       xAxis =
         <SelectDiv>
           <FilterTitle>X Axis Metric</FilterTitle>
@@ -244,6 +264,27 @@ class TableAbove extends React.Component {
             <Option value="avg_shoot_perc">Shooting %</Option>
             <Option value="avg_xgoals">xShooting %</Option>
             <Option value="goals_aa_per_shot">GoalsAA/s</Option>
+            <Option value="num_goals">Goals</Option>
+            <Option value="sum_xgoals">xGoals</Option>
+            <Option value="shot_quality">Shot Quality</Option>
+            <Option value="mean_dist">Avg Dist</Option>
+            <Option value="mean_ang">Avg Ang</Option>
+            <Option value="num_shots">Shots</Option>
+          </Select>
+        </SelectDiv>
+    }
+    if(this.state.selectedOpts.indexOf("xaxisplayers") > -1){ // Goalies
+      xAxis =
+        <SelectDiv>
+          <FilterTitle>X Axis Metric</FilterTitle>
+          <Select
+            defaultValue="xsave_perc"
+            style={{width: 160}}
+            onChange={(value) => this.props.changeXAxisCallback(value)}
+          >
+            <Option value="save_perc">Save %</Option>
+            <Option value="xsave_perc">xSave %</Option>
+            <Option value="saves_aa_per_shot">SavesAA/s</Option>
             <Option value="num_goals">Goals</Option>
             <Option value="sum_xgoals">xGoals</Option>
             <Option value="shot_quality">Shot Quality</Option>

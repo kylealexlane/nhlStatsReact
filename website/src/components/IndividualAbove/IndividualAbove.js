@@ -169,7 +169,6 @@ class IndividualAbove extends React.Component {
     if(this.state.teamInfo.teams){
       teamabbr = this.state.teamInfo.teams[0].abbreviation
     }
-    console.log("teamid", teamid);
     let content = (
       <LoadingWrapper>
         <Spin tip="Loading...">

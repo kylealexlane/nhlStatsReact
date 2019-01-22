@@ -358,6 +358,14 @@ const basicOptionsGraph = [
   {label: "Y Axis Metric", val: "yaxisplayers"}
 ];
 
+const basicOptionsGraphGoalies = [
+  {label: "Year", val: "year"},
+  {label: "Game Type", val: "gametype"},
+  {label: "Min Shots", val: "minshots"},
+  {label: "X Axis Metric", val: "xaxisgoalies"},
+  {label: "Y Axis Metric", val: "yaxisgoalies"}
+];
+
 const basicPlusSituationOptions = [
   {label: "Year", val: "year"},
   {label: "Game Type", val: "gametype"},
@@ -368,6 +376,7 @@ const basicPlusSituationOptions = [
 
 const basicDefaultOptions = ["year", "gametype", "statstype"];
 const basicDefaultOptionsGraph =["year", "gametype", "minshots", "xaxisplayers", "yaxisplayers"];
+const basicDefaultOptionsGraphGoalies =["year", "gametype", "minshots", "xaxisgoalies", "yaxisgoalies"];
 const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype"];
 
 export default {
@@ -394,7 +403,9 @@ export default {
 
   // Goalies
   goaliesBasicOptions: basicOptions,
+  goaliesBasicOptionsGraph: basicOptionsGraphGoalies,
   goaliesBasicDefaultOptions: basicDefaultOptions,
+  goaliesBasicDefaultOptionsGraph: basicDefaultOptionsGraphGoalies,
   goaliesBasicColumns: goaliesBasicColumns,
   goaliesFreqColumns: goaliesFreqColumns,
   goaliesShootPercColumns: goaliesShootPercColumns,

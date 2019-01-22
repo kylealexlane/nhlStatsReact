@@ -10,6 +10,7 @@ import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
 import { PlayersGraphs } from "../PlayersGraphs"
+import { metricsLabels } from "../../utils/lookups"
 
 
 const MainWrapper = styled.div`
@@ -26,17 +27,6 @@ const MainWrapper = styled.div`
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
 
-const lookupDict = {
-  avg_shoot_perc: "S%",
-  avg_xgoals: "xS%",
-  goals_aa_per_shot: "GoalsAA/s",
-  num_goals: "Goals",
-  sum_xgoals: "xGoals",
-  shot_quality: "SQ",
-  mean_dist: "feet",
-  mean_ang: "Degrees",
-  num_shots: "Shots",
-};
 
 class Players extends React.Component {
   constructor(props) {
@@ -90,7 +80,6 @@ class Players extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("next props!!s", nextProps);
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.players !== this.state.players) {
       this.setState({ data: nextProps.players });
@@ -150,12 +139,12 @@ class Players extends React.Component {
 
   // Handle change of X axis
   changeXAxisCallback(value){
-    this.setState({ xAxis: value, xAxisName: lookupDict[value] })
+    this.setState({ xAxis: value, xAxisName: metricsLabels[value] })
   }
 
   // handle change of Y axis
   changeYAxisCallback(value){
-    this.setState({ yAxis: value, yAxisName: lookupDict[value] })
+    this.setState({ yAxis: value, yAxisName: metricsLabels[value] })
   }
 
   getCols() {
@@ -204,7 +193,6 @@ class Players extends React.Component {
     const cols = this.getCols();
     const opts = this.getOpts();
     const defaultopts = this.getDefaultOpts();
-    console.log("OPTS", opts, defaultopts);
     const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
 
 

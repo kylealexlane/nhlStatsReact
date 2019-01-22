@@ -68,6 +68,10 @@ function Routes(location) {
                 render = {(props) => <GoaliesContainer {...props} />}
               />
               <Route
+                exact path={"/goalies-chart"}
+                render = {(props) => <GoaliesContainer {...props} chart={true} />}
+              />
+              <Route
                 path={"/goalies/:slug"}
                 render = {(props) => <GoalieContainer {...props} />}
               />
