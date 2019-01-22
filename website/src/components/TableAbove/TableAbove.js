@@ -65,7 +65,7 @@ class TableAbove extends React.Component {
     if (nextProps.location && nextProps.location.state && (nextProps.location.state.situation !== this.state.situationValue)) {
       this.changeSelectSituation(nextProps.location.state.situation);
     }
-    if(nextProps.defaultSelectFilters !== this.state.selectedOpts){
+    if(nextProps.defaultSelectFilters !== this.state.selectedOpts && nextProps.defaultSelectFilters){
       this.setState({ selectedOpts: nextProps.defaultSelectFilters });
     }
   }
@@ -106,6 +106,7 @@ class TableAbove extends React.Component {
     }
 
     // year filter
+    console.log("state", this.state);
     if(this.state.selectedOpts.indexOf("year") > -1){
       selectYear =
         <SelectDiv>

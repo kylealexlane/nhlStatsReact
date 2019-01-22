@@ -2,6 +2,8 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import { withRouter } from "react-router-dom";
 import ReactEcharts from 'echarts-for-react';
+import {connect} from "react-redux";
+import {playersFetchData} from "../../actions/players";
 
 
 function getOptions(props) {
@@ -25,12 +27,12 @@ function getOptions(props) {
       //   text: props.title,
       //   // subtext: '抽样调查来自: Heinz  2003'
       // },
-      // grid: {
-      //   left: '3%',
-      //   right: '7%',
-      //   bottom: '3%',
-      //   containLabel: true
-      // },
+      grid: {
+        left: '3%',
+        right: '7%',
+        bottom: '3%',
+        containLabel: true
+      },
       tooltip : {
         // trigger: 'axis',
         showDelay : 0,
@@ -51,10 +53,10 @@ function getOptions(props) {
         }
       },
       toolbox: {
-        feature: {
+        feature: props.isMobile ? {} : {
           dataZoom: {},
           brush: {
-            type: ['rect', 'polygon', 'clear']
+            type: ['rect', 'clear']
           }
         }
       },
@@ -69,7 +71,7 @@ function getOptions(props) {
           type : 'value',
           scale:true,
           axisLabel : {
-            formatter: '{value} ' + xAxisName
+            formatter: props.isMobile ? '{value}' : '{value} ' + xAxisName
           },
           splitLine: {
             show: false
@@ -81,7 +83,7 @@ function getOptions(props) {
           type : 'value',
           scale:true,
           axisLabel : {
-            formatter: '{value} ' + yAxisName
+            formatter: props.isMobile ? '{value}' : '{value} ' + yAxisName
           },
           splitLine: {
             show: false
@@ -198,5 +200,16 @@ const ScatterPlot = props => (
   />
 );
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
 
-export default withRouter(withTheme(ScatterPlot));
+const mapStateToProps = (state) => {
+  return {
+    isMobile: state.isMobileMode,
+  };
+};
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (withTheme(ScatterPlot)));

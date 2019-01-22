@@ -56,7 +56,6 @@ class BlogHome extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       loaded: false
     };
@@ -74,18 +73,13 @@ class BlogHome extends Component {
   componentWillMount() {
     // let page = this.props.params.page || 1;
     let page = this.props.match.params.page || 1;
-
-
     this.fetchPosts(page)
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({loaded: false});
-
     // let page = nextProps.params.page || 1;
     let page = nextProps.match.params.page || 1;
-
-
     this.fetchPosts(page)
   }
 
@@ -133,7 +127,7 @@ class BlogHome extends Component {
           // style={{ width: this.state.width - this.state.sidebarWidth - (layout.outerPaddingInt*2)}}
         >
           <TableAbove
-            title={"Blog"}
+            title={"About"}
             subTitle={"Information, research, and news is posted here and displayed in chronological order"}
           />
           {content}
