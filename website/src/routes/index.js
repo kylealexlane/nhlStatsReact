@@ -36,7 +36,8 @@ const Content = styled.div`
   width: 100%;
 `;
 
-function Routes() {
+function Routes(location) {
+  let params = new URLSearchParams(location.search);
   return (
     <Router>
       <Container>

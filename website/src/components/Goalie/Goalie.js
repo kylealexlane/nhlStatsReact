@@ -12,10 +12,8 @@ import { GoalieGraphs } from "../GoalieGraphs";
 import { Tabs } from 'antd';
 import { GoalieTables } from "../GoalieTables"
 
-const maxTableWidth = 1200;
 
 const TabPane = Tabs.TabPane;
-
 
 const MainWrapper = styled.div`
   align-self: center;

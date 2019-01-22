@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
-import mainTheme from "../../styles/theme";
 
 const Header = styled.header`
   margin-bottom: 24px;

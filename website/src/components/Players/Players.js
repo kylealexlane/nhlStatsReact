@@ -9,10 +9,8 @@ import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
-import {isMobileMode} from "../../reducers/sidebar";
+import { PlayersGraphs } from "../PlayersGraphs"
 
-
-const maxTableWidth = 1200;
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -40,6 +38,16 @@ class Players extends React.Component {
       statsType: 'basic',
       isLoading: false,
       data: [],
+      yAxis: "avg_xgoals",
+      yAxisName: "xS%",
+      xAxis: "avg_shoot_perc",
+      xAxisName: "S%",
+      colourMetric: "num_shots",
+      colourMetricName: "Shots",
+      nameMetric: "last_name",
+      minMetric: "num_shots",
+      minMetricValue: 50,
+      graph: true,
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
       pageNum: maintheme.DefaultNumTableItems
     };
@@ -151,7 +159,7 @@ class Players extends React.Component {
 
     return (
       <React.Fragment>
-        <MainWrapper style={{ width: w}}>
+        <MainWrapper style={{ width: w, height: "100%"}}>
           <TableAbove
             title={"Players"}
             subTitle={"Player shooting statistics by season and game type"}
@@ -164,16 +172,34 @@ class Players extends React.Component {
             selectGameTypeCallback={this.handleChangeGameType}
             changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
           />
-          <Table
-            pageSize={this.state.pageNum}
-            cols={cols}
-            dataSource={this.state.data}
-            scroll={{ x: cols.length * colWidth }} // each column has a fixed width of 100
-            loading={this.state.isLoading}
-            rowKey="id"
-            colWidth={colWidth}
-            fixedColWidth={colWidth}
-          />
+          {this.state.graph ?
+            <PlayersGraphs
+              style={{ height: "100%" }}
+              // minHeight={this.props.isMobile ? 700 : 1000}
+              dataSource={this.state.data}
+              loading={this.state.isLoading}
+              metric1={this.state.yAxis}
+              metric1Name={this.state.yAxisName}
+              metric2={this.state.xAxis}
+              metric2Name={this.state.xAxisName}
+              colourMetric={this.state.colourMetric}
+              colourMetricName={this.state.colourMetricName}
+              nameMetric={this.state.nameMetric}
+              minMetric={this.state.minMetric}
+              minMetricValue={this.state.minMetricValue}
+              parseByForward = {true}
+            /> :
+            <Table
+              pageSize={this.state.pageNum}
+              cols={cols}
+              dataSource={this.state.data}
+              scroll={{ x: cols.length * colWidth }} // each column has a fixed width of 100
+              loading={this.state.isLoading}
+              rowKey="id"
+              colWidth={colWidth}
+              fixedColWidth={colWidth}
+            />
+          }
         </MainWrapper>
       </React.Fragment>
     );

@@ -11,8 +11,6 @@ import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
 
 
-const maxTableWidth = 1200;
-
 const MainWrapper = styled.div`
   align-self: center;
   margin: 0;
@@ -26,11 +24,6 @@ const MainWrapper = styled.div`
   background: ${props => props.theme.colors.mainBackground};
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
-
-const TableWrapper = styled.div`
-  max-width: calc(${maxTableWidth}px);
-`;
-
 
 class Goalies extends React.Component {
   constructor(props) {
@@ -169,20 +162,17 @@ class Goalies extends React.Component {
             selectGameTypeCallback={this.handleChangeGameType}
             changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
           />
-          <TableWrapper>
-            <Table
-              goalieStats={true}
-              pageSize={this.state.pageNum}
-              cols={cols}
-              dataSource={this.state.data}
-              scroll={{ x: cols.length * colWidth }}
-              loading={this.state.isLoading}
-              rowKey="id"
-              colWidth={colWidth}
-              fixedColWidth={colWidth}
-            />
-
-          </TableWrapper>
+          <Table
+            goalieStats={true}
+            pageSize={this.state.pageNum}
+            cols={cols}
+            dataSource={this.state.data}
+            scroll={{ x: cols.length * colWidth }}
+            loading={this.state.isLoading}
+            rowKey="id"
+            colWidth={colWidth}
+            fixedColWidth={colWidth}
+          />
         </MainWrapper>
       </React.Fragment>
     );

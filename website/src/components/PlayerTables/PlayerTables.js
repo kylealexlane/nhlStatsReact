@@ -10,9 +10,6 @@ import dataColumns from "../../utils/dataColumns"
 import { Table } from "../Table";
 
 
-const maxTableWidth = 1200;
-
-
 const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;

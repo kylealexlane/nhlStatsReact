@@ -39,7 +39,7 @@ export const layout = {
   topBariHeightInt: 48,
   outerPadding: "16px",
   outerPaddingInt: 16,
-  maxWrapperWidthInt: 1250,
+  maxWrapperWidthInt: 1280,
   maxBlogPostWidthInt: 300,
   sidebarGoneWidth: 768,
   sidebarExpandedWidth: 992,
