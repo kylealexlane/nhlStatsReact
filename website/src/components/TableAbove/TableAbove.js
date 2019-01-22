@@ -82,6 +82,9 @@ class TableAbove extends React.Component {
     let minShotNum;
     let xAxis;
     let yAxis;
+    let xAxisG;
+    let yAxisG;
+
 
     // Selector for choosing which filters to show/display
     if(this.props.chooseSelects) {
@@ -229,8 +232,8 @@ class TableAbove extends React.Component {
           </Select>
         </SelectDiv>
     }
-    if(this.state.selectedOpts.indexOf("yaxisplayers") > -1){ // Goalies
-      yAxis =
+    if(this.state.selectedOpts.indexOf("yaxisgoalies") > -1){ // Goalies
+      yAxisG =
         <SelectDiv>
           <FilterTitle>Y Axis Metric</FilterTitle>
           <Select
@@ -273,8 +276,8 @@ class TableAbove extends React.Component {
           </Select>
         </SelectDiv>
     }
-    if(this.state.selectedOpts.indexOf("xaxisplayers") > -1){ // Goalies
-      xAxis =
+    if(this.state.selectedOpts.indexOf("xaxisgoalies") > -1){ // Goalies
+      xAxisG =
         <SelectDiv>
           <FilterTitle>X Axis Metric</FilterTitle>
           <Select
@@ -310,6 +313,8 @@ class TableAbove extends React.Component {
       {minShotNum}
       {yAxis}
       {xAxis}
+      {yAxisG}
+      {xAxisG}
     </Header>)}
 }
 

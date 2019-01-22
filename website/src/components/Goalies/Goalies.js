@@ -169,7 +169,7 @@ class Goalies extends React.Component {
   getOpts() {
     let opts =[];
     if(this.state.chart) {
-      opts= dataColumns.playersBasicOptionsGraph;
+      opts= dataColumns.goaliesBasicOptionsGraph;
     } else {
       opts = dataColumns.playersBasicOptions;
     }
@@ -179,7 +179,7 @@ class Goalies extends React.Component {
   getDefaultOpts() {
     let optsDef =[];
     if(this.state.chart) {
-      optsDef= dataColumns.playersBasicDefaultOptionsGraph;
+      optsDef= dataColumns.goaliesBasicDefaultOptionsGraph;
     } else {
       optsDef = dataColumns.playersBasicDefaultOptions;
     }
