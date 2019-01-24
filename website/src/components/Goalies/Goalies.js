@@ -63,7 +63,8 @@ class Goalies extends React.Component {
     this.changeYAxisCallback = this.changeYAxisCallback.bind(this);
     this.getCols = this.getCols.bind(this);
     this.getOpts = this.getOpts.bind(this);
-    this.getDefaultOpts = this.getDefaultOpts.bind(this);  }
+    this.getDefaultOpts = this.getDefaultOpts.bind(this);
+  }
 
   // Functions for calculating window size on the fly and dynamically updating things
   componentDidMount() {
