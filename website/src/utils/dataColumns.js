@@ -369,7 +369,7 @@ const basicPlusSituationOptions = [
 const basicDefaultOptions = ["year", "gametype", "statstype", "pagenum"];
 const basicDefaultOptionsGraph =["year", "gametype", "minshots", "xaxisplayers", "yaxisplayers"];
 const basicDefaultOptionsGraphGoalies =["year", "gametype", "minshots", "xaxisgoalies", "yaxisgoalies"];
-const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype"];
+const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype", "pagenum"];
 
 export default {
   // Players

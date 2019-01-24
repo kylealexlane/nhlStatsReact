@@ -48,7 +48,7 @@ class Players extends React.Component {
       colourMetricName: "Shots",
       nameMetric: "last_name",
       minMetric: "num_shots",
-      minMetricValue: 50,
+      minMetricValue: maintheme.defaultMinShotsGraph,
       chart: false,
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
       pageNum: maintheme.DefaultNumTableItems
