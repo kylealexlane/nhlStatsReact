@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 import { TableAbove } from "../TableAbove";
 import {withRouter} from "react-router-dom";
 import dataColumns from "../../utils/dataColumns"
+import { PlayersGraphs } from "../PlayersGraphs"
+import { metricsLabels } from "../../utils/lookups"
 
-
-const maxTableWidth = 1200;
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -23,14 +23,9 @@ const MainWrapper = styled.div`
   padding-bottom: ${props => props.theme.layout.paddingVertical};
   padding-right: ${props => props.theme.layout.paddingHorizontal};
   padding-left: ${props => props.theme.layout.paddingHorizontal};
-  background: ${props => props.theme.colors.mainBackground};
+  background: ${props => props.theme.colors.mainBackground}; d
   min-height: calc(100vh - ${props => props.theme.layout.topBarHeight} - ${props => props.theme.layout.paddingVertical} * 2);
 `;
-
-const TableWrapper = styled.div`
-  max-width: calc(${maxTableWidth}px);
-`;
-
 
 class Goalies extends React.Component {
   constructor(props) {
@@ -44,6 +39,16 @@ class Goalies extends React.Component {
       statsType: 'basic',
       isLoading: false,
       data: [],
+      xAxis: "xsave_perc",
+      xAxisName: "xSave%",
+      yAxis: "save_perc",
+      yAxisName: "Save%",
+      colourMetric: "num_shots",
+      colourMetricName: "Shots",
+      nameMetric: "last_name",
+      minMetric: "num_shots",
+      minMetricValue: maintheme.defaultMinShotsGraph,
+      chart: false,
       sidebarWidth: this.props.sidebarCollapsed ? layout.sidebarCollapsedWidth : layout.sideBarWidth,
       pageNum: maintheme.DefaultNumTableItems
     };
@@ -53,7 +58,12 @@ class Goalies extends React.Component {
     this.pageNumChangeCallback = this.pageNumChangeCallback.bind(this);
     this.fetchGoalieData = this.fetchGoalieData.bind(this);
     this.changeSelectStatsTypeCallback = this.changeSelectStatsTypeCallback.bind(this);
+    this.minShotsChangeCallback = this.minShotsChangeCallback.bind(this);
+    this.changeXAxisCallback = this.changeXAxisCallback.bind(this);
+    this.changeYAxisCallback = this.changeYAxisCallback.bind(this);
     this.getCols = this.getCols.bind(this);
+    this.getOpts = this.getOpts.bind(this);
+    this.getDefaultOpts = this.getDefaultOpts.bind(this);
   }
 
   // Functions for calculating window size on the fly and dynamically updating things
@@ -72,6 +82,9 @@ class Goalies extends React.Component {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.goalies !== this.state.goalies) {
       this.setState({ data: nextProps.goalies });
+    }
+    if (nextProps.chart !== this.state.chart) {
+      this.setState({ chart: nextProps.chart });
     }
     if (nextProps.isLoading !== this.state.isLoading) {
       this.setState({ isLoading: nextProps.isLoading });
@@ -118,6 +131,21 @@ class Goalies extends React.Component {
     this.setState({ statsType: value })
   }
 
+  //Handle changing min shots
+  minShotsChangeCallback(n){
+    this.setState({ minMetricValue: n })
+  }
+
+  // Handle change of X axis
+  changeXAxisCallback(value){
+    this.setState({ xAxis: value, xAxisName: metricsLabels[value] })
+  }
+
+  // handle change of Y axis
+  changeYAxisCallback(value){
+    this.setState({ yAxis: value, yAxisName: metricsLabels[value] })
+  }
+
   getCols() {
     switch(this.state.statsType) {
       case "basic":
@@ -139,13 +167,32 @@ class Goalies extends React.Component {
     }
   }
 
+  getOpts() {
+    let opts =[];
+    if(this.state.chart) {
+      opts= dataColumns.goaliesBasicOptionsGraph;
+    } else {
+      opts = dataColumns.playersBasicOptions;
+    }
+    return opts;
+  }
+
+  getDefaultOpts() {
+    let optsDef =[];
+    if(this.state.chart) {
+      optsDef= dataColumns.goaliesBasicDefaultOptionsGraph;
+    } else {
+      optsDef = dataColumns.playersBasicDefaultOptions;
+    }
+    return optsDef;
+  }
+
 
   render() {
     const cols = this.getCols();
-    const opts = dataColumns.goaliesBasicOptions;
+    const opts = this.getOpts();
+    const defaultopts = this.getDefaultOpts();
     const colWidth = this.props.isMobile ? maintheme.layout.mobileColWidth : maintheme.layout.colWidth;
-
-    const defaultopts = dataColumns.goaliesBasicDefaultOptions;
 
     // Width calculations for proper re-sizing
     let pw = this.props.sidebarGone ?
@@ -168,21 +215,39 @@ class Goalies extends React.Component {
             selectYearCallback={this.handleChangeYear}
             selectGameTypeCallback={this.handleChangeGameType}
             changeSelectStatsTypeCallback={this.changeSelectStatsTypeCallback}
+            minShotsChangeCallback={this.minShotsChangeCallback}
+            changeXAxisCallback={this.changeXAxisCallback}
+            changeYAxisCallback={this.changeYAxisCallback}
           />
-          <TableWrapper>
+          {this.state.chart ?
+            <PlayersGraphs
+              style={{height: "100%"}}
+              // minHeight={this.props.isMobile ? 700 : 1000}
+              dataSource={this.state.data}
+              loading={this.state.isLoading}
+              yAxis={this.state.yAxis}
+              yAxisName={this.state.yAxisName}
+              xAxis={this.state.xAxis}
+              xAxisName={this.state.xAxisName}
+              colourMetric={this.state.colourMetric}
+              colourMetricName={this.state.colourMetricName}
+              nameMetric={this.state.nameMetric}
+              minMetric={this.state.minMetric}
+              minMetricValue={this.state.minMetricValue}
+              parseByForward={false}
+            /> :
             <Table
               goalieStats={true}
               pageSize={this.state.pageNum}
               cols={cols}
               dataSource={this.state.data}
-              scroll={{ x: cols.length * colWidth }}
+              scroll={{x: cols.length * colWidth}}
               loading={this.state.isLoading}
               rowKey="id"
               colWidth={colWidth}
               fixedColWidth={colWidth}
             />
-
-          </TableWrapper>
+          }
         </MainWrapper>
       </React.Fragment>
     );

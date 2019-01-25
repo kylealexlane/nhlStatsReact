@@ -36,7 +36,8 @@ const Content = styled.div`
   width: 100%;
 `;
 
-function Routes() {
+function Routes(location) {
+  let params = new URLSearchParams(location.search);
   return (
     <Router>
       <Container>
@@ -52,7 +53,11 @@ function Routes() {
               {/*<Route exact path={"/"} component={BaseContainer} />*/}
               <Route
                 exact path={"/players"}
-                render = {(props) => <PlayersContainer {...props} />}
+                render = {(props) => <PlayersContainer {...props} chart={false}/>}
+              />
+              <Route
+                exact path={"/players-chart"}
+                render = {(props) => <PlayersContainer {...props} chart={true} />}
               />
               <Route
                 path={"/players/:slug"}
@@ -61,6 +66,10 @@ function Routes() {
               <Route
                 exact path={"/goalies"}
                 render = {(props) => <GoaliesContainer {...props} />}
+              />
+              <Route
+                exact path={"/goalies-chart"}
+                render = {(props) => <GoaliesContainer {...props} chart={true} />}
               />
               <Route
                 path={"/goalies/:slug"}

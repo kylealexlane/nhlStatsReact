@@ -62,7 +62,6 @@ export function goalieFetchBio(url) {
     dispatch(goalieBioIsLoading(true));
     fetch(url)
       .then((response) => {
-        console.log("goalie bio response", response);
         if (!response.ok) {
           throw Error(response.statusText);
         }

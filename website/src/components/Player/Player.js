@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { withTheme } from "styled-components";
 import "react-typist/dist/Typist.css";
-import { Table } from "../Table";
 import maintheme from "../../styles/theme"
 import { layout } from "../../styles/theme"
 import { playerFetchData, playerFetchBio } from '../../actions/player';
@@ -13,10 +12,8 @@ import { PlayerGraphs } from "../PlayerGraphs";
 import { Tabs } from 'antd';
 import { PlayerTables } from "../PlayerTables"
 
-const maxTableWidth = 1200;
 
 const TabPane = Tabs.TabPane;
-
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -78,7 +75,6 @@ class Player extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("player next props", nextProps);
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.player !== this.state.player) {
       this.setState({ data: nextProps.player });

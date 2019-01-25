@@ -45,8 +45,6 @@ class Table extends React.Component {
   render() {
     const fixedColWidth = this.props.fixedColWidth ? this.props.fixedColWidth : 100;
     const colWidth = this.props.colWidth ? this.props.colWidth : 100;
-    console.log("table using", colWidth);
-    console.log("table using f", fixedColWidth);
 
 
     const columns = [];

@@ -2,9 +2,9 @@ import React from "react";
 
 import { Goalies } from "../../components/Goalies";
 
-const GoaliesContainer = () => (
+const GoaliesContainer = (props) => (
   <React.Fragment>
-    <Goalies />
+    <Goalies {...props} />
   </React.Fragment>
 );
 

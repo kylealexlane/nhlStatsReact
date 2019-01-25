@@ -12,10 +12,8 @@ import { GoalieGraphs } from "../GoalieGraphs";
 import { Tabs } from 'antd';
 import { GoalieTables } from "../GoalieTables"
 
-const maxTableWidth = 1200;
 
 const TabPane = Tabs.TabPane;
-
 
 const MainWrapper = styled.div`
   align-self: center;
@@ -77,7 +75,6 @@ class Goalie extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("goalie next props", nextProps);
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.goalie !== this.state.goalie) {
       this.setState({ data: nextProps.goalie });

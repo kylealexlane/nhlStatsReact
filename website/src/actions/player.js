@@ -62,7 +62,6 @@ export function playerFetchBio(url) {
     dispatch(playerBioIsLoading(true));
     fetch(url)
       .then((response) => {
-        console.log("player bio response", response);
         if (!response.ok) {
           throw Error(response.statusText);
         }

@@ -7,8 +7,6 @@ import mainTheme from "../../styles/theme"
 import { changeSidebarStatus, changeSidebarGoneStatus, changeScreenWidth, isMobileMode } from '../../actions/sidebar';
 import { connect } from 'react-redux';
 import { layout } from '../../styles/theme'
-// import { withRouter } from 'react-router-dom'
-
 
 
 const { Item } = Menu;
@@ -140,18 +138,62 @@ class SideBar extends React.Component {
                 <StyledLogo>PuckLuck</StyledLogo>
               </StyledLink>
             </LogoItem>
-            <Item key="players">
-              <StyledLink to="/players">
-                <StyledIcon type="user" />
-                <span>Players</span>
-              </StyledLink>
-            </Item>
-            <Item key="goalies">
-              <StyledLink to="/goalies">
-                <StyledIcon type="table" />
-                <span>Goalies</span>
-              </StyledLink>
-            </Item>
+            {/*<Item key="players">*/}
+              {/*<StyledLink to="/players">*/}
+                {/*<StyledIcon type="user" />*/}
+                {/*<span>Players</span>*/}
+              {/*</StyledLink>*/}
+            {/*</Item>*/}
+            <SubMenu
+              title={
+                <span className="submenu-title-wrapper">
+                  <Icon type="user" />
+                  <span>Players</span>
+                </span>
+              }
+            >
+              <Item key="players">
+                <StyledLink to="/players">
+                  <StyledIcon type="database" />
+                  <span>Table</span>
+                </StyledLink>
+              </Item>
+              <Item key="playersgraph">
+                <StyledLink to="/players-chart">
+                  <StyledIcon type="dot-chart" />
+                  <span>Chart</span>
+                </StyledLink>
+              </Item>
+            </SubMenu>
+
+            <SubMenu
+              title={
+                <span className="submenu-title-wrapper">
+                  <Icon type="table" />
+                  <span>Goalies</span>
+                </span>
+              }
+            >
+              <Item key="goalies">
+                <StyledLink to="/goalies">
+                  <StyledIcon type="database" />
+                  <span>Table</span>
+                </StyledLink>
+              </Item>
+              <Item key="goaliesgraph">
+                <StyledLink to="/goalies-chart">
+                  <StyledIcon type="dot-chart" />
+                  <span>Chart</span>
+                </StyledLink>
+              </Item>
+            </SubMenu>
+
+            {/*<Item key="goalies">*/}
+              {/*<StyledLink to="/goalies">*/}
+                {/*<StyledIcon type="table" />*/}
+                {/*<span>Goalies</span>*/}
+              {/*</StyledLink>*/}
+            {/*</Item>*/}
             <SubMenu
               title={
                 <span className="submenu-title-wrapper">
@@ -182,7 +224,7 @@ class SideBar extends React.Component {
             <Item key="blog" >
               <StyledLink to="/blog">
                 <StyledIcon type="laptop" />
-                <span>Blog</span>
+                <span>About</span>
               </StyledLink>
             </Item>
           </StyledMenu>

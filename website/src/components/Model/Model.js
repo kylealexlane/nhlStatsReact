@@ -20,7 +20,7 @@ class Model extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <p>test</p>
+        <p>Model</p>
       </React.Fragment>
     );
   }
