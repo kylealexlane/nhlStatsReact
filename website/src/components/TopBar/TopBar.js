@@ -2,6 +2,7 @@ import React from "react";
 import styled, { withTheme } from "styled-components";
 import { withRouter } from "react-router-dom";
 import { Icon } from "antd";
+import logo from "../../assets/butter-b.png"
 
 const Container = styled.div`
   ${props => props.theme.flex.spaceBetween};
@@ -33,15 +34,25 @@ const RightMenuIcon = styled(Icon)`
   margin-left: ${props => props.theme.padding.sixteen};
 `;
 
+const InlineP = styled.p`
+  display: inline;
+`;
+
 const TopBar = props => (
+
   <Container>
     <ExpandIcon onClick={props.toggle}>
       <Icon type={props.collapsed ? "menu-unfold" : "menu-fold"} />
     </ExpandIcon>
-    <span>
-      {/*<RightMenuIcon type="search" />*/}
-      {/*<RightMenuIcon type="question-circle" />*/}
-    </span>
+    {props.showButterLogo ?
+      <span>
+        <InlineP>Blog API provided by </InlineP>
+        <a href="https://buttercms.com/"><img src={logo} alt={"logo"} style={{height: "100%", width: 120}}/></a>
+        {/*<RightMenuIcon type="question-circle" />*/}
+
+      </span> : <span />
+    }
+
   </Container>
 );
 
