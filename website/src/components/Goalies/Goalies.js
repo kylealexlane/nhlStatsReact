@@ -79,16 +79,6 @@ class Goalies extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.goalies !== this.state.goalies) {
-      this.setState({ data: nextProps.goalies });
-    }
-    if (nextProps.chart !== this.state.chart) {
-      this.setState({ chart: nextProps.chart });
-    }
-    if (nextProps.isLoading !== this.state.isLoading) {
-      this.setState({ isLoading: nextProps.isLoading });
-    }
     if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
       this.setState({
         sidebarCollapsed: nextProps.sidebarCollapsed,
@@ -169,7 +159,7 @@ class Goalies extends React.Component {
 
   getOpts() {
     let opts =[];
-    if(this.state.chart) {
+    if(this.props.chart) {
       opts= dataColumns.goaliesBasicOptionsGraph;
     } else {
       opts = dataColumns.playersBasicOptions;
@@ -179,7 +169,7 @@ class Goalies extends React.Component {
 
   getDefaultOpts() {
     let optsDef =[];
-    if(this.state.chart) {
+    if(this.props.chart) {
       optsDef= dataColumns.goaliesBasicDefaultOptionsGraph;
     } else {
       optsDef = dataColumns.playersBasicDefaultOptions;
@@ -219,12 +209,12 @@ class Goalies extends React.Component {
             changeXAxisCallback={this.changeXAxisCallback}
             changeYAxisCallback={this.changeYAxisCallback}
           />
-          {this.state.chart ?
+          {this.props.chart ?
             <PlayersGraphs
               style={{height: "100%"}}
               // minHeight={this.props.isMobile ? 700 : 1000}
-              dataSource={this.state.data}
-              loading={this.state.isLoading}
+              dataSource={this.props.goalies}
+              loading={this.props.isLoading}
               yAxis={this.state.yAxis}
               yAxisName={this.state.yAxisName}
               xAxis={this.state.xAxis}
@@ -240,9 +230,10 @@ class Goalies extends React.Component {
               goalieStats={true}
               pageSize={this.state.pageNum}
               cols={cols}
-              dataSource={this.state.data}
+              dataSource={this.props.goalies}
+              rowClick={(id) => this.props.history.push(`/goalies/${id}`)}
               scroll={{x: cols.length * colWidth}}
-              loading={this.state.isLoading}
+              loading={this.props.isLoading}
               rowKey="id"
               colWidth={colWidth}
               fixedColWidth={colWidth}

@@ -27,12 +27,17 @@ export function playerFetchData(url) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        dispatch(playerIsLoading(false));
         return response;
       })
       .then((response) => response.json())
-      .then((player) => dispatch(playerFetchDataSuccess(player.player_stats)))
-      .catch(() => dispatch(playerHasErrored(true)));
+      .then((player) => {
+        dispatch(playerFetchDataSuccess(player.player_stats));
+        dispatch(playerIsLoading(false));
+      })
+      .catch(() => {
+        dispatch(playerHasErrored(true));
+        dispatch(playerIsLoading(false));
+      });
   };
 }
 

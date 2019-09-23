@@ -7,6 +7,7 @@ import { Popover, Card, Icon, Avatar, Spin, Alert } from 'antd';
 import {layout} from "../../styles/theme";
 import maintheme from "../../styles/theme";
 import { TableAbove } from "../TableAbove";
+import {showButterLogoHeader} from "../../actions/butter";
 
 
 const { Meta } = Card;
@@ -51,7 +52,6 @@ const LoadingWrapper = styled.div`
   height: 100%;
 `;
 
-
 class BlogHome extends Component {
 
   constructor(props) {
@@ -73,7 +73,12 @@ class BlogHome extends Component {
   componentWillMount() {
     // let page = this.props.params.page || 1;
     let page = this.props.match.params.page || 1;
-    this.fetchPosts(page)
+    this.fetchPosts(page);
+    this.props.showButterLogo(true);
+  }
+
+  componentWillUnmount() {
+    this.props.showButterLogo(false);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -139,6 +144,7 @@ class BlogHome extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    showButterLogo: (bool) => dispatch(showButterLogoHeader(bool)),
   };
 };
 

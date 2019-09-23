@@ -5,6 +5,7 @@ import {withRouter} from "react-router-dom";
 import styled, { withTheme } from "styled-components";
 import {connect} from "react-redux";
 import {layout} from "../../styles/theme";
+import {showButterLogoHeader} from "../../actions/butter";
 
 const butter = Butter('3e57058a25a5cd171ba409a081c9da7e0cbe6f54');
 
@@ -67,10 +68,12 @@ class BlogPost extends Component {
     document.title = this.state.post;
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    this.props.showButterLogo(true);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
+    this.props.showButterLogo(false);
   }
 
   updateWindowDimensions() {
@@ -116,6 +119,7 @@ class BlogPost extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    showButterLogo: (bool) => dispatch(showButterLogoHeader(bool)),
   };
 };
 

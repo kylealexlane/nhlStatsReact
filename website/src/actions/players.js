@@ -28,13 +28,16 @@ export function playersFetchData(url) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-
-        dispatch(playersIsLoading(false));
-
         return response;
       })
       .then((response) => response.json())
-      .then((players) => dispatch(playersFetchDataSuccess(players.player_stats)))
-      .catch(() => dispatch(playersHasErrored(true)));
+      .then((players) => {
+        dispatch(playersFetchDataSuccess(players.player_stats));
+        dispatch(playersIsLoading(false));
+      })
+      .catch(() => {
+        dispatch(playersHasErrored(true));
+        dispatch(playersIsLoading(false));
+      });
   };
 }

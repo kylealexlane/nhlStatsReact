@@ -28,13 +28,16 @@ export function goaliesFetchData(url) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-
-        dispatch(goaliesIsLoading(false));
-
         return response;
       })
       .then((response) => response.json())
-      .then((goalies) => dispatch(goaliesFetchDataSuccess(goalies.goalie_stats)))
-      .catch(() => dispatch(goaliesHasErrored(true)));
+      .then((goalies) => {
+        dispatch(goaliesFetchDataSuccess(goalies.goalie_stats));
+        dispatch(goaliesIsLoading(false));
+      })
+      .catch(() => {
+        dispatch(goaliesHasErrored(true));
+        dispatch(goaliesIsLoading(false));
+      });
   };
 }

@@ -232,6 +232,7 @@ class SideBar extends React.Component {
         <Main>
           <TopBar
             collapsed={this.state.collapsed}
+            showButterLogo={this.props.showButterLogo}
             toggle={() => {
               this.toggle();
             }}
@@ -255,7 +256,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     sidebarCollapsed: state.sidebarCollapsed,
-    sidebarGone: state.sidebarGone
+    sidebarGone: state.sidebarGone,
+    showButterLogo: state.showButterLogo,
   };
 };
 

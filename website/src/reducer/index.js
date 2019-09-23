@@ -5,6 +5,7 @@ import { teams, teamsHasErrored, teamsIsLoading, teamInfo, teamInfoHasErrored, t
 import { goalies, goaliesHasErrored, goaliesIsLoading } from '../reducers/goalies';
 import { goalie, goalieHasErrored, goalieIsLoading, goalieBio, goalieBioHasErrored, goalieBioIsLoading } from '../reducers/goalie';
 import { sidebarCollapsed, sidebarGone, screenWidth, isMobileMode } from '../reducers/sidebar'
+import { showButterLogo } from "../reducers/butter";
 
 
 const rootReducer = combineReducers({
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
   goalieBioIsLoading,
   screenWidth,
   isMobileMode,
+  showButterLogo,
 });
 
 export default rootReducer;

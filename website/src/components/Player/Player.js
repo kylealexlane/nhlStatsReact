@@ -36,9 +36,13 @@ const Section = styled.div`
   padding-left: 16px;
 `;
 
+const StyledTabPane = styled(TabPane)`
+  font-size: 30px;
+`;
+
 const SectionTitle = styled.h2`
   margin-left: 16px;
-  margin-top: 16px;
+  margin-top: 24px;
   text-transform: none;
   color: ${props => props.theme.colors.mainAccent};
 `;
@@ -127,12 +131,12 @@ class Player extends React.Component {
             type={"player"}
           />
           <Tabs defaultActiveKey="1" onChange={this.tabchange}>
-            <TabPane tab="Puck Luck" key="1">
+            <StyledTabPane tab="Puck Luck" key="1">
               <SectionTitle >Puck Luck</SectionTitle>
               <Section>
                 <PlayerGraphs />
               </Section>
-            </TabPane>
+            </StyledTabPane>
             <TabPane tab="Stats" key="2">
               <SectionTitle >Stats</SectionTitle>
               <Section>

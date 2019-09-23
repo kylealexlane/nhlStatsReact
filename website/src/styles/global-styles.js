@@ -73,6 +73,7 @@ injectGlobal`
   }
   .ant-tabs-nav .ant-tabs-tab-active {
     color: #f76600;
+    font-weight: 300;
   }
   .ant-tabs-nav .ant-tabs-tab:hover{
     color: #f76600;
@@ -82,6 +83,13 @@ injectGlobal`
   }
   .ant-table-thead > tr > th .ant-table-column-sorter-up.on, .ant-table-thead > tr > th .ant-table-column-sorter-down.on {
     color: #f76600;
+  }
+  .clickable-row:hover {
+    cursor: pointer;
+  }
+  .ant-tabs-nav {
+    font-size: 24px;
+    font-weight: 300;
   }
   @media only screen and (max-width: 768px) {
     h1 {

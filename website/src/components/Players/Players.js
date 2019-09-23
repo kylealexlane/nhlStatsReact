@@ -80,16 +80,6 @@ class Players extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.players !== this.state.players) {
-      this.setState({ data: nextProps.players });
-    }
-    if (nextProps.chart !== this.state.chart) {
-      this.setState({ chart: nextProps.chart });
-    }
-    if (nextProps.isLoading !== this.state.isLoading) {
-      this.setState({ isLoading: nextProps.isLoading });
-    }
     if (nextProps.sidebarCollapsed !== this.state.sidebarCollapsed) {
       this.setState({
         sidebarCollapsed: nextProps.sidebarCollapsed,
@@ -170,7 +160,7 @@ class Players extends React.Component {
 
   getOpts() {
     let opts =[];
-    if(this.state.chart) {
+    if(this.props.chart) {
       opts= dataColumns.playersBasicOptionsGraph;
     } else {
       opts = dataColumns.playersBasicOptions;
@@ -180,7 +170,7 @@ class Players extends React.Component {
 
   getDefaultOpts() {
     let optsDef =[];
-    if(this.state.chart) {
+    if(this.props.chart) {
       optsDef= dataColumns.playersBasicDefaultOptionsGraph;
     } else {
       optsDef = dataColumns.playersBasicDefaultOptions;
@@ -190,6 +180,8 @@ class Players extends React.Component {
 
 
   render() {
+    console.log('players are: ', this.props.players);
+    console.log('isLoading is: ', this.props.isLoading);
     const cols = this.getCols();
     const opts = this.getOpts();
     const defaultopts = this.getDefaultOpts();
@@ -220,12 +212,12 @@ class Players extends React.Component {
             changeXAxisCallback={this.changeXAxisCallback}
             changeYAxisCallback={this.changeYAxisCallback}
           />
-          {this.state.chart ?
+          {this.props.chart ?
             <PlayersGraphs
               style={{ height: "100%" }}
               // minHeight={this.props.isMobile ? 700 : 1000}
-              dataSource={this.state.data}
-              loading={this.state.isLoading}
+              dataSource={this.props.players}
+              loading={this.props.isLoading}
               yAxis={this.state.yAxis}
               yAxisName={this.state.yAxisName}
               xAxis={this.state.xAxis}
@@ -241,10 +233,11 @@ class Players extends React.Component {
             <Table
               pageSize={this.state.pageNum}
               cols={cols}
-              dataSource={this.state.data}
+              dataSource={this.props.players}
               scroll={{ x: cols.length * colWidth }} // each column has a fixed width of 100
-              loading={this.state.isLoading}
+              loading={this.props.isLoading}
               rowKey="id"
+              rowClick={(id) => this.props.history.push(`/players/${id}`)}
               colWidth={colWidth}
               fixedColWidth={colWidth}
             />
