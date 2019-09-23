@@ -1175,6 +1175,15 @@ class Table extends React.Component {
         onChange={this.props.onChange}
         scroll={this.props.scroll}
         rowKey={this.props.rowKey}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: () => {this.props.rowClick ? this.props.rowClick(record.id) : null }, // click row
+            onContextMenu: event => {}, // right button click row
+            onMouseEnter: event => {}, // mouse enter row
+            onMouseLeave: event => {}, // mouse leave row
+          };
+        }}
+        rowClassName={this.props.rowClick ? "clickable-row" : "not-clickable-row"}
         loading={this.props.loading}
         pagination={{
           pageSize: this.state.pageSize,

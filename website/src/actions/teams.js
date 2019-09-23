@@ -27,12 +27,17 @@ export function teamsFetchData(url) {
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        dispatch(teamsIsLoading(false));
         return response;
       })
       .then((response) => response.json())
-      .then((teams) => dispatch(teamsFetchDataSuccess(teams)))
-      .catch(() => dispatch(teamsHasErrored(true)));
+      .then((teams) => {
+        dispatch(teamsFetchDataSuccess(teams));
+        dispatch(teamsIsLoading(false));
+      })
+      .catch(() => {
+        dispatch(teamsHasErrored(true));
+        dispatch(teamsIsLoading(false));
+      });
   };
 }
 

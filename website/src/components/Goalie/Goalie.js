@@ -123,13 +123,13 @@ class Goalie extends React.Component {
             type={"goalie"}
           />
           <Tabs defaultActiveKey="1" onChange={this.tabchange}>
-            <TabPane tab="Puck Luck" key="1">
+            <TabPane tab="Puck Luck" key="1" className="tabPaneTitle">
               <SectionTitle >Puck Luck</SectionTitle>
               <Section>
                 <GoalieGraphs />
               </Section>
             </TabPane>
-            <TabPane tab="Stats" key="2">
+            <TabPane tab="Stats" key="2" className="tabPaneTitle">
               <SectionTitle >Stats</SectionTitle>
               <Section>
                 <GoalieTables />
