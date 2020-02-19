@@ -114,10 +114,11 @@ class TableAbove extends React.Component {
         <SelectDiv>
           <FilterTitle>Year</FilterTitle>
           <Select
-            defaultValue="20182019"
+            defaultValue="20192020"
             style={{width: 160}}
             onChange={(value) => this.props.selectYearCallback(value)}
           >
+            <Option value="20192020">2019-2020</Option>
             <Option value="20182019">2018-2019</Option>
             <Option value="20172018">2017-2018</Option>
             <Option value="20162017">2016-2017</Option>

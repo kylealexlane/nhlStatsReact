@@ -188,9 +188,9 @@ class IndividualAbove extends React.Component {
               <SmallLogo src={`https://assets.nhle.com/nhl/images/logos/teams/${teamabbr}_logo.svgz?v=12.16`}/>
             </LogoNum>
             {this.props.isMobile ?
-              <MobileFaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
+              <MobileFaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
               :
-              <FaceImage src={`https://assets.nhle.com/mugs/nhl/20182019/${teamabbr}/${this.state.bio.id}.png`} />
+              <FaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
             }
           </RightDiv>
         </WrapperDiv>

@@ -34,7 +34,7 @@ class Goalies extends React.Component {
       searchText: "",
       width: 0,
       height: 0,
-      yearSelected: '20182019',
+      yearSelected: '20192020',
       gametype: 'R',
       statsType: 'basic',
       isLoading: false,
@@ -179,6 +179,7 @@ class Goalies extends React.Component {
 
 
   render() {
+    const data = this.state.minMetricValue && this.state.minMetric ? this.props.goalies.filter(player => player[this.state.minMetric] > this.state.minMetricValue) : this.props.goalies;
     const cols = this.getCols();
     const opts = this.getOpts();
     const defaultopts = this.getDefaultOpts();
@@ -213,7 +214,7 @@ class Goalies extends React.Component {
             <PlayersGraphs
               style={{height: "100%"}}
               // minHeight={this.props.isMobile ? 700 : 1000}
-              dataSource={this.props.goalies}
+              dataSource={data}
               loading={this.props.isLoading}
               yAxis={this.state.yAxis}
               yAxisName={this.state.yAxisName}
@@ -230,7 +231,7 @@ class Goalies extends React.Component {
               goalieStats={true}
               pageSize={this.state.pageNum}
               cols={cols}
-              dataSource={this.props.goalies}
+              dataSource={data}
               rowClick={(id) => this.props.history.push(`/goalies/${id}`)}
               scroll={{x: cols.length * colWidth}}
               loading={this.props.isLoading}

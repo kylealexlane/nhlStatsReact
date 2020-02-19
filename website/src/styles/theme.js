@@ -49,8 +49,8 @@ export const layout = {
 };
 
 export default {
-  DefaultNumTableItems: 15,
-  defaultMinShotsGraph: 100,
+  DefaultNumTableItems: 100,
+  defaultMinShotsGraph: 50,
   layout: {
     paddingHorizontal: layout.paddingHorizontal,
     paddingHorizInt: layout.paddingHorizInt,
