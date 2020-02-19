@@ -42,7 +42,7 @@ class Teams extends React.Component {
       searchText: "",
       width: 0,
       height: 0,
-      yearSelected: '20182019',
+      yearSelected: '20192020',
       gametype: 'R',
       statsType: 'basic',
       isLoading: false,

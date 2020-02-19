@@ -35,7 +35,7 @@ class Players extends React.Component {
       searchText: "",
       width: 0,
       height: 0,
-      yearSelected: '20182019',
+      yearSelected: '20192020',
       gametype: 'R',
       statsType: 'basic',
       isLoading: false,
@@ -180,8 +180,7 @@ class Players extends React.Component {
 
 
   render() {
-    console.log('players are: ', this.props.players);
-    console.log('isLoading is: ', this.props.isLoading);
+    const data = this.state.minMetricValue && this.state.minMetric ? this.props.players.filter(player => player[this.state.minMetric] > this.state.minMetricValue) : this.props.players;
     const cols = this.getCols();
     const opts = this.getOpts();
     const defaultopts = this.getDefaultOpts();
@@ -216,7 +215,7 @@ class Players extends React.Component {
             <PlayersGraphs
               style={{ height: "100%" }}
               // minHeight={this.props.isMobile ? 700 : 1000}
-              dataSource={this.props.players}
+              dataSource={data}
               loading={this.props.isLoading}
               yAxis={this.state.yAxis}
               yAxisName={this.state.yAxisName}
@@ -233,7 +232,7 @@ class Players extends React.Component {
             <Table
               pageSize={this.state.pageNum}
               cols={cols}
-              dataSource={this.props.players}
+              dataSource={data}
               scroll={{ x: cols.length * colWidth }} // each column has a fixed width of 100
               loading={this.props.isLoading}
               rowKey="id"

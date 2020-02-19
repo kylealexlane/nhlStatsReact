@@ -339,6 +339,7 @@ const basicOptions = [
   {label: "Year", val: "year"},
   {label: "Game Type", val: "gametype"},
   {label: "Stats Type", val: "statstype"},
+  {label: "Min Shots", val: "minshots"},
   {label: "Items Per Page", val: "pagenum"}
 ];
 
@@ -366,7 +367,7 @@ const basicPlusSituationOptions = [
   {label: "Items Per Page", val: "pagenum"}
 ];
 
-const basicDefaultOptions = ["year", "gametype", "statstype", "pagenum"];
+const basicDefaultOptions = ["year", "gametype", "statstype", "minshots", "pagenum"];
 const basicDefaultOptionsGraph =["year", "gametype", "minshots", "xaxisplayers", "yaxisplayers"];
 const basicDefaultOptionsGraphGoalies =["year", "gametype", "minshots", "xaxisgoalies", "yaxisgoalies"];
 const basicPlusSituationDefaultOptions = ["year", "gametype", "situation", "statstype", "pagenum"];
