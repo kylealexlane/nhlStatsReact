@@ -15,6 +15,16 @@ const WrapperDiv = styled.div`
   background-size:     cover;
   background-repeat:   no-repeat;
   background-position: center center; 
+  align-items: center;
+  padding: 0px;
+`;
+
+const DarkDiv = styled.div`
+  width: 100%;
+  height: 300px;
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center; 
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -177,22 +187,24 @@ class IndividualAbove extends React.Component {
     );
     if (!this.state.isLoading && this.state.teamInfo.teams) {
       content = (
-        <WrapperDiv style={{ backgroundImage: `url(https://nhl.bamcontent.com/images/arena/scoreboard/${teamid}@2x.jpg)`}}>
-          <LeftDiv>
-            <FirstName>{this.state.bio.firstName}</FirstName>
-            <LastName>{this.state.bio.lastName}</LastName>
-            <HeadingText>{this.state.bio.height} | {this.state.bio.currentAge} | {this.state.bio.weight}lbs</HeadingText>
-          </LeftDiv>
-          <RightDiv>
-            <LogoNum>
-              <SmallLogo src={`https://assets.nhle.com/nhl/images/logos/teams/${teamabbr}_logo.svgz?v=12.16`}/>
-            </LogoNum>
-            {this.props.isMobile ?
-              <MobileFaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
-              :
-              <FaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
-            }
-          </RightDiv>
+        <WrapperDiv style={{ backgroundImage: `url(https://cms.nhl.bamgrid.com/images/actionshots/${this.state.bio.id}_low_resolution.jpg)`}}>
+          <DarkDiv style={{background: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))'}}>
+            <LeftDiv>
+              <FirstName>{this.state.bio.firstName}</FirstName>
+              <LastName>{this.state.bio.lastName}</LastName>
+              <HeadingText>{this.state.bio.height} | {this.state.bio.currentAge} | {this.state.bio.weight}lbs</HeadingText>
+            </LeftDiv>
+            <RightDiv>
+              <LogoNum>
+                <SmallLogo src={`https://assets.nhle.com/nhl/images/logos/teams/${teamabbr}_logo.svgz?v=12.16`}/>
+              </LogoNum>
+              {this.props.isMobile ?
+                <MobileFaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
+                :
+                <FaceImage src={`https://assets.nhle.com/mugs/nhl/20192020/${teamabbr}/${this.state.bio.id}.png`} />
+              }
+            </RightDiv>
+          </DarkDiv>
         </WrapperDiv>
       );
     }
